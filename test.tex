@@ -4,6 +4,7 @@
   \usepackage{graphics}
   \usepackage{url}
   \usepackage[utf8]{inputenc}
+  \graphicspath{{images/}}
   \topmargin0.0cm
   \headheight0.0cm
   \headsep0.0cm
@@ -25,44 +26,50 @@
 
    \begin{document}
 
-  \title{Konvolutionaariset neuroverkot}
+  \title{Kuvien tunnistus neuroverkoilla}
   \author{Teemu Sarapisto}
   \maketitle
 
-  \section{Introduction}
+  \section{Alkuhommat}
 
 
-  Neuroverkot yleistyneet blablabla. Perustuvat joltain osin luonnollisiin neuroverkkoihin. herp \cite{Goodfellow-et-al-2016} derp
+  Neuroverkot yleistyneet viimeaikoina koska GPU:t. Neuroverkkojen lisäkerroksien hyöty löydetty (deep learning). Perustuvat osittain biologisten neuroverkkojen toimintaperiaatteisiin. Konvoluutioneuroverkot erittäin hyviä klassifioimaan kuvia. \cite{Goodfellow-et-al-2016}
 
 
-  \section{neuroverkkojen toiminta ylipäätään}
-  \subsection{Keinotekoinen neuroni}
-  (abstract neuron)
-  funktio jolla on monta sisään tulevaa kanavaa, jokaisella kanavalla on siihen liittyvä painotus $w_i$, jolla kanavaa pitkin sisään tulevat arvot kerrotaan
-  \subsection{yksi neuroni / perseptroni}
-   kappaleessa 3 hyvää juttua \cite{Rojas96}
-  \subsection{aktivaatiofunktio}
-  \subsection{backpropagation}
-  \subsection{Feedforward Networks}
-  yksinkertaisin keinotekoinen neuroverkko (artificial neural network)
-  single-layer perceptron network
+  \section{Neuroverkkojen rakenne}
+  \subsection{Yksi neuroni / perseptroni}
+   %kappaleessa 3 rojanista hyvää juttua \cite{Rojas96}
 
-   Chapter 6:
+   %http://neuralnetworksanddeeplearning.com/chap1.html keksi parempi lähde
+   % oliko varmasti 50-luvulla?
+   Keinotekoiset neuroverkot koostuvat useista keinotekoisista neuroneista. Neuroneista yksinkertaisimpia ovat 50-luvulla kehitetyt "perseptronit". Perseptronit ottavat vastaan binäärisiä (syötteen arvo voi olla joko 0 tai 1) syötteitä $x_1$, $x_2$, ..., ja kunkin syötteen vaikutusta ulostuloarvoon (output?) säädetään siihen liittyvällä painolla $w_i$. Perseptronilla on yksi ulostuloarvo, 0 tai 1 joka riippuu siitä, onko summa $\Sigma x_i * w_i$ yli, vai alle jonkin valitun kynnysarvon. Muut keinotekoiset neuronit ovat paljolti perseptroneja vastaavia, esimerkiksi hyvin yleisesti käytetyssä sigmoidisessa neuronissa syöte- ja ulostuloarvoina käyvät mitkä tahansa reaaliluvut välillä 0-1, ja ulostulon määrää aktivaatiofunktioksi kutsuttu kaava (TODO: bias arvon "b" selitys kaavasta) $\sigma(w_i*x_i + b)$, jossa $\sigma(z) = 1/(1-e^{-z}))$\cite{Nielsen-neural}
 
-   - deep feedforward networks, OR multilayer perceptrons (MLPs) \cite{Rojas96}
+   \subsection{Verkko neuroneja}
 
-  For example, the convolutional networks used for object recognition from photos are a specialized kind of feedforward network
+   TODO: piirrä oma kuva / keksi jostain royalty free, tää on täältä http://neuralnetworksanddeeplearning.com/images/tikz11.png
+   \includegraphics[scale=0.5]{basic-neuralnet}
 
-  \subsection{suuremmat neuroverkot}
+   [under-construction.gif]
 
-  \subsection{Structure}
-   The  line `` (backslash) begin \{ document \} "  introduces the body of the paper.  Any ``begin" command must get paired with an ``end" command; look at the last line in this template
+   Yksinkertaisimmassa neuroverkkorakenteen omaavat feedforward (suomennos?) neuroverkot muodostetaan tasoittain, jossa jokaisen neuroverkon tason neuronit saavat syötteenään niitä edeltävien tasojen neuroneiden ulostuloarvot. Poikkeuksena ensimmäinen taso (kuvassa vasemmanpuoleisimpana), joihin verkon alkuperäinen syöte koodataan jollakin halutulla tavalla. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle, voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan.
 
-   I can mention that it was in Section~\ref{section:mathmode}. Labels work for definitions, theorems, questions, sections, diagrams, and equations, among others.
+   (For example, the convolutional networks used for object recognition from photos are a specialized kind of feedforward network)
+   
+   \section{Neuroverkkojen oppiminen / opettaminen}
+   - backpropagation, gradient descent, cost function
 
-  \subsection{Math Mode}\label{section:mathmode}
-  % If you're wondering about the ``\label" above, it will be explained below.  Note that this line of text which follows the percent sign doesn't show up in the pdf.  This is a good way to leave notes for yourself on a work in progress.
-   \textit{italic} or \textbf{boldface}),  $x+ y=7$ and the program takes care of spacing.  It's also easy to write Greek letters ($\alpha$, $\Sigma$), exponents ($2^{x+y}$), and subscripts ($x_1$)
+   - overfitting
+
+   - (regularization, dropout)
+
+   - weight initialization
+
+   \section{Erilaiset neuroverkot}
+   - Olemassa esim RNN, CNN
+
+   - CNN toimii hyvin kuvien tunnistamiseen. Millaisia CNN:t ovat tarkemmin
+   \section{Kuvien tunnistus (konvoluutioneuroverkoilla)}
+   - local receptive fields, shared weights/biases, pooling
 
    \renewcommand{\refname}{Lähteet}
    \bibliographystyle{ieeetr}
