@@ -32,42 +32,41 @@
 
   \section{Alkuhommat}
 
-  Tietokoneiden suorituskyvyn kasvamisen, suurien määrien luokiteltua dataa löytymisen ja sopivien algoritmien kuten backpropagationin  (suomenna) yleistymisen myötä neuroverkot alkoivat noin 2006 alkaen saavuttaa suurta suosiota, oltuaan jo aikaisemmin sekä 40-60 luvuilla, että 80-95 vuosina jo vahvasti pinnalla.
+  %Neuroverkot saivat alkunsa jo 40-luvulla, mutta vasta 2006 tarvittavat palaset niiden läpimurtoon saatiin kasaan (katso millaisella kielellä papereita yleensä aloitetaan).
 
-  Neuroverkot ovat jo pari kertaa olleet pinnalla, mutta niiden todelliseen läpilyömiseen tarvitut osaset löytyivät vasta 2006, kun suuret määrät luokiteltua dataa tuli helposti saataville, ja näytönohjainten tietokoneiden suorituskyvyn kasvettua mm. näytonohjainten hyödyntämisen kautta tarpeeksi suurelle tasolle jotta neuroverkkojen tehokas hyödyntäminen tuli mahdolliseksi. Myös back-propagation.
+  %Tietokoneiden suorituskyvyn kasvamisen, suurien määrien luokiteltua dataa löytymisen ja sopivien algoritmien kuten backpropagationin  (suomenna) yleistymisen myötä neuroverkot alkoivat noin 2006 alkaen ratkaista ongelmia joihin ei muilla lähestymistavoilla oltu aikaisemmin pystytty. suurta suosiota, oltuaan jo aikaisemmin sekä 40-60 luvuilla, että 80-95 vuosina jo vahvasti pinnalla.
+
+  %Neuroverkot ovat jo pari kertaa olleet pinnalla, mutta niiden todelliseen läpilyömiseen tarvitut osaset löytyivät vasta 2006, kun suuret määrät luokiteltua dataa tuli helposti saataville, ja näytönohjainten tietokoneiden suorituskyvyn kasvettua mm. näytonohjainten hyödyntämisen kautta tarpeeksi suurelle tasolle jotta neuroverkkojen tehokas hyödyntäminen tuli mahdolliseksi. Myös back-propagation.
+
+  Neuroverkot yleistyneet viimeaikoina labeloidun datan määrän kasvettua, tietokoneiden suorituskyvyn kasvettua esimerkiksi näytönohjainten tehokkaan hyödyntämisen kautta jne. Neuroverkkojen lisäkerroksien hyöty löydetty (deep learning). Neuroverkot ottivat vaikutteita biologisista neuroverkoista. neuroverkot erittäin hyviä klassifioimaan kuvia \cite{Goodfellow-et-al-2016}. TODO: paljon yleislätinää neuroverkoista.
 
   Syväoppiminen blabla erillään?
-
-
-  
-  Neuroverkot yleistyneet viimeaikoina labeloidun datan määrän kasvettua, tietokoneiden suorituskyvyn kasvettua esimerkiksi näytönohjainten tehokkaan hyödyntämisen kautta jne. Neuroverkkojen lisäkerroksien hyöty löydetty (deep learning). Neuroverkot ottivat vaikutteita biologisista neuroverkoista. neuroverkot erittäin hyviä klassifioimaan kuvia \cite{Goodfellow-et-al-2016}. TODO: paljon yleislätinää neuroverkoista.
 
 
   \section{Neuroverkkojen rakenne}
   \subsection{Keinotekoinen neuroni}
 
 
-    Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä matemaattisia funktioita jotka ovat muotoa kuten Kaava \ref{eq:neuroni} joilla on jokin syöte ja vastaava ulostuloarvo. 
+    Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä Kaavan \ref{eq:neuroni} muotoisia matemaattisia funktioita.
 
     \begin{equation}
       \label{eq:neuroni}
-      \Sigma w_i x_i \mapsto f(\Sigma w_i x_i)
+      \Sigma w_i x_i \mapsto f(\Sigma w_i x_i - b)
     \end{equation}
-    
-    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joille kullekin on asetettu jokin painoarvo $w_i$. Näiden syötteiden ja painotuksien summa $\Sigma x_i w_i$ toimii \textit{aktivaatiofunktion} $f$ syötteenä, jonka ulostuloarvo toimii koko neuronin ulostuloarvona. 
 
-    50-luvulla kehitetty \textit{perseptroni} oli ensimmäinen tällainen neuroni. Sen syötteet ja ulostuloarvot ovat binäärisiä, ja sen ulostuloarvo on suoraan $\Sigma x_i w_i$. Nykyiset 
-    
-    Esimerkiksi hyvin yleinen sigmoidinen saa nimensä siitä, että sen aktivaatiofunktiona toimii sigmoidinen funktio.
+    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja siitä saatu arvo toimii neuronin lopullisena ulostuloarvona. Joissakin tapauksissa summaparametristä vähennetään ennen funktiolle syöttöä myös taipumusarvo (bias) $b$.
+
+    %You can think of the bias as a measure of how easy it is to get the perceptron to output a 1. Or to put it in more biological terms, the bias is a measure of how easy it is to get the perceptron to fire
+
+    50-luvulla kehitettiin ensimmäinen tällainen neuroni (viittaa niihin perseptronijäbät). Sen syötteet ja ulostuloarvot ovat binäärisiä. Aktivaatiofunktiona toimii vain tarkastus ylittääkö $\Sigma x_i w_i - b$ arvon 0, ja jos, neuronin ulostuloarvo on 1, muuten 0.
+    <tähän kaavana threshhold suurempikuin-pienempikuin hommat?>
+
+    Nykyään hyvin yleisesti käytetään sigmoidinen neuroni joka saa nimensä sen aktivaatiofunktiona toimivasta sigmoidisesta funktiosta. Sen syötteet ja paluuarvot ovat reaalilukuja 0 ja 1 väliltä
 
   %kappaleessa 3 rojanista hyvää juttua \cite{Rojas96}
 
   %http://neuralnetworksanddeeplearning.com/chap1.html keksi parempi lähde
   % oliko varmasti 50-luvulla?
-  Keinotekoiset neuroverkot koostuvat useista keinotekoisista neuroneista. Neuroneista yksinkertaisimpia ovat 50-luvulla kehitetyt "perseptronit".
-  Perseptronit ottavat vastaan binäärisiä (syötteen arvo voi olla joko 0 tai 1) syötteitä $x_1$, $x_2$, ..., ja kunkin syötteen vaikutusta ulostuloarvoon (output?) säädetään siihen liittyvällä painolla $w_i$.
-  Perseptronilla on yksi ulostuloarvo, 0 tai 1 joka riippuu siitä, onko summa $\Sigma x_i w_i$ yli, vai alle jonkin valitun kynnysarvon.
-  Muut keinotekoiset neuronit ovat paljolti perseptroneja vastaavia, esimerkiksi hyvin yleisesti käytetyssä sigmoidisessa neuronissa syöte- ja ulostuloarvoina käyvät mitkä tahansa reaaliluvut välillä 0-1, ja ulostulon määrää aktivaatiofunktioksi kutsuttu kaava (TODO: bias arvon "b" selitys kaavasta) $\sigma(w_i x_i + b)$, jossa $\sigma(z) = 1/(1-e^{-z}))$\cite{Nielsen-neural}
 
   \subsection{Verkko neuroneja}
 
