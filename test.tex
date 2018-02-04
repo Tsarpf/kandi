@@ -22,18 +22,17 @@
   \newtheorem{question}{Question}
   \theoremstyle{definition}
   \newtheorem{definition}{Definition}
-
+  \renewcommand{\figurename}{Kuva}
 
    \begin{document}
 
-  \title{Kuvien tunnistus neuroverkoilla}
+  \title{Konvoluutioneuroverkot}
   \author{Teemu Sarapisto}
   \maketitle
 
   \section{Alkuhommat}
 
-
-  Neuroverkot yleistyneet viimeaikoina koska GPU:t. Neuroverkkojen lisäkerroksien hyöty löydetty (deep learning). Perustuvat osittain biologisten neuroverkkojen toimintaperiaatteisiin. Konvoluutioneuroverkot erittäin hyviä klassifioimaan kuvia. \cite{Goodfellow-et-al-2016}
+  Neuroverkot yleistyneet viimeaikoina labeloidun datan määrän kasvettua, tietokoneiden suorituskyvyn kasvettua esimerkiksi näytönohjainten tehokkaan hyödyntämisen kautta jne. Neuroverkkojen lisäkerroksien hyöty löydetty (deep learning). Perustuvat osittain biologisten neuroverkkojen toimintaperiaatteisiin. Konvoluutioneuroverkot erittäin hyviä klassifioimaan kuvia \cite{Goodfellow-et-al-2016}. TODO: paljon yleislätinää neuroverkoista
 
 
   \section{Neuroverkkojen rakenne}
@@ -47,14 +46,16 @@
    \subsection{Verkko neuroneja}
 
    TODO: piirrä oma kuva / keksi jostain royalty free, tää on täältä http://neuralnetworksanddeeplearning.com/images/tikz11.png
+   \begin{figure}[h]
+   \centering
    \includegraphics[scale=0.5]{basic-neuralnet}
-
-   [under-construction.gif]
+   \caption{http://neuralnetworksanddeeplearning.com/chap1.html}
+   \end{figure}
 
    Yksinkertaisimmassa neuroverkkorakenteen omaavat feedforward (suomennos?) neuroverkot muodostetaan tasoittain, jossa jokaisen neuroverkon tason neuronit saavat syötteenään niitä edeltävien tasojen neuroneiden ulostuloarvot. Poikkeuksena ensimmäinen taso (kuvassa vasemmanpuoleisimpana), joihin verkon alkuperäinen syöte koodataan jollakin halutulla tavalla. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle, voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan.
 
    (For example, the convolutional networks used for object recognition from photos are a specialized kind of feedforward network)
-   
+
    \section{Neuroverkkojen oppiminen / opettaminen}
    - backpropagation, gradient descent, cost function
 
