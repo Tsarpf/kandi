@@ -37,11 +37,7 @@
   %Tietokoneiden suorituskyvyn kasvamisen, suurien määrien luokiteltua dataa löytymisen ja sopivien algoritmien kuten backpropagationin  (suomenna) yleistymisen myötä neuroverkot alkoivat noin 2006 alkaen ratkaista ongelmia joihin ei muilla lähestymistavoilla oltu aikaisemmin pystytty. suurta suosiota, oltuaan jo aikaisemmin sekä 40-60 luvuilla, että 80-95 vuosina jo vahvasti pinnalla.
 
   %Neuroverkot ovat jo pari kertaa olleet pinnalla, mutta niiden todelliseen läpilyömiseen tarvitut osaset löytyivät vasta 2006, kun suuret määrät luokiteltua dataa tuli helposti saataville, ja näytönohjainten tietokoneiden suorituskyvyn kasvettua mm. näytonohjainten hyödyntämisen kautta tarpeeksi suurelle tasolle jotta neuroverkkojen tehokas hyödyntäminen tuli mahdolliseksi. Myös back-propagation.
-
-  Neuroverkot yleistyneet viimeaikoina labeloidun datan määrän kasvettua, tietokoneiden suorituskyvyn kasvettua esimerkiksi näytönohjainten tehokkaan hyödyntämisen kautta jne. Neuroverkkojen lisäkerroksien hyöty löydetty (deep learning). Neuroverkot ottivat vaikutteita biologisista neuroverkoista. neuroverkot erittäin hyviä klassifioimaan kuvia \cite{Goodfellow-et-al-2016}. TODO: paljon yleislätinää neuroverkoista.
-
-  Syväoppiminen blabla erillään?
-
+  Viimeisen hieman yli kymmenen vuoden aikana voidaan sanoa keinotekoisten neuroverkkojen ja syväoppimisen tehneen läpimurron. Syväoppimisen voidaan katsoa syntyneen jo 40-luvulla, mutta laajamittaiseen sovelluskäyttöön se on tullut vasta viime vuosina, kun sekä riittävä määrä luokiteltua dataa, että riittävästi prosessointitehoa on tullut helposti saataville. Myös algoritmipuolella tapahtuneet edistykset ovat edesauttaneet läpimurtoa. Aikaisemmin koneoppimisen alalla haasteelliseksi osoittautuneissa sovelluskohteissa kuten kuvien sekä puheen sisällön tunnistamisessa keinotekoiset neuroverkot ovat osoittautuneet toistaiseksi ylivoimaisesti parhaiten toimiviksi ratkaisuiksi.\cite{Goodfellow-et-al-2016}
 
   \section{Neuroverkkojen rakenne}
   \subsection{Keinotekoinen neuroni}
@@ -54,16 +50,15 @@
       \Sigma w_i x_i \mapsto f(\Sigma w_i x_i + b)
     \end{equation}
 
-    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja siitä saatu arvo toimii neuronin lopullisena ulostuloarvona.
-    
-    Joissakin tapauksissa käytetään myös taipumusvakiota (bias) $b$, joka vähennetään syötteiden ja painotuksien tulojen summasta.
+    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja tämän funktion arvo toimii neuronin lopullisena ulostuloarvona.
 
-    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvojen arvoja säätämällä.
+    Toisinaan käytetään myös taipumusvakiota (bias) $b$, joka lisätään syötteiden ja painotuksien tulojen summaan.
+
 
     %You can think of the bias as a measure of how easy it is to get the perceptron to output a 1. Or to put it in more biological terms, the bias is a measure of how easy it is to get the perceptron to fire
 
-    Ensimmäinen tällainen neuroni, perseptroni, kehitettiin 50-luvulla. Sen syötteet ja ulostuloarvot ovat binäärisiä. Perseptronissa aktivaatiofunktiona on Kaavan \ref{eq:perceptron} mukainen tarkastus ylittääkö $\Sigma x_i w_i + b$ arvon 0, ja jos, neuronin ulostuloarvo on 1, muuten 0.
-    
+    Ensimmäinen tällainen neuroni, perseptroni, kehitettiin 50-luvulla. Sen syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktiona toimii Kaavan \ref{eq:perceptron} mukainen funktio.
+
     \begin{equation}
       \label{eq:perceptron}
       ulostuloarvo
@@ -73,22 +68,17 @@
       \end{cases}
     \end{equation}
 
-    Perseptroneja käytetätessä törmätään kuitenkin helposti ongelmaan, jossa 
-
-    Eräs nykyään paljon käytetty neuroni on sigmoidinen neuroni, joka saa nimensä sen aktivaatiofunktiona toimivasta sigmoidisesta funktiosta (Kaava x). Sen syötteet ja paluuarvot ovat reaalilukuja 0 ja 1 väliltä, ja aktivaatiofunktio 
+    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvon muuttumisen kautta. Perseptroneja käytetätessä törmätään kuitenkin helposti ongelmaan, jossa yksi pieni muutos painotuksissa tai taipumusarvossa johtaa ulostuloarvon vaihtumiseen, joka saattaa aiheuttaa suuria muutoksia ulostuloarvoissa myös koko neuroverkon tasolla. Usein halutaan hienovaraisempia muutoksia ja siksi usein käytetään neuroneita joiden syöte- ja paluuarvot voivat olla myös mitä vain reaalilukuja nollan ja yhden väliltä. Esimerkiksi yksi tällainen laajalti käytössä oleva neuroni on sigmoidinen neuroni, jonka aktivaatiofunktiona toimii sigmoidinen funktio
 
   %kappaleessa 3 rojanista hyvää juttua \cite{Rojas96}
 
   %http://neuralnetworksanddeeplearning.com/chap1.html keksi parempi lähde
   % oliko varmasti 50-luvulla?
 
-  \subsection{Verkko neuroneja}
-
-  Yhdessä yksi suuri funktio, joka pystyy mallintamaan mitä tahansa muita funktioita karkeasti tjsp?
-
-  (deep learning!) verkon tasot oppivat toinen toistaan abstraktimpia asioita asiasta jota pyritään oppimaan.
+  \subsection{Keinotekoisten neuroverkkojen rakenne}
 
   \begin{figure}[h]
+  \label{pic:neuralnet}
   \centering
   \includegraphics[scale=0.5]{basic-neuralnet}
   \caption{http://neuralnetworksanddeeplearning.com/chap1.html}
@@ -96,6 +86,7 @@
 
   Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan tasoittain, jossa jokaisen verkon tason neuronit saavat syötteenään niitä edeltävän tason neuroneiden ulostuloarvot. Poikkeuksena ensimmäinen taso (kuvassa vasemmanpuoleisimpana), joihin verkon syöte koodataan. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle, voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan.
 
+  Vaikka syväoppimista voidaan harjoittaa myös muutoin kuin keinotekoisilla neuroverkoilla, neuroverkkojen tapauksessa termillä viitataan neuroverkkojen piilokerroksiin ja niiden määrään. Kasvattamalla neuroverkkotasojen sekä tasoissa olevien neuronien määrää, neuroverkoilla voidaan mallintaa entistä monimutkaisempia funktioita.
 
   \section{Neuroverkkojen oppiminen / opettaminen}
   - backpropagation, gradient descent, cost function, error function
