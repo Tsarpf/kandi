@@ -51,17 +51,31 @@
 
     \begin{equation}
       \label{eq:neuroni}
-      \Sigma w_i x_i \mapsto f(\Sigma w_i x_i - b)
+      \Sigma w_i x_i \mapsto f(\Sigma w_i x_i + b)
     \end{equation}
 
-    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja siitä saatu arvo toimii neuronin lopullisena ulostuloarvona. Joissakin tapauksissa summaparametristä vähennetään ennen funktiolle syöttöä myös taipumusarvo (bias) $b$.
+    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja siitä saatu arvo toimii neuronin lopullisena ulostuloarvona.
+    
+    Joissakin tapauksissa käytetään myös taipumusvakiota (bias) $b$, joka vähennetään syötteiden ja painotuksien tulojen summasta.
+
+    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvojen arvoja säätämällä.
 
     %You can think of the bias as a measure of how easy it is to get the perceptron to output a 1. Or to put it in more biological terms, the bias is a measure of how easy it is to get the perceptron to fire
 
-    50-luvulla kehitettiin ensimmäinen tällainen neuroni (viittaa niihin perseptronijäbät). Sen syötteet ja ulostuloarvot ovat binäärisiä. Aktivaatiofunktiona toimii vain tarkastus ylittääkö $\Sigma x_i w_i - b$ arvon 0, ja jos, neuronin ulostuloarvo on 1, muuten 0.
-    <tähän kaavana threshhold suurempikuin-pienempikuin hommat?>
+    Ensimmäinen tällainen neuroni, perseptroni, kehitettiin 50-luvulla. Sen syötteet ja ulostuloarvot ovat binäärisiä. Perseptronissa aktivaatiofunktiona on Kaavan \ref{eq:perceptron} mukainen tarkastus ylittääkö $\Sigma x_i w_i + b$ arvon 0, ja jos, neuronin ulostuloarvo on 1, muuten 0.
+    
+    \begin{equation}
+      \label{eq:perceptron}
+      ulostuloarvo
+      \begin{cases}
+        0\; jos \; \Sigma x_i w_i + b \leq 0 \\
+        1\; jos \; \Sigma x_i w_i + b > 0 \\
+      \end{cases}
+    \end{equation}
 
-    Nykyään hyvin yleisesti käytetään sigmoidinen neuroni joka saa nimensä sen aktivaatiofunktiona toimivasta sigmoidisesta funktiosta. Sen syötteet ja paluuarvot ovat reaalilukuja 0 ja 1 väliltä
+    Perseptroneja käytetätessä törmätään kuitenkin helposti ongelmaan, jossa 
+
+    Eräs nykyään paljon käytetty neuroni on sigmoidinen neuroni, joka saa nimensä sen aktivaatiofunktiona toimivasta sigmoidisesta funktiosta (Kaava x). Sen syötteet ja paluuarvot ovat reaalilukuja 0 ja 1 väliltä, ja aktivaatiofunktio 
 
   %kappaleessa 3 rojanista hyvää juttua \cite{Rojas96}
 
@@ -71,6 +85,8 @@
   \subsection{Verkko neuroneja}
 
   Yhdessä yksi suuri funktio, joka pystyy mallintamaan mitä tahansa muita funktioita karkeasti tjsp?
+
+  (deep learning!) verkon tasot oppivat toinen toistaan abstraktimpia asioita asiasta jota pyritään oppimaan.
 
   \begin{figure}[h]
   \centering
@@ -82,7 +98,7 @@
 
 
   \section{Neuroverkkojen oppiminen / opettaminen}
-  - backpropagation, gradient descent, cost function
+  - backpropagation, gradient descent, cost function, error function
 
   - overfitting
 
