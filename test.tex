@@ -26,7 +26,7 @@
 
    \begin{document}
 
-  \title{Konvoluutioneuroverkot}
+  \title{Neuroverkot}
   \author{Teemu Sarapisto}
   \maketitle
 
@@ -87,13 +87,14 @@
 
   Vaikka syväoppimista voidaan harjoittaa myös muutoin kuin keinotekoisilla neuroverkoilla, neuroverkkojen tapauksessa termillä viitataan neuroverkkojen piilokerroksiin ja niiden määrään. Kasvattamalla neuroverkkotasojen sekä tasoissa olevien neuronien määrää, neuroverkoilla voidaan mallintaa entistä monimutkaisempia funktioita.
 
-  \section{Neuroverkkojen oppiminen / opettaminen}
+  \section{Neuroverkkojen oppiminen}
   Neuroverkkoa opetettaessa tavoitteena on minimoida neuroverkon tekemä virhe sen approksimoidessa jotakin funktiota. Tämän virheen määrää arvioidaan virhefunktion (error function) avulla. Neuroverkon laskiessa ulostuloarvon jollekkin syötteelle, tapahtuu eteenpäinkulkeutumista (forward-propagation). Taaksepäinkulkeutumiseksi (back-propagation) kutsutaan algoritmiä jonka avulla jollekkin neuroverkon painoille määritellylle virhefunktiolle lasketaan gradientti, jonka perusteella neuroverkon approksimoinnin virhettä voidaan lähteä pienentämään gradientin laskeutumismenetelmää käyttäen.
 
   Suuri haaste neuroverkkojen opetuksessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty metodeja kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa opetusvaiheessa yksittäisiä neuroneita poistetaan käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti.
 
   Neuroverkkojen opetuksessa olennaisessa osassa on myös verkon alkuperäisten painotuksien valitseminen sopivalla tavalla.
 
+  \nocite{*}
 
   \renewcommand{\refname}{Lähteet}
   \bibliographystyle{ieeetr}
