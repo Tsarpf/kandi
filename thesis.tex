@@ -73,10 +73,10 @@
   % The following commands define the information used to generate title and
   % abstract pages. The following entries should be always specified:
 
-  \title{Neuroverkot}
+  \title{Konvolutionaaliset neuroverkot}
   \author{Teemu Sarapisto}
   \date{\today}
-  \level{Kandidaatintutkielma}
+  \level{Aine}
   \abstract{TBD}
 
   % The following can be used to specify keywords and classification of the paper:
@@ -124,11 +124,16 @@
 
   \mainmatter       % clear page, start arabic page numbering
 
+  \section{Johdanto}
+
   Viimeisen hieman yli kymmenen vuoden aikana voidaan sanoa keinotekoisten neuroverkkojen ja syväoppimisen tehneen läpimurron. Syväoppimisen voidaan katsoa syntyneen jo 40-luvulla, mutta laajamittaiseen sovelluskäyttöön se on tullut vasta viime vuosina, kun sekä riittävä määrä luokiteltua dataa, että riittävästi prosessointitehoa on tullut helposti saataville. Myös algoritmipuolella tapahtuneet edistykset ovat edesauttaneet läpimurtoa. Aikaisemmin koneoppimisen alalla haasteelliseksi osoittautuneissa sovelluskohteissa kuten kuvien sekä puheen sisällön tunnistamisessa keinotekoiset neuroverkot ovat osoittautuneet toistaiseksi ylivoimaisesti parhaiten toimiviksi ratkaisuiksi.
 
+
+  TODO: historiaa pidemmälti
   \section{Neuroverkkojen rakenne}
   \subsection{Keinotekoinen neuroni}
 
+    TODO: selkiytä kaavahommelia
 
     Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä Kaavan \ref{eq:neuroni} muotoisia matemaattisia funktioita.
 
@@ -155,7 +160,7 @@
       \end{cases}
     \end{equation}
 
-    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvon muuttumisen kautta. Perseptroneja käytettäessä törmätään kuitenkin usein ongelmaan, jossa yksi pieni muutos painotuksissa tai taipumusarvossa johtaa ulostuloarvon vaihtumiseen, joka saattaa aiheuttaa suuria muutoksia ulostuloarvoissa myös koko neuroverkon tasolla. Usein halutaan hienovaraisempia muutoksia ja siksi usein käytetään neuroneita joiden syöte- ja paluuarvot voivat olla myös mitä vain reaalilukuja nollan ja yhden väliltä. Esimerkiksi yksi tällainen laajalti käytössä oleva neuroni on sigmoidinen neuroni, jonka aktivaatiofunktiona toimii sigmoidinen funktio.
+    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvon muuttumisen kautta. Perseptroneja käytettäessä törmätään kuitenkin usein ongelmaan, jossa yksi pieni muutos painotuksissa tai taipumusarvossa johtaa ulostuloarvon vaihtumiseen, joka saattaa aiheuttaa suuria muutoksia ulostuloarvoissa myös koko neuroverkon tasolla. Usein halutaan hienovaraisempia muutoksia ja tällöin käytetään neuroneita joiden syöte- ja paluuarvot voivat olla myös mitä vain reaalilukuja nollan ja yhden väliltä. Esimerkiksi yksi tällainen laajalti käytössä oleva neuroni on sigmoidinen neuroni, jonka aktivaatiofunktiona toimii sigmoidinen funktio.
 
   %kappaleessa 3 rojanista hyvää juttua \cite{Rojas96}
 
@@ -181,6 +186,41 @@
   Suuri haaste neuroverkkojen opetuksessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty metodeja kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa opetusvaiheessa yksittäisiä neuroneita poistetaan käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti.
 
   Neuroverkkojen opetuksessa olennaisessa osassa on myös verkon alkuperäisten painotuksien valitseminen sopivalla tavalla.
+
+  \subsection{Hintafunktio}
+    Olkoon $y(x)$ jokin funktio jota neuroverkko approksimoi. Hintafunktion avulla voidaan laskea kuinka paljon neuroverkon approksimaatio eroaa todellisesta funktiosta. Usein käytetään neliöllistä virhefunktiota:
+
+    \begin{equation}
+      \label{eq:cost-function}
+      C = 1/2n \Sigma || y(x) - a ||^2
+    \end{equation}
+    jossa $a$ on taulukko neuroverkon saamia arvoja.
+
+  \subsection{(stochastic?) Gradient descent (suomeksi)}
+  batch gradient descent
+  Ei välttämättä haluta ajaa takaisinvirtausalgoritmiä uudestaan jokaiselle harjoitus"materiaalin" yksikölle. Voidaan ottaa niistä vain jotain keskiarvoja tms eli batching skjfdghsg
+
+
+  Hintafunktio vs takaisinvirtausalgoritmi vs gradient descent
+
+  \subsection{Takaisinvirtausalgoritmi}
+  Takaisinvirtausalgoritmi (back-propagation)
+
+  \section{Konvolutionaalisten neuroverkkojen rakenne}
+  Konvolutionaalisten tasojen ero täysin yhdistettyihin neuroverkkotasoihin. Konvolutionaaliset käsittelevät vain osaa kuvasta kerrallaan konvoluutioiden avulla.
+  ReLu
+  \subsection{Konvoluution matemaattinen selitys}
+  \subsection{konvoluutiokerrokset}
+  \subsection{pooling}
+  kasautumiskerrokset?
+  \subsection{flattening}
+  Konvoluutiokerrosten yhdistäminen täysin yhdistettyjen kerrosten kanssa
+  \subsection{full connection}
+
+  \section{Konvolutionaalisten neuroverkkojen sovellukset}
+  \subsection{Kuvien luokittelu}
+
+
 
 
 
