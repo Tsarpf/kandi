@@ -207,38 +207,43 @@
 
   \subsection{Gradientin laskeutumismenetelmä} %tarvitseeko omaa otsikkoa, pitäisikö vain olla kappale takaisinvirtausalgoritmin otsikon alla?
   %batch gradient descent
-  Menetelmä toimii liikkumalla aina gradientin negatiiviseen suuntaan, näin liikkuen kohti funktion (lokaalia?) minimiä.
 
-  Jotta takaisinvirtausalgoritmia ei tarvitsisi ajaa jokaiselle harjoitusmateriaalin yksikölle, voidaan harjoitusmateriaalille laskea (tilastollisia arvoja?) keskiarvoja ja käyttää näitä keskiarvoja laskeutumismenetelmässä hyväksi. Ei välttämättä haluta ajaa takaisinvirtausalgoritmia uudestaan jokaiselle harjoitus"materiaalin" yksikölle. Voidaan ottaa niistä vain jotain keskiarvoja tms eli batching skjfdghsg
+  Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida hintafunktiota. Tätä toistetaan kunnes hintafunktio antaa riittävän pienen tuloksen. Jotta jokaista gradientin laskentakertaa varten ei tarvitsisi suorittaa takaisinvirtausalgoritmia syötedatan jokaista yksikköä kohden, voidaan käyttää stokastista gradientin laskeutumismenetelmää approksimointiin, joka yleensä tuottaa huomattavasti nopeammin hyviä tuloksia. TODO: Batch vs stochastic.
+
+  %Jotta takaisinvirtausalgoritmia ei tarvitsisi ajaa jokaiselle harjoitusmateriaalin yksikölle, voidaan harjoitusmateriaalille laskea (tilastollisia arvoja?) keskiarvoja ja käyttää näitä keskiarvoja laskeutumismenetelmässä hyväksi. Ei välttämättä haluta ajaa takaisinvirtausalgoritmia uudestaan jokaiselle harjoitus"materiaalin" yksikölle. Voidaan ottaa niistä vain jotain keskiarvoja tms eli batching skjfdghsg
 
   \section{Konvolutionaalisten neuroverkkojen rakenne}
-  Konvolutionaalisten tasojen ero täysin yhdistettyihin neuroverkkotasoihin. Konvolutionaaliset käsittelevät vain osaa kuvasta kerrallaan.
-  ReLu
-  \subsection{Sparse interactions}
-    Layerit eivät ole fully connected. Vaikka vierekkäisten layereiden neuronit eivät vaikutakkaan kaikki toisiinsa, useamman layerin tasolla vaikutukset yltävät pidemmälle äh.
-  \subsection{Konvoluution matemaattinen selitys}
-  "Ikkuna" funktioon. Käytetään konvoluutioneuroverkoissa rajoittamaan neuronien kuvasta käsittelemiä osia. (TODO: parempi muotoilu:) Neuroverkoista puhuttaessa käytetään usein termiä konvoluutio sekaisin/päittäin ristikorrelaation kanssa, sillä ne ovat hyvin samankaltaisia.
+  (TODO: ReLu)
+  \subsection{Konvoluutiokerrokset}
 
-    syöte, ydin.
-    
-    (Pitäisiköhän selittää konvoluutio integraaleja myöten vai muuttaa/poistaa kappale ja pysyttäytyä vain intuitiossa?) Konvoluutio on kahden funktion $f$ ja $g$ välinen operaatio joka tuottaa uuden funktion $f \star g$ . Ydin (kernel) funktio $g$ "liukuu" syötefunktion $f$ yli, ja jokaisessa kohdassa funktioiden yhteinen pinta-ala toimii lopullisen konvoluutiofunktion ulostulona.
-  \subsection{konvoluutiokerrokset
-  }
   \begin{figure}[h]
-  \label{pic:neuralnet}
+  \label{pic:convolution}
   \centering
   \includegraphics[scale=0.4]{convolution}
   \caption{http://www.deeplearningbook.org/contents/convnets.html}
   \end{figure}
 
+  Konvoluutiokerroksissa neuronit saavat syötteenään vain osan syötekerroksensa ulostuloista. Tätä kutsutaan local receptive fieldsiksi. Esitettäessä konvoluutiokerrosten neuronien ulostuloarvot syötteidensä funktiona, tämä funktio on syötteiden ja painojen konvoluutio, mistä konvolutionaaliset neuroverkot ovatkin saaneet nimensä. 
+
+  (TODO: muotoile:) Vaikka vierekkäiset neuronikerrokset eivät ole täysin kytkettyjä, välillisesti muutaman kerroksen päässä olevat neuronit yleensä saavat syötteensä koko syötekerrokselta.
+  
+  Kuvan \ref{pic:convolution} mukaisesti mikäli tehdään vain "valid" konvoluutioita joissa ytimen täytyy olla täysin syötekuvan sisällä, konvoluutiokerroksella on vähemmän ulostuloja kuin sisääntuloja.
+
+  \subsection{feature maps/detectors}
+  Yhdessä konvoluutiokerroksessa on useita ominaisuuskarttoja :D (feature detectors) 
+
+  \subsection{shared weights}
+
   \subsection{pooling}
-  kasautumiskerrokset?
+  Poolaus? funktio muuttaa verkon tietyn osan ulostulon verkon lähialueita kuvastavan yhteenvetävän tilastollisen arvon (summary statistic) mukaiseksi.
   \subsection{flattening}
   Konvoluutiokerrosten yhdistäminen täysin yhdistettyjen kerrosten kanssa
+
   \subsection{full connection}
 
   \section{Konvolutionaalisten neuroverkkojen sovellukset}
   \subsection{Kuvien luokittelu}
+  Tuloskerroksessa käytännössä todennäköisyysarvio luokittain
 
 
 
