@@ -128,21 +128,23 @@
    Syväoppimisen historia ulottuu 1940-luvulle asti, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli jolla kuvailla biologista aivoissa tapahtuvaa oppimista. Tällä lineaarisella mallilla pystyi tunnistamaan ihmisen asettamien syötekategoriat määrittelevien painotuksien (weights) avulla vain kahden erilaisen syötekategorian välillä. 
   
   Seuraava merkittävä kehitys tapahtui, kun 1950-luvulla kehitettiin ensimmäinen malli joka pystyi oppimaan syötekategorioita kuvaavat painotukset niistä annettujen esimerkkien perusteella, niin kutsuttu perseptroni.  
-  Kybernetiikan mentyä pois muodista 1960-luvun aikana, seuraavan kerran merkittävää kehitystä tapahtui 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmin (back-propagation) keksittiin 1986 mahdollistavan monikerroksisten neuroverkkojen opetuksen verrattain tehokkaasti.
+  Kybernetiikan mentyä pois muodista 1960-luvun aikana, seuraavan kerran merkittävää kehitystä tapahtui 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmin (back-propagation) keksittiin 1986 mahdollistavan monikerroksisten neuroverkkojen harjoittamisen verrattain tehokkaasti.
 
-  90-luvun puolivälin jälkeen syväoppiminen eli jälleen hiljaiseloa vuoteen 2006 asti, jolloin vielä nykyäänkin jatkuvan voimakkaan kiinnostuksen syväoppimiseen voidaan katsoa alkaneen. Geoffrey Hinton osoitti tällöin syvien uskomusverkkojen (deep belief network) olevan opetettavissa tehokkaasti tasoittain ja muut tutkimusryhmät yleistivät tämän opetustavan muille syville keinotekoisille neuroverkoille. Näiden tutkimuksien myötä syväoppiminen terminä alkoi yleistyä, termin käytön tarkoituksena korostaa aikaisempaa syvempien verkkojen opetettavissa olemista. 
+  90-luvun puolivälin jälkeen syväoppiminen eli jälleen hiljaiseloa vuoteen 2006 asti, jolloin vielä nykyäänkin jatkuvan voimakkaan kiinnostuksen syväoppimiseen voidaan katsoa alkaneen. Geoffrey Hinton osoitti tällöin syvien uskomusverkkojen (deep belief network) olevan harjoitettavissa tehokkaasti tasoittain ja muut tutkimusryhmät yleistivät tämän harjoitustavan muille syville keinotekoisille neuroverkoille. Näiden tutkimuksien myötä syväoppiminen terminä alkoi yleistyä, termin käytön tarkoituksena korostaa aikaisempaa syvempien verkkojen harjoitettavissa olemista. 
+  
+  Lopullisen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamiskilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä (konvoluutio)neuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä tunnistamiskilpailussa ihmistä paremmin.
 
-  Lopullinen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamiskilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa konvoluutioneuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä tunnistamiskilpailussa ihmistä paremmin.
+  Nykyään käytössä olevat ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla käytössä olleet. Merkittävimmät erot silloisiin algoritmeihin ovat syvien verkkorakenteiden harjoittamiseen 
 
   ovat hyvin samanlaisia kuin jo 1980-luvulla kehitetyt, vaikka 
 
-  Suurin osa Yhteiskunnan digitalisoitumisen myötä kasvaneet 
+   Yhteiskunnan digitalisoitumisen myötä kasvaneet 
 
   1
   
   2
 
-  Neuroverkkojen opettamisessa harjoitusdataa tarvitaan usein paljon, esimerkiksi konvoluutioneuroverkoilla tehtävässä kuvien luokittelussa harjoitusdatana toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella luokiteltuja kuvia. Esimerkiksi yhdessä tunnetuimmista kuvien sisällön tunnistamisen harjoittelua varten tehdyssä datasetissä, ImageNetissä (http://image-net.org/about-stats), on yli 14 miljoonaa luokiteltua kuvaa.
+  Neuroverkkojen harjoittamisessa harjoitusdataa tarvitaan usein paljon, esimerkiksi konvoluutioneuroverkoilla tehtävässä kuvien luokittelussa harjoitusdatana toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella luokiteltuja kuvia. Esimerkiksi yhdessä tunnetuimmista kuvien sisällön tunnistamisen harjoittelua varten tehdyssä datasetissä, ImageNetissä (http://image-net.org/about-stats), on yli 14 miljoonaa luokiteltua kuvaa.
 
   Tänä päivänä, vaikka neurotiedettä pidetäänkin tärkeänä inspiraation lähteenä syväoppimiselle, se ei kuitenkaan enää ole ensisijainen alaa eteenpäin vievä tekijä.
 
@@ -198,7 +200,7 @@
 
   \section{Neuroverkkojen oppiminen}
 
-  Neuroverkkojen on todistettu olevan universaaleja approksimaattoreita, eli voidaan taata, että mille tahansa funktiolle on löydettävissä neuroverkko, joka pystyy mallintamaan funktiota halutulla tarkkuudella \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen opettamisen voidaan siis sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota. 
+  Neuroverkkojen on todistettu olevan universaaleja approksimaattoreita, eli voidaan taata, että mille tahansa funktiolle on löydettävissä neuroverkko, joka pystyy mallintamaan funktiota halutulla tarkkuudella \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen harjoittamisen voidaan siis sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota. 
   
   Neuroverkon tekemän virheen määrää voidaan mitata virhefunktion (error function) avulla. Usein käytetään neliöllistä virhefunktiota:
 
@@ -208,9 +210,9 @@
 
 
   Neuroverkon laskiessa ulostuloarvon jollekkin syötteelle, tapahtuu eteenpäinkulkeutumista (forward-propagation). 
-  Suuri haaste neuroverkkojen opetuksessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty metodeja kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa opetusvaiheessa yksittäisiä neuroneita poistetaan käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti.
+  Suuri haaste neuroverkkojen harjoittamisessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty metodeja kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti.
 
-  Neuroverkkojen opetuksessa olennaisessa osassa on myös verkon alkuperäisten painotuksien valitseminen sopivalla tavalla.
+  Neuroverkkojen harjoittamisessa olennaisessa osassa on myös verkon alkuperäisten painotuksien valitseminen sopivalla tavalla.
 
   \subsection{Gradienttimenetelmä} %tarvitseeko omaa otsikkoa, pitäisikö vain olla kappale takaisinvirtausalgoritmin otsikon alla?
   %batch gradient descent
