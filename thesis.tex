@@ -125,28 +125,23 @@
   \mainmatter       % clear page, start arabic page numbering
 
   \section{Johdanto}
-   Syväoppimisen historia ulottuu 1940-luvulle asti, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli jolla kuvailla biologista aivoissa tapahtuvaa oppimista. Tällä lineaarisella mallilla pystyi tunnistamaan ihmisen asettamien syötekategoriat määrittelevien painotuksien (weights) avulla vain kahden erilaisen syötekategorian välillä. 
+   Syväoppimisen historia ulottuu 1940-luvulle asti, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli jolla kuvailla biologista aivoissa tapahtuvaa oppimista. Tällä lineaarisella mallilla on mahdollista tunnistaa kahden syötekategorian välillä kategoriat määrittelevien painotuksien (weights) avulla, jotka ihminen joutuu määrittelemään. 
   
-  Seuraava merkittävä kehitys tapahtui, kun 1950-luvulla kehitettiin ensimmäinen malli joka pystyi oppimaan syötekategorioita kuvaavat painotukset niistä annettujen esimerkkien perusteella, niin kutsuttu perseptroni.  
+  Merkittävää kehitystä tapahtui, kun 1950-luvulla kehitettiin ensimmäinen malli joka pystyi oppimaan syötekategorioita kuvaavat painotukset niistä annettujen esimerkkien perusteella, niin kutsuttu perseptroni.  
+
   Kybernetiikan mentyä pois muodista 1960-luvun aikana, seuraavan kerran merkittävää kehitystä tapahtui 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmin (back-propagation) keksittiin 1986 mahdollistavan monikerroksisten neuroverkkojen harjoittamisen verrattain tehokkaasti.
 
   90-luvun puolivälin jälkeen syväoppiminen eli jälleen hiljaiseloa vuoteen 2006 asti, jolloin vielä nykyäänkin jatkuvan voimakkaan kiinnostuksen syväoppimiseen voidaan katsoa alkaneen. Geoffrey Hinton osoitti tällöin syvien uskomusverkkojen (deep belief network) olevan harjoitettavissa tehokkaasti tasoittain ja muut tutkimusryhmät yleistivät tämän harjoitustavan muille syville keinotekoisille neuroverkoille. Näiden tutkimuksien myötä syväoppiminen terminä alkoi yleistyä, termin käytön tarkoituksena korostaa aikaisempaa syvempien verkkojen harjoitettavissa olemista. 
   
-  Lopullisen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamiskilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä (konvoluutio)neuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä tunnistamiskilpailussa ihmistä paremmin.
+  Lopullisen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamiskilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä (konvoluutio)neuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä (varsin rajallisessa) kuvasta tunnistamistehtävässä ihmistä paremmin.
 
-  Nykyään käytössä olevat ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla käytössä olleet. Merkittävimmät erot silloisiin algoritmeihin ovat syvien verkkorakenteiden harjoittamiseen 
+  Nykyään käytössä olevat ihmisille mutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla käytössä olleet. Jonkin verran muutoksia silloisiin algoritmeihin on tehty syvien verkkorakenteiden harjoittamista helpottavina yksinkertaistuksina, mutta selkeästi suurin syy syväoppimisen erittäin tärkeäksi muuttumiseen vasta nyt on kuitenkin yhteiskunnan digitalisoitumisen myötä merkittävästi kasvanut helposti saatavilla olevan luokitellun datan määrä, sekä valtavasti kasvanut laskentakapasiteetti.
 
-  ovat hyvin samanlaisia kuin jo 1980-luvulla kehitetyt, vaikka 
+  Esimerkkinä tarvittavan datan määrästä konvoluutioneuroverkoilla tehtävässä kuvien luokittelussa harjoitusdatana toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella luokiteltuja kuvia. Esimerkiksi ILSVRC-kilpailun harjoitusdatana käytettävä ImageNet sisältää yli 14 miljoonaa luokiteltua kuvaa.
 
-   Yhteiskunnan digitalisoitumisen myötä kasvaneet 
+  Kuvien sisällön tunnistamisen lisäksi syväoppiminen on osoittautunut erittäin hyödylliseksi useissa haasteellisiksi osoittautuneissa sovelluskohteissa, kuten puheen sisällön, liikennemerkkien luokittelun sekä jalankulkijoiden tunnistamisessa.
 
-  1
-  
-  2
-
-  Neuroverkkojen harjoittamisessa harjoitusdataa tarvitaan usein paljon, esimerkiksi konvoluutioneuroverkoilla tehtävässä kuvien luokittelussa harjoitusdatana toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella luokiteltuja kuvia. Esimerkiksi yhdessä tunnetuimmista kuvien sisällön tunnistamisen harjoittelua varten tehdyssä datasetissä, ImageNetissä (http://image-net.org/about-stats), on yli 14 miljoonaa luokiteltua kuvaa.
-
-  Tänä päivänä, vaikka neurotiedettä pidetäänkin tärkeänä inspiraation lähteenä syväoppimiselle, se ei kuitenkaan enää ole ensisijainen alaa eteenpäin vievä tekijä.
+  %Tänä päivänä, vaikka neurotiedettä pidetäänkin tärkeänä inspiraation lähteenä syväoppimiselle, se ei kuitenkaan enää ole ensisijainen alaa eteenpäin vievä tekijä.
 
   \section{Neuroverkkojen rakenne}
   \subsection{Keinotekoinen neuroni}
