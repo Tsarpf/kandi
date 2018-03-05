@@ -206,10 +206,27 @@
 
   Takaisinvirtausalgoritmilla etsitään virhefunktion minimiä säätämällä painotuksia ja taipumusvakioita käyttäen gradienttimenetelmää (gradient descent).
 
-  Gradienttimenetelmä on metodi joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Neuroverkkojen tapauksessa gradienttimenetelmän käytön edellytyksenä siis on, että neuronien aktivaatiofunktiot ovat jatkuvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat jatkuvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan kunnes gradientti on tarpeeksi pieni, päädytään lähelle paikallista minimiä.
+  Gradienttimenetelmä on numeerinen menetelmä joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Neuroverkkojen tapauksessa gradienttimenetelmän käytön edellytyksenä siis on, että neuronien aktivaatiofunktiot ovat derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan kunnes gradientti on tarpeeksi pieni, päädytään lähelle paikallista minimiä.
 
-  Takaisinvirtausalgoritmi saa nimensä siitä, että eteenpäinsyötön jälkeen kuljetaan taaksepäin, ja lopulta solmulle x verkossa ollaan laskettu käytännössä derivaatat putkelle ja jotain.
+  Takaisinvirtausalgoritmi on tiivistetysti tapa derivoida neuroverkon muodostamaa yhdistelmäfunktiota derivaatan ketjusäännön mukaisesti. Tämä voidaan tehdä esimerkiksi kahden neuroniyksikön tapauksessa seuraavasti: 
+  
+  \begin{figure}[h]
+    \label{pic:composition}
+    \centering
+    \includegraphics[scale=0.5]{function-composition}
+    \caption{http://page.mi.fu-berlin.de/rojas/neural/ kappale 7.2.2}
+  \end{figure}
+  
+  Eteenpäinsyöttövaiheessa normaalin eteenpäinsyötön lisäksi jokaisen yksikön kohdalla tallennetaan neuroniin sen ulostuloarvon derivaatta. Kuvassa \ref{pic:composition} tämä tallennettava arvo näkyy palloina esitettyjen neuroniyksiköiden vasemmassa puoliskossa.
 
+  \begin{figure}[h]
+    \label{pic:backpropagation}
+    \centering
+    \includegraphics[scale=0.5]{backpropagation}
+    \caption{http://page.mi.fu-berlin.de/rojas/neural/ kappale 7.2.2}
+  \end{figure}
+
+  Takaisinvirtausvaiheessa, jossa verkkoa kuljetaan algoritmin nimen mukaisesti takaperin aikaisempaan nähden, kuljetetaan mukana tulosta. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, ja uuteen neuroniyksikköön saavuttaessa kerrotaan mukana kulkeva arvo neuroniin tallennetulla, kuvassa \ref{pic:backpropagation} neuroniyksikön vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta kahden yksikön jälkeen $f(g(x))$ muotoinen funktio on saatu sen derivoituun muotoon $f'(g(x))g'(x)$ joka vastaa ketjusäännön avulla derivoitua tulosta.
 
   %tarvitseeko omaa otsikkoa, pitäisikö vain olla kappale takaisinvirtausalgoritmin otsikon alla?
 
@@ -217,11 +234,14 @@
 
   %Neuroverkon laskiessa ulostuloarvon jollekkin syötteelle, tapahtuu eteenpäinkulkeutumista (forward-propagation).
 
-  Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida virhefunktiota. Tätä toistetaan kunnes virhefunktio antaa riittävän pienen tuloksen. Jotta jokaista gradientin laskentakertaa varten ei tarvitsisi suorittaa takaisinvirtausalgoritmia syötedatan jokaista yksikköä kohden, voidaan käyttää stokastista gradientin laskeutumismenetelmää approksimointiin, joka yleensä tuottaa huomattavasti nopeammin hyviä tuloksia. TODO: Batch vs stochastic.
+  %Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida virhefunktiota. Tätä toistetaan kunnes virhefunktio antaa riittävän pienen tuloksen. 
+  
+  TODO: parepmi stokastisen/batchauksen selitys
+  Jotta jokaista gradientin laskentakertaa varten ei tarvitsisi suorittaa takaisinvirtausalgoritmia syötedatan jokaista yksikköä kohden, voidaan käyttää stokastista gradientin laskeutumismenetelmää approksimointiin, joka yleensä tuottaa huomattavasti nopeammin hyviä tuloksia. TODO: Batch vs stochastic.
 
-  Esittele syntaksi jolla tiettyyn verkon "solmuun" viitataan?
+  %Esittele syntaksi jolla tiettyyn verkon "solmuun" viitataan?
 
-  Takaisinvirtausalgoritmi (back-propagation) (numeerinen menetelmä?) kertoo kuinka muutokset painoihin ja taipumusvakioihin muuttavat virhefunktion saamia arvoja. Näiden muutoksien perusteella voidaan laskea osittaisderivaatat painotuksille sekä taipumusvakioille virhefunktion suhteen. Osittaisderivaattojen avulla saadaan virhefunktiolle gradientti, ja gradientin laskeutumismenetelmällä voidaan minimoida virhefunktiota.
+  %Takaisinvirtausalgoritmi (back-propagation) (numeerinen menetelmä?) kertoo kuinka muutokset painoihin ja taipumusvakioihin muuttavat virhefunktion saamia arvoja. Näiden muutoksien perusteella voidaan laskea osittaisderivaatat painotuksille sekä taipumusvakioille virhefunktion suhteen. Osittaisderivaattojen avulla saadaan virhefunktiolle gradientti, ja gradientin laskeutumismenetelmällä voidaan minimoida virhefunktiota.
 
   %Jotta takaisinvirtausalgoritmia ei tarvitsisi ajaa jokaiselle harjoitusmateriaalin yksikölle, voidaan harjoitusmateriaalille laskea (tilastollisia arvoja?) keskiarvoja ja käyttää näitä keskiarvoja laskeutumismenetelmässä hyväksi. Ei välttämättä haluta ajaa takaisinvirtausalgoritmia uudestaan jokaiselle harjoitus"materiaalin" yksikölle. Voidaan ottaa niistä vain jotain keskiarvoja tms eli batching skjfdghsg
 
