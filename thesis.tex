@@ -206,7 +206,7 @@
 
   Takaisinvirtausalgoritmilla etsitään virhefunktion minimiä säätämällä painotuksia ja taipumusvakioita käyttäen gradienttimenetelmää (gradient descent).
 
-  Gradienttimenetelmä on numeerinen menetelmä joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Neuroverkkojen tapauksessa gradienttimenetelmän käytön edellytyksenä siis on, että neuronien aktivaatiofunktiot ovat derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan kunnes gradientti on tarpeeksi pieni, päädytään lähelle paikallista minimiä.
+  Gradienttimenetelmä on numeerinen menetelmä joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Neuroverkkojen tapauksessa gradienttimenetelmän käytön edellytyksenä on, että neuronien aktivaatiofunktiot ovat derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan kunnes gradientti on tarpeeksi pieni, päädytään lähelle paikallista minimiä.
 
   Takaisinvirtausalgoritmi on tiivistetysti tapa derivoida neuroverkon muodostamaa yhdistelmäfunktiota derivaatan ketjusäännön mukaisesti. Tämä voidaan tehdä esimerkiksi kahden neuroniyksikön tapauksessa seuraavasti: 
   
@@ -217,7 +217,7 @@
     \caption{http://page.mi.fu-berlin.de/rojas/neural/ kappale 7.2.2}
   \end{figure}
   
-  Eteenpäinsyöttövaiheessa normaalin eteenpäinsyötön lisäksi jokaisen yksikön kohdalla tallennetaan neuroniin sen ulostuloarvon derivaatta. Kuvassa \ref{pic:composition} tämä tallennettava arvo näkyy palloina esitettyjen neuroniyksiköiden vasemmassa puoliskossa.
+  Eteenpäinsyöttövaiheessa normaalin eteenpäinsyötön lisäksi jokaisen yksikön kohdalla tallennetaan neuroniin sen (TODO: ei ihan näin yksinkertaista, ulostuloarvo on vakio joka derivoitaessa katoaisi, mutta jotakin suhteessa sen painoihin) ulostuloarvon derivaatta. Kuvassa \ref{pic:composition} tämä tallennettava arvo näkyy palloina esitettyjen neuroniyksiköiden vasemmassa puoliskossa.
 
   \begin{figure}[h]
     \label{pic:backpropagation}
@@ -226,7 +226,15 @@
     \caption{http://page.mi.fu-berlin.de/rojas/neural/ kappale 7.2.2}
   \end{figure}
 
-  Takaisinvirtausvaiheessa, jossa verkkoa kuljetaan algoritmin nimen mukaisesti takaperin aikaisempaan nähden, kuljetetaan mukana tulosta. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, ja uuteen neuroniyksikköön saavuttaessa kerrotaan mukana kulkeva arvo neuroniin tallennetulla, kuvassa \ref{pic:backpropagation} neuroniyksikön vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta kahden yksikön jälkeen $f(g(x))$ muotoinen funktio on saatu sen derivoituun muotoon $f'(g(x))g'(x)$ joka vastaa ketjusäännön avulla derivoitua tulosta.
+  Takaisinvirtausvaiheessa verkkoa kuljetaan algoritmin nimen mukaisesti takaperin aikaisempaan nähden. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, kuljettaen tätä arvoa mukana neuronilta toiselle, ja uuteen neuroniyksikköön saavuttaessa kertomalla mukana kulkeva arvo neuroniin tallennetulla, kuvassa \ref{pic:backpropagation} neuroniyksikön vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta esimerkin kahden neuroniyksikön läpi kulkemisen jälkeen $f(g(x))$ muotoinen funktio on saatu sen derivoituun muotoon $f'(g(x))g'(x)$ joka vastaa ketjusäännön avulla derivoitua tulosta. Tämä metodi yleistyy myös monimutkaisemmille verkkorakenteille, ja on helposti hajautettavissa jakamalla verkko osaverkkoihin ja yhdistämällä osaverkot myöhemmin.
+
+  TODO:
+
+  - Mitä backpropagation algoritmin esimerkissä oikeastaan tallennetaan yksikköön eteenpäinsyöttövaiheessa jotta derivoidessa ei jää vain 0?
+
+  - Verkkoon voidaan ajatella lisättävän backpropagationia varten ulostulokerroksen jälkeen ulostulot yhdistävä virhefunktion arvon kertova "neuroni", se auttoi jossain
+
+  - Joku summarum hommasta
 
   %tarvitseeko omaa otsikkoa, pitäisikö vain olla kappale takaisinvirtausalgoritmin otsikon alla?
 
@@ -236,10 +244,7 @@
 
   %Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida virhefunktiota. Tätä toistetaan kunnes virhefunktio antaa riittävän pienen tuloksen. 
   
-  TODO: parepmi stokastisen/batchauksen selitys
-  Jotta jokaista gradientin laskentakertaa varten ei tarvitsisi suorittaa takaisinvirtausalgoritmia syötedatan jokaista yksikköä kohden, voidaan käyttää stokastista gradientin laskeutumismenetelmää approksimointiin, joka yleensä tuottaa huomattavasti nopeammin hyviä tuloksia. TODO: Batch vs stochastic.
-
-  %Esittele syntaksi jolla tiettyyn verkon "solmuun" viitataan?
+  Virhefunktion arvon laskeminen jokaiselle syötteelle ja keskiarvon ottaminen ja tämän perusteella takaisinvirtausalgoritmin suorittaminen olisi erittäin raskasta kun syötteitä voi olla miljoonia kappaleita. Tämän takia käytetään yleensä stokastista gradienttimenetelmää, jossa virhefunktion keskiarvo lasketaan kaikkien syötteiden sijaan joukolle satunnaisesti valittuja syötteitä.
 
   %Takaisinvirtausalgoritmi (back-propagation) (numeerinen menetelmä?) kertoo kuinka muutokset painoihin ja taipumusvakioihin muuttavat virhefunktion saamia arvoja. Näiden muutoksien perusteella voidaan laskea osittaisderivaatat painotuksille sekä taipumusvakioille virhefunktion suhteen. Osittaisderivaattojen avulla saadaan virhefunktiolle gradientti, ja gradientin laskeutumismenetelmällä voidaan minimoida virhefunktiota.
 
@@ -279,7 +284,7 @@
 
     Intuitiivisemmin, konvoluution voidaan ajatella olevan liukuva ikkuna, joka rajoittaa neuronit saamaan kuvan \ref{pic:convolution} mukaisesti syötteenään vain osan syötekerroksensa ulostuloista, täysin yhdistetyistä neuroverkkokerroksista poiketen. Tämä rajoittuneisuus mahdollistaa neuroneiden erikoistumisen johonkin osa-alueeseen syötteissään, joka on erityisen hyödyllistä haluttaessa käyttää neuroverkkoja syötteiden tutkintaan joissa ilmenee paikallisuutta. Esimerkiksi kuvat ovat erittäin paikallistuneita, pikselien etäisyys toisistaan korreloi vahvasti sen kanssa, liittyykö niiden sisältö toisiinsa.
 
-    Kuvasta \ref{pic:convolution} ilmenee myös yleinen konvoluutiokerrosten piirre: mikäli tehdään vain konvoluutioita joissa ydin mahtuu kokonaan syötekuvaan, konvoluutiokerroksella on vähemmän ulostuloja kuin sisääntuloja. Kuvan tapauksessa nähdään syötematriisin ollessa 3x4, ja ytimen 2x2 kokoinen, ulostulomatriisin kooksi tulee 2x3. Tällä tavalla konvoluutio mahdollistaa myös sen, että konvoluutioverkot voivat ottaa vastaan vaihtelevan kokoisia syötteitä.
+    Kuvasta \ref{pic:convolution} ilmenee myös toinen yleinen konvoluutiokerrosten piirre: mikäli tehdään vain konvoluutioita joissa ydin mahtuu kokonaan syötekuvaan, konvoluutiokerroksella on vähemmän ulostuloja kuin sisääntuloja. Kuvan tapauksessa nähdään syötematriisin ollessa 3x4, ja ytimen 2x2 kokoinen, ulostulomatriisin kooksi tulee 2x3. Tällä tavalla konvoluutio mahdollistaa myös sen, että konvoluutioverkot voivat ottaa vastaan vaihtelevan kokoisia syötteitä.
 
     \subsection{Ominaisuuskartat ja jaetut painot}
 
@@ -287,7 +292,7 @@
 
     (TODO: voisi muotoilla paremmin, laajemmin, esimerkein?) Painotuksien jakamisen ansiosta konvoluutioverkon parametrien määrä on usein huomattavasti vastaavaa täysin yhdistettyä neuroverkkoa pienempi, mahdollistaen tehokkaamman harjoittamisen.
     \subsection{Kokoaminen ja tehokkuus}
-    Usein konvoluutioverkoissa käytetään heti konvoluutiokerrosten jälkeen kokoamiskerroksia, jotka tekevät yhteenvedon jostakin edeltävästä neuroverkkokerroksen alueesta. Hyvin yleinen (TODO: saisiko ilmaistua jotenkin vähemmän kankeasti? ->) maksimikokoamiskerros (max-pooling) antaa ulostuloksi esimerkiksi 2x2 kokoiselle syötteelle suurimman yksittäisen aktivointiarvon alueen neuroneista.
+    Usein konvoluutioverkoissa käytetään heti konvoluutiokerrosten jälkeen kokoamiskerroksia, jotka tekevät yhteenvedon jostakin edeltävästä neuroverkkokerroksen alueesta. Hyvin yleinen maksimikokoamiskerros (max-pooling) antaa ulostuloksi esimerkiksi 2x2 kokoiselle syötteelle suurimman yksittäisen aktivointiarvon alueen neuroneista.
 
     (TODO pidemmin?:) Sekä kokoamiskerrokset että jaetut painotukset yhdessä vähentävät konvoluutioneuroverkoissa tarvittavien harjoitettavien parametrien määrää ja mahdollistavat niiden tehokkaan käytön suurillekkin syötteille.
 
