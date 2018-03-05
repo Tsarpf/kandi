@@ -199,7 +199,7 @@
   
   Neuroverkon tekemän virheen määrää voidaan mitata virhefunktion (error function) avulla. Usein käytetään neliöllistä virhefunktiota:
 
-    $$C(x) = \frac{1}{2N} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2$$
+    $$C(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2$$
 
   jossa $a(x_i)$ on harjoitusdatan $i$:s yksikkö, ja $N$ syötteiden määrä.
 
@@ -212,7 +212,7 @@
   \subsection{Gradienttimenetelmä} %tarvitseeko omaa otsikkoa, pitäisikö vain olla kappale takaisinvirtausalgoritmin otsikon alla?
   %batch gradient descent
 
-  Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida hintafunktiota. Tätä toistetaan kunnes hintafunktio antaa riittävän pienen tuloksen. Jotta jokaista gradientin laskentakertaa varten ei tarvitsisi suorittaa takaisinvirtausalgoritmia syötedatan jokaista yksikköä kohden, voidaan käyttää stokastista gradientin laskeutumismenetelmää approksimointiin, joka yleensä tuottaa huomattavasti nopeammin hyviä tuloksia. TODO: Batch vs stochastic.
+  Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida virhefunktiota. Tätä toistetaan kunnes virhefunktio antaa riittävän pienen tuloksen. Jotta jokaista gradientin laskentakertaa varten ei tarvitsisi suorittaa takaisinvirtausalgoritmia syötedatan jokaista yksikköä kohden, voidaan käyttää stokastista gradientin laskeutumismenetelmää approksimointiin, joka yleensä tuottaa huomattavasti nopeammin hyviä tuloksia. TODO: Batch vs stochastic.
 
   %Jotta takaisinvirtausalgoritmia ei tarvitsisi ajaa jokaiselle harjoitusmateriaalin yksikölle, voidaan harjoitusmateriaalille laskea (tilastollisia arvoja?) keskiarvoja ja käyttää näitä keskiarvoja laskeutumismenetelmässä hyväksi. Ei välttämättä haluta ajaa takaisinvirtausalgoritmia uudestaan jokaiselle harjoitus"materiaalin" yksikölle. Voidaan ottaa niistä vain jotain keskiarvoja tms eli batching skjfdghsg
 
@@ -221,7 +221,7 @@
 
   Esittele syntaksi jolla tiettyyn verkon "solmuun" viitataan?
 
-  Takaisinvirtausalgoritmi (back-propagation) kertoo kuinka muutokset painoihin ja taipumusvakioihin muuttavat hintafunktion saamia arvoja. Näiden muutoksien perusteella voidaan laskea osittaisderivaatat painotuksille sekä taipumusvakioille hintafunktion suhteen. Osittaisderivaattojen avulla saadaan hintafunktiolle gradientti, ja gradientin laskeutumismenetelmällä voidaan minimoida hintafunktiota.
+  Takaisinvirtausalgoritmi (back-propagation) kertoo kuinka muutokset painoihin ja taipumusvakioihin muuttavat virhefunktion saamia arvoja. Näiden muutoksien perusteella voidaan laskea osittaisderivaatat painotuksille sekä taipumusvakioille virhefunktion suhteen. Osittaisderivaattojen avulla saadaan virhefunktiolle gradientti, ja gradientin laskeutumismenetelmällä voidaan minimoida virhefunktiota.
   
   %Taaksepäinkulkeutumiseksi (back-propagation) kutsutaan algoritmia jonka avulla jollekkin neuroverkon painoille määritellylle virhefunktiolle lasketaan gradientti, jonka perusteella neuroverkon approksimoinnin virhettä voidaan lähteä pienentämään gradientin laskeutumismenetelmää käyttäen.
 
