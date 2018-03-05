@@ -254,9 +254,22 @@
   Neuroverkkojen harjoittamisessa olennaisessa osassa on myös verkon alkuperäisten painotuksien valitseminen sopivalla tavalla. Joissakin tapauksissa tämä tehdään vain valitsemalla painotuksille satunnaiset alkuarvot.
 
   \section{Konvoluutioneuroverkkojen rakenne}
-  (TODO: ReLu)
+  Konvoluutioneuroverkkojen rakenne eroaa tavanomaisista täysin yhdistetyistä neuroverkoista konvoluutio- ja kokoamiskerroksien (pooling layer) olemassaolon, kerrosten mahdollisen rinnakkaisuuden, sekä ominaisuuskarttojen jaettujen painojen kautta.   
+  
+  %Tätä kutsutaan nimellä local receptive fields. Esitettäessä konvoluutiokerrosten neuronien ulostuloarvot syötteidensä funktiona, tämä funktio on syötteiden ja painojen konvoluutio, mistä konvolutionaaliset neuroverkot ovatkin saaneet nimensä.
+
+  %(TODO: ReLu)
   \subsection{Konvoluutiokerrokset}
 
+  Konvoluutioverkkojen nimi juontaa juurensa matemaattiseen operaattoriin konvoluutio, sillä kaava jolla konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa:
+
+  $$ \sum_{l=0}^{4}\sum_{m=0}^{4} w_{l,m}a_{j+l,k+m}$$
+  %  $$C(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2$$
+  
+    joka on käytännössä diskreetti konvoluutio, jossa painotukset ovat konvoluution ydin (kernel).
+
+  Intuitiivisemmin, konvoluutiokerroksissa neuronit saavat kuvan \ref{pic:convolution} mukaisesti syötteenään vain osan syötekerroksensa ulostuloista, täysin yhdistetyistä neuroverkkokerroksista poiketen. Tämä rajoittuneisuus mahdollistaa neuroneiden erikoistumisen johonkin osa-1alueeseen syötteissään, joka on erityisen hyödyllistä haluttaessa käyttää neuroverkkoja syötteiden tutkintaan joissa ilmenee paikallisuutta. Esimerkiksi kuvat ovat erittäin paikallistuneita, pikselien etäisyys toisistaan korreloi vahvasti sen kanssa, liittyykö niiden sisältö toisiinsa.
+  
   \begin{figure}[h]
   \label{pic:convolution}
   \centering
@@ -264,16 +277,11 @@
   \caption{http://www.deeplearningbook.org/contents/convnets.html}
   \end{figure}
 
-  Konvoluutiokerroksissa neuronit saavat syötteenään vain osan syötekerroksensa ulostuloista. Tätä kutsutaan local receptive fieldsiksi. Esitettäessä konvoluutiokerrosten neuronien ulostuloarvot syötteidensä funktiona, tämä funktio on syötteiden ja painojen konvoluutio, mistä konvolutionaaliset neuroverkot ovatkin saaneet nimensä.
+  Kuvasta \ref{pic:convolution} ilmenee myös yleinen konvoluutiokerrosten piirre: mikäli tehdään vain konvoluutioita joissa ydin mahtuu kokonaan syötekuvaan, konvoluutiokerroksella on vähemmän ulostuloja kuin sisääntuloja. Kuvan tapauksessa nähdään syötematriisin ollessa 3x4, ja ytimen 2x2 kokoinen, ulostulomatriisin kooksi tulee 2x3.
 
-  (TODO: muotoile:) Vaikka vierekkäiset neuronikerrokset eivät ole täysin kytkettyjä, välillisesti muutaman kerroksen päässä olevat neuronit yleensä saavat syötteensä koko syötekerrokselta.
+  \subsection{Ominaisuuskartat ja jaetut painot}
 
-  Kuvan \ref{pic:convolution} mukaisesti mikäli tehdään vain "valid" konvoluutioita joissa ytimen täytyy olla täysin syötekuvan sisällä, konvoluutiokerroksella on vähemmän ulostuloja kuin sisääntuloja.
-
-  \subsection{feature maps/detectors}
-  Yhdessä konvoluutiokerroksessa on useita ominaisuuskarttoja :D (feature detectors)
-
-  \subsection{shared weights}
+  Konvoluutioneuroverkoissa konvoluutiokerroksia on yleensä useita rinnakkain, ja 
 
   \subsection{pooling}
   Poolaus? funktio muuttaa verkon tietyn osan ulostulon verkon lähialueita kuvastavan yhteenvetävän tilastollisen arvon (summary statistic) mukaiseksi.
