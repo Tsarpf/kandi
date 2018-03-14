@@ -73,7 +73,7 @@
   % The following commands define the information used to generate title and
   % abstract pages. The following entries should be always specified:
 
-  \title{Konvoluutioneuroverkot}
+  \title{Konvoluutionaaliset neuroverkot}
   \author{Teemu Sarapisto}
   \date{\today}
   \level{Aine}
@@ -85,7 +85,7 @@
 
   % The following can be used to specify keywords and classification of the paper:
 
-  \keywords{avainsana 1, avainsana 2, avainsana 3}
+  \keywords{neuroverkot, konvoluutio, takaisinvirtausalgoritmi}
 
   % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
   % This is probably mostly relevant for computer scientists
@@ -129,51 +129,43 @@
   \mainmatter       % clear page, start arabic page numbering
 
   \section{Johdanto}
-   Syväoppimisen historia ulottuu 1940-luvulle asti, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli jolla kuvailla biologista aivoissa tapahtuvaa oppimista. Heidän kehittelemällään lineaarisella mallilla oli mahdollista tunnistaa kahden syötekategorian välillä kummasta on kyse kategoriat määrittelevien painotuksien (weights) avulla, ihmisen joutuessa määrittelemään nämä painot.
+   Syväoppimisen historia ulottuu 1940-luvulle asti, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli jolla kuvailla biologista aivoissa tapahtuvaa oppimista. Heidän kehittelemällään lineaarisella mallilla oli mahdollista tunnistaa kahden syötekategorian välillä kummasta on kyse kategoriat määrittelevien painotuksien avulla, ihmisen joutuessa määrittelemään nämä painot.
 
   Vasta 1950-luvulla kehitettiin ensimmäinen malli joka pystyi oppimaan syötekategorioita kuvaavat painotukset niistä annettujen esimerkkien perusteella, niin kutsuttu perseptroni.
 
-  Kiinnostuksen kybernetiikkaan hiivuttua 1960-luvun aikana, seuraavan kerran merkittävää kehitystä tapahtui 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmin (backpropagation) keksittiin 1986 mahdollistavan monikerroksisten neuroverkkojen harjoittamisen verrattain tehokkaasti.
+  Kiinnostuksen kybernetiikkaan hiivuttua 1960-luvun aikana, seuraavan kerran merkittävää kehitystä tapahtui 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmi (backpropagation) keksittiin 1986 mahdollistavan monikerroksisten neuroverkkojen harjoittamisen verrattain tehokkaasti.
 
   90-luvun puolivälin jälkeen syväoppiminen eli jälleen hiljaiseloa vuoteen 2006 asti, jonka jälkeen se on ollut jatkuvasti pinnalla tähän päivään asti. Geoffrey Hinton osoitti tällöin syvien uskomusverkkojen (deep belief network) olevan harjoitettavissa tehokkaasti tasoittain ja muut tutkimusryhmät yleistivät tämän harjoitustavan muille syville keinotekoisille neuroverkoille. Näiden tutkimuksien myötä syväoppiminen terminä alkoi yleistyä, termin käytön tarkoituksena korostaa aikaisempaa syvempien verkkojen harjoitettavissa olemista.
 
-  Lopullinen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamisen kilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä (konvoluutio)neuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä (varsin rajoitetussa) tunnistamistehtävässä ihmistä paremmin.
+  Lopullinen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamisen kilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä konvoluutioneuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä varsin rajoitetussa tunnistamistehtävässä ihmistä paremmin.
 
   Nykyään käytössä olevat ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla käytössä olleet. Jonkin verran muutoksia silloisiin algoritmeihin on tehty syvien verkkorakenteiden harjoittamista helpottavina yksinkertaistuksina, mutta selkeästi suurin syy syväoppimisen tärkeäksi muuttumiseen vasta äskettäin on kuitenkin yhteiskunnan digitalisoitumisen myötä merkittävästi kasvanut helposti saatavilla olevan luokitellun datan määrä, sekä valtavasti kasvanut laskentakapasiteetti, jotka olivat edellytyksiä algoritmien kunnolliselle toiminnalle.
 
   Esimerkkinä tarvittavan harjoitusdatan määrästä konvoluutioneuroverkkojen harjoittamiseen kuvien luokittelua varten toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella etukäteen luokiteltuja kuvia. Esimerkiksi ILSVRC-kilpailun harjoitusdatana käytössä oleva ImageNet sisältää yli 14 miljoonaa luokiteltua kuvaa. (http://image-net.org/about-stats)
 
-  Kuvien sisällön tunnistamisen lisäksi syväoppiminen on osoittautunut erittäin hyödylliseksi useissa haasteellisissa sovelluskohteissa, kuten puheen sisällön, liikennemerkkien luokittelun sekä jalankulkijoiden tunnistamisessa.
+  Kuvien sisällön tunnistamisen lisäksi syväoppiminen on osoittautunut erittäin hyödylliseksi useissa haasteellisissa sovelluskohteissa, kuten puheen sisällön, liikennemerkkien luokittelun, sekä jalankulkijoiden tunnistamisessa.
 
-  %Tänä päivänä, vaikka neurotiedettä pidetäänkin tärkeänä inspiraation lähteenä syväoppimiselle, se ei kuitenkaan enää ole ensisijainen alaa eteenpäin vievä tekijä.
+  Tässä tekstissä käsitellään ensin yleisiä keinotekoisten neuroverkkojen piirteitä, kuten yksittäisen neuronin rakennetta, neuroverkkojen rakennetta, sekä sitä, miten neuroverkkoja harjoitetaan. Tämän jälkeen käsitellään miten konvolutionaaliset neuroverkot eroavat muista neuroverkoista, ja mitä sovelluksia niillä on.
 
   \section{Neuroverkkojen rakenne}
   \subsection{Keinotekoinen neuroni}
 
-    TODO: selkiytä kaavahommelia
+    Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä 
 
-    Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä Kaavan \ref{eq:neuroni} muotoisia matemaattisia funktioita.
+     $$ x_1, x_2, ..., x_n \mapsto \Sigma w_i x_i \mapsto f(\Sigma w_i x_i + b) $$
 
-    \begin{equation}
-      \label{eq:neuroni}
-      \Sigma w_i x_i \mapsto f(\Sigma w_i x_i + b)
-    \end{equation}
+    kaltaisia matemaattisia funktioita. Ne ottavat vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja tämän funktion arvo toimii neuronin lopullisena ulostuloarvona.
 
-    Yleisessä muodossaan neuroni ottaa vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja tämän funktion arvo toimii neuronin lopullisena ulostuloarvona.
+    Toisinaan käytetään myös taipumusvakiota (bias) $b$, joka lisätään syötteiden ja painotuksien tulojen summaan, tarkoituksena säätää neuronin ulostuloarvoja painotuksista riippumatta.
 
-    Toisinaan käytetään myös taipumusvakiota (bias) $b$, joka lisätään syötteiden ja painotuksien tulojen summaan.
-
-
-    %You can think of the bias as a measure of how easy it is to get the perceptron to output a 1. Or to put it in more biological terms, the bias is a measure of how easy it is to get the perceptron to fire
-
-    Ensimmäinen tällainen neuroni, perseptroni, kehitettiin 50-luvulla. Sen syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktiona toimii Kaavan \ref{eq:perceptron} mukainen funktio.
+    50-luvulla kehitetty ensimmäinen tällainen neuroni, perseptroni, kehitettiin 50-luvulla. Sen syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktiona toimii Kaavan \ref{eq:perceptron} mukainen funktio.
 
     \begin{equation}
       \label{eq:perceptron}
-      ulostuloarvo
+      f(\Sigma w_i x_i + b)
       \begin{cases}
-        0\; jos \; \Sigma x_i w_i + b \leq 0 \\
-        1\; jos \; \Sigma x_i w_i + b > 0 \\
+        0\; \text{jos} \; \Sigma x_i w_i + b \leq 0 \\
+        1\; \text{jos} \; \Sigma x_i w_i + b > 0 \\
       \end{cases}
     \end{equation}
 
@@ -193,7 +185,7 @@
   \caption{http://neuralnetworksanddeeplearning.com/chap1.html}
   \end{figure}
 
-  Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan tasoittain, jossa jokaisen verkon tason neuronit saavat syötteenään niitä edeltävän tason neuroneiden ulostuloarvot. Poikkeuksena ensimmäinen taso (kuvassa vasemmanpuoleisimpana), joihin verkon syöte koodataan. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle, voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan.
+  Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan tasoittain, jossa jokaisen verkon tason neuronit saavat syötteenään niitä edeltävän tason neuroneiden ulostuloarvot. Poikkeuksena ensimmäinen taso (kuvassa vasemmanpuoleisimpana), joihin verkon syöte koodataan. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan. Neuroverkon laskennan lopputuloksena toimii verkon viimeisen tason neuroneiden ulostuloarvot.
 
   Vaikka syväoppimista voidaan harjoittaa myös muutoin kuin keinotekoisilla neuroverkoilla, neuroverkkojen tapauksessa termillä viitataan neuroverkkojen piilokerroksiin ja niiden määrään. Kasvattamalla neuroverkkotasojen sekä tasoissa olevien neuronien määrää neuroverkoilla voidaan mallintaa entistä monimutkaisempia funktioita.
 
@@ -202,26 +194,27 @@
   Neuroverkkojen on todistettu olevan universaaleja approksimaattoreita, eli voidaan taata, että mille tahansa funktiolle on löydettävissä neuroverkko, joka pystyy mallintamaan funktiota halutulla tarkkuudella, kunhan laskentaresursseja on riittävästi käytettävissä \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen harjoittamisen voidaan siis sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota.
 
   Tätä neuroverkon tekemän virheen määrää voidaan mitata virhefunktion (error function) avulla. Usein käytetään neliöllistä virhefunktiota:
-    $$C(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2$$
+    $$E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2$$
   jossa $y(x_i)$ on neuroverkon tulos syötteellä $x_i$, $a(x_i)$ on harjoitusdatan $i$:s yksikkö, ja $N$ syötteiden määrä.
 
 
   \subsection{Gradienttimenetelmä ja takaisinvirtausalgoritmi}
+  Gradienttimenetelmä (gradient descent) on numeerinen menetelmä joka toimii minkä tahansa jatkuvan funktion lokaalien minimien etsintään. Käytännössä kuitenkin yleensä riittää, että funktiot ovat suurimmilta osin jatkuvia. Neuroverkkojen yhteydessä gradienttimenetelmä toimii valittaessa neuronien aktivaatiofunktioksi pääosin jatkuvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat jatkuvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan, kunnes gradientti on tarpeeksi pieni, päädytään lähelle lokaalia minimiä.
 
-  Takaisinvirtausalgoritmilla etsitään virhefunktion minimiä säätämällä painotuksia ja taipumusvakioita käyttäen gradienttimenetelmää (gradient descent).
+  Takaisinvirtausalgoritmilla voidaan laskea virhefunktiolle osittaisderivaatta kunkin verkon painon suhteen. Osittaisderivaatoista voidaan muodostaa virhefunktiolle gradientti ja siten soveltaa gradienttimenetelmää. Virhefunktion osittaisderivaatan selvittämiseksi yksittäisen neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen  tarvitaan ensin välituloksena virhefunktion osittaisderivaatta neuronin $n_j$ kohdalla. 
 
-  Gradienttimenetelmä on numeerinen menetelmä joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Neuroverkkojen tapauksessa gradienttimenetelmän käytön edellytyksenä on, että neuronien aktivaatiofunktiot ovat derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan kunnes gradientti on tarpeeksi pieni, päädytään lähelle paikallista minimiä.
-
-  Takaisinvirtausalgoritmi on tiivistetysti tapa derivoida neuroverkon muodostamaa yhdistelmäfunktiota derivaatan ketjusäännön mukaisesti. Tämä voidaan tehdä esimerkiksi kahden neuroniyksikön tapauksessa seuraavasti: 
-  
+  Neuroverkon voidaan ajatella olevan yhdistetty funktio sen neuroneiden funktioista, joten sen derivointiin on kätevää soveltaa ketjusääntöä. Jotta virhefunktion arvot saadaan osaksi verkkoa, lisätään ulostulokerroksen jälkeen yksi näennäinen neuroni joka ottaa ulostulokerroksen neuroneiden ulostulot syötteenään ja laskee niiden perusteella virhefunktion arvon. Nyt virhefunktion derivaattojen laskentaan voidaan hyödyntää seuraavaksi esitettävää verkkomuotoista derivaatan ketjusäännön toteutusta. 
+    
   \begin{figure}[h]
     \label{pic:composition}
     \centering
     \includegraphics[scale=0.5]{function-composition}
     \caption{http://page.mi.fu-berlin.de/rojas/neural/ kappale 7.2.2}
   \end{figure}
+
+  Ketjusäännön mukainen derivointi suoritetaan kahdessa osassa, käyden verkko ensin läpi normaaliin suuntaan syötteistä ulostuloarvojen kautta virhefunktion arvoon, ja sen jälkeen takaperin. Takaisinvirtausalgoritmi on saanut nimensä tästä taaksepäin kulkemisesta, jossa virhefunktion arvojen voidaan ajatella virtaavan taaksepäin verkon loppupäästä.
   
-  Eteenpäinsyöttövaiheessa normaalin eteenpäinsyötön lisäksi jokaisen yksikön kohdalla tallennetaan neuroniin sen (TODO: ei ihan näin yksinkertaista, ulostuloarvo on vakio joka derivoitaessa katoaisi, mutta jotakin suhteessa sen painoihin) ulostuloarvon derivaatta. Kuvassa \ref{pic:composition} tämä tallennettava arvo näkyy palloina esitettyjen neuroniyksiköiden vasemmassa puoliskossa.
+  Eteenpäinsyöttövaiheessa jokaisen solmun kohdalla tallennetaan solmun toteuttaman funktion derivaatta. Kuvassa \ref{pic:composition} tämä tallennettava arvo näkyy palloina esitettyjen solmujen vasemmassa puoliskossa.
 
   \begin{figure}[h]
     \label{pic:backpropagation}
@@ -230,31 +223,15 @@
     \caption{http://page.mi.fu-berlin.de/rojas/neural/ kappale 7.2.2}
   \end{figure}
 
-  Takaisinvirtausvaiheessa verkkoa kuljetaan algoritmin nimen mukaisesti takaperin aikaisempaan nähden. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, kuljettaen tätä arvoa mukana neuronilta toiselle, ja uuteen neuroniyksikköön saavuttaessa kertomalla mukana kulkeva arvo neuroniin tallennetulla, kuvassa \ref{pic:backpropagation} neuroniyksikön vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta esimerkin kahden neuroniyksikön läpi kulkemisen jälkeen $f(g(x))$ muotoinen funktio on saatu sen derivoituun muotoon $f'(g(x))g'(x)$ joka vastaa ketjusäännön avulla derivoitua tulosta. Tämä metodi yleistyy myös monimutkaisemmille verkkorakenteille, ja on helposti hajautettavissa jakamalla verkko osaverkkoihin ja yhdistämällä osaverkot myöhemmin.
+  Takaisinvirtausvaiheessa verkkoa kuljetaan takaperin aikaisempaan nähden. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, kuljettaen tätä arvoa mukana solmulta toiselle, ja uuteen solmuun saavuttaessa kertomalla mukana kulkeva arvo solmuun tallennetulla, kuvassa \ref{pic:backpropagation} solmun vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta esimerkin kahden solmun läpi kulkemisen jälkeen yhdistetty funktio $f(g(x))$ on saatu muotoon $f'(g(x))g'(x)$ joka on funktion $f(g(x))$ derivaatta. 
 
-  TODO:
+  Kuvaamalla virhefunktion derivaattaa neuronin $n_j$ kohdalla merkinnällä $\delta_j$ voidaan virhefunktion derivaatta suhteessa painoon $w_{ij}$ esittää muodossa 
 
-  - Mitä backpropagation algoritmin esimerkissä oikeastaan tallennetaan yksikköön eteenpäinsyöttövaiheessa jotta derivoidessa ei jää vain 0?
+    $$ \frac{\partial E}{\partial w_{ij}} = o_i\delta_j,$$
 
-  - Verkkoon voidaan ajatella lisättävän backpropagationia varten ulostulokerroksen jälkeen ulostulot yhdistävä virhefunktion arvon kertova "neuroni", se auttoi jossain
+  jossa $o_i$ on neuronin $n_i$ ulostuloarvo.
 
-  - Joku summarum hommasta
-
-  %tarvitseeko omaa otsikkoa, pitäisikö vain olla kappale takaisinvirtausalgoritmin otsikon alla?
-
-  %batch gradient descent
-
-  %Neuroverkon laskiessa ulostuloarvon jollekkin syötteelle, tapahtuu eteenpäinkulkeutumista (forward-propagation).
-
-  %Muuttamalla neuroverkon painoja ja taipumusvakioita suuntaan jonka gradientti osoittaa olevan negatiivinen voidaan minimoida virhefunktiota. Tätä toistetaan kunnes virhefunktio antaa riittävän pienen tuloksen. 
-  
-  Virhefunktion arvon laskeminen jokaiselle syötteelle ja keskiarvon ottaminen ja tämän perusteella takaisinvirtausalgoritmin suorittaminen olisi erittäin raskasta kun syötteitä voi olla miljoonia kappaleita. Tämän takia käytetään yleensä stokastista gradienttimenetelmää, jossa virhefunktion keskiarvo lasketaan kaikkien syötteiden sijaan joukolle satunnaisesti valittuja syötteitä.
-
-  %Takaisinvirtausalgoritmi (back-propagation) (numeerinen menetelmä?) kertoo kuinka muutokset painoihin ja taipumusvakioihin muuttavat virhefunktion saamia arvoja. Näiden muutoksien perusteella voidaan laskea osittaisderivaatat painotuksille sekä taipumusvakioille virhefunktion suhteen. Osittaisderivaattojen avulla saadaan virhefunktiolle gradientti, ja gradientin laskeutumismenetelmällä voidaan minimoida virhefunktiota.
-
-  %Jotta takaisinvirtausalgoritmia ei tarvitsisi ajaa jokaiselle harjoitusmateriaalin yksikölle, voidaan harjoitusmateriaalille laskea (tilastollisia arvoja?) keskiarvoja ja käyttää näitä keskiarvoja laskeutumismenetelmässä hyväksi. Ei välttämättä haluta ajaa takaisinvirtausalgoritmia uudestaan jokaiselle harjoitus"materiaalin" yksikölle. Voidaan ottaa niistä vain jotain keskiarvoja tms eli batching skjfdghsg
-
-
+  Virhefunktion arvon laskeminen jokaiselle syötteelle ja keskiarvon ottaminen ja tämän perusteella takaisinvirtausalgoritmin suorittaminen olisi erittäin raskasta kun syötteitä voi olla miljoonia kappaleita. Tämän takia käytetään yleensä stokastista gradienttimenetelmää, jossa virhefunktion keskiarvo lasketaan kaikkien syötteiden sijaan joukolle satunnaisesti valittuja syötteitä, ja ajetaan takaisinvirtausalgoritmi tämän tuloksen perusteella.
 
   \subsection{Ongelmia}
 
@@ -306,6 +283,8 @@
   \section{Konvoluutioneuroverkkojen sovellukset}
   \subsection{Kuvien luokittelu}
   Tuloskerroksessa käytännössä todennäköisyysarvio luokittain
+
+  \section{Yhteenveto}
 
 
 
