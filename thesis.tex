@@ -240,7 +240,6 @@
   \subsection{Esimerkki harjoittamisesta}
   Tässä kappaleessa käymme läpi neuroverkkojen harjoittamisesta esimerkin jossa suoritamme yhden harjoittamiskierroksen yhdellä harjoitusaineiston yksiköllä. Laskemme ensin neuroverkon antaman tuloksen esimerkkisyötteelle satunnaisesti alustetuin painotuksin, ja sen jälkeen suoritamme harjoittamiskierroksen takaisinvirtausalgoritmia ja gradienttimenetelmää hyödyntäen pyrkien näin muuttamaan neuroverkon aluksi antamaa tulosta lähemmäksi harjoitusaineiston yksikköä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusarvoja, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia. 
   
-  
   \subsection{Ylisovitus}
 
   Suuri haaste neuroverkkojen harjoittamisessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty tekniikoita kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti.
@@ -302,7 +301,7 @@
 
 \section{Yhteenveto} 
 
-Tässä tekstissä kävimme läpi neuroverkoille yleisiä matemaattisia toimintaperiaatteita menemättä kovin syvälle teknisiin yksityiskohtiin. Käsittelimme neuroverkkojen rakennetta, ja tyypillisä tapoja toteuttaa neuroverkkojen oppiminen. Tämän jälkeen käsittelimme konvoluutioverkkojen eroavaisuuksia muista neuroverkoista ja lopuksi kävimme läpi käytännön esimerkin konvolutionaalisesta neuroverkosta.
+Tässä tekstissä kävimme läpi ensin kaikille neuroverkoille yleisiä piirteitä kuten yksittäisen neuronin rakennetta ja sitä, miten yksittäisistä neuroneista muodostetaan eteenpäinsyöttävä neuroverkko. Kävimme läpi kuinka takaisinvirtausalgoritmin avulla pystymme gradienttimenetelmää hyödyntäen harjoittamaan neuroverkkoja harjoitusaineiston perusteella. Tämän jälkeen käsittelimme konvolutionaalisten neuroverkkojen eroavaisuuksia muista neuroverkoista ja lopuksi esittelimme käytännön esimerkin konvolutionaalisesta neuroverkosta.
 
 
 
