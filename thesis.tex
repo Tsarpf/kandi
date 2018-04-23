@@ -191,15 +191,19 @@
 
   \section{Neuroverkkojen harjoittaminen}
 
-  Eteenpäinsyöttävien neuroverkkojen joissa on yksi piilokerros jossa on tarpeeksi neuroneita on todistettu pystyvän mallintamaan mitä tahansa jatkuvia $R^n$ kompaktien aliavaruuksien funktioita rajatuilla väleillä, kunhan tarpeeksi laskentaresursseja on käytettävissä \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen harjoittamisen voidaan sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota.
+  Eteenpäinsyöttävien neuroverkkojen joissa on yksi piilokerros jossa on tarpeeksi neuroneita on todistettu pystyvän mallintamaan mitä tahansa jatkuvia $R^n$ kompaktien aliavaruuksien funktioita, kunhan tarpeeksi laskentaresursseja on käytettävissä \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen harjoittamisen voidaan sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota.
 
   Tätä neuroverkon tekemän virheen määrää voidaan mitata virhefunktion (error function) avulla. Usein käytetään neliöllistä virhefunktiota:
     $$E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2$$
   jossa $y(x_i)$ on neuroverkon tulos syötteellä $x_i$, $a(x_i)$ on harjoitusdatan $i$:s yksikkö, ja $N$ syötteiden määrä.
 
+  %% TOOO: Mainitse että koko harjoitusdatalle lasketaan yksittäisten kierroksien virhefunktioiden arvoista keskiarvo. Smaa pätee painojen ja taipumusvakioiden derivaatoille, niistä otetaan vain keskiarvo. Tästä sais kokonaisen kappaleen lisää? Stokastisen gradienttimenetelmän kohdalla kylläkin mainitaan asiasta lyhyesti
+
+  % The reason we need this assumption is because what backpropagation actually lets us do is compute the partial derivatives  and  for a single training example. We then recover  and  by averaging over training examples.
+
 
   \subsection{Gradienttimenetelmä ja takaisinvirtausalgoritmi}
-  Gradienttimenetelmä (gradient descent) on numeerinen menetelmä joka toimii minkä tahansa jatkuvan funktion lokaalien minimien etsintään. Käytännössä kuitenkin yleensä riittää, että funktiot ovat suurimmilta osin jatkuvia. Neuroverkkojen yhteydessä gradienttimenetelmä toimii valittaessa neuronien aktivaatiofunktioksi pääosin jatkuvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat jatkuvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan, kunnes gradientti on tarpeeksi pieni, päädytään lähelle lokaalia minimiä.
+  Gradienttimenetelmä (gradient descent) on numeerinen menetelmä joka toimii minkä tahansa derivoitavissa olevan funktion lokaalien minimien etsintään. Käytännössä kuitenkin yleensä riittää, että funktiot ovat suurimmilta osin derivoituvia. Neuroverkkojen yhteydessä gradienttimenetelmä toimii valittaessa neuronien aktivaatiofunktioksi pääosin derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan, kunnes gradientti on tarpeeksi pieni, päädytään lähelle lokaalia minimiä.
 
   Takaisinvirtausalgoritmilla voidaan laskea virhefunktiolle osittaisderivaatta kunkin verkon painon suhteen. Osittaisderivaatoista voidaan muodostaa virhefunktiolle gradientti ja siten soveltaa gradienttimenetelmää. Virhefunktion osittaisderivaatan selvittämiseksi yksittäisen neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen  tarvitaan ensin välituloksena virhefunktion osittaisderivaatta neuronin $n_j$ kohdalla. 
 
@@ -233,14 +237,19 @@
 
   Virhefunktion arvon laskeminen jokaiselle syötteelle ja keskiarvon ottaminen ja tämän perusteella takaisinvirtausalgoritmin suorittaminen olisi erittäin raskasta kun syötteitä voi olla miljoonia kappaleita. Tämän takia käytetään yleensä stokastista gradienttimenetelmää, jossa virhefunktion keskiarvo lasketaan kaikkien syötteiden sijaan joukolle satunnaisesti valittuja syötteitä, ja ajetaan takaisinvirtausalgoritmi tämän tuloksen perusteella.
 
+  \subsection{Esimerkki harjoittamisesta}
+  Tässä kappaleessa käymme läpi neuroverkkojen harjoittamisesta esimerkin jossa suoritamme yhden harjoittamiskierroksen yhdellä harjoitusaineiston yksiköllä. Laskemme ensin neuroverkon antaman tuloksen esimerkkisyötteelle satunnaisesti alustetuin painotuksin, ja sen jälkeen suoritamme harjoittamiskierroksen takaisinvirtausalgoritmia ja gradienttimenetelmää hyödyntäen pyrkien näin muuttamaan neuroverkon aluksi antamaa tulosta lähemmäksi harjoitusaineiston yksikköä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusarvoja, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia. 
+  
+  
   \subsection{Ylisovitus}
 
   Suuri haaste neuroverkkojen harjoittamisessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty tekniikoita kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti.
 
-  \section{Konvoluutioneuroverkkojen rakenne}
-    Konvoluutioneuroverkkojen rakenne eroaa tavanomaisista täysin yhdistetyistä neuroverkoista konvoluutio- ja kokoamiskerroksien (pooling layer) olemassaolon, kerrosten mahdollisen rinnakkaisuuden, sekä ominaisuuskarttojen jaettujen painojen kautta.   
+  \section{Konvolutionaalisten neuroverkkojen rakenne}
+    Konvolutionaalisten neuroverkkojen rakenne eroaa tavanomaisista täysin yhdistetyistä neuroverkoista konvoluutio- ja kokoamiskerroksien (pooling layer) olemassaolon, kerrosten mahdollisen rinnakkaisuuden, sekä ominaisuuskarttojen jaettujen painojen kautta.   
     
     %(TODO: ReLu)
+    % TODO: selitä lisää, että mikä kernel/ydin on?
     \subsection{Konvoluutiokerrokset}
     
     \begin{figure}[h]
@@ -285,7 +294,7 @@
     \caption{Krizhevsky, Sutskever, Hinton 2012 ILSVRC-2012 kilpailun voittaneen neuroverkon rakenne \cite{KSHimagenet2012}}
     \end{figure}
 
-    Vuonna 2012 ImageNet kuvantunnistuskilpailun voittaneessa Krizhevsky, Sutskever ja Hintonin (myöhemmin KSH) konvolutionaalisessa neuroverkossa on 7 piilokerrosta, joista 5 ensimmäistä ovat konvoluutiokerroksia, ja 2 viimeistä kerrosta täysin yhdistettyjä kerroksia. KSH:ssa on 1000 neuronin ulostulokerros joka vastaa verkon tunnistamaa 1000 erilaista.
+    Vuonna 2012 ImageNet kuvantunnistuskilpailun voittaneessa Krizhevsky, Sutskever ja Hintonin (myöhemmin KSH) konvolutionaalisessa neuroverkossa on 7 piilokerrosta, joista 5 ensimmäistä ovat konvoluutiokerroksia, ja 2 viimeistä kerrosta täysin yhdistettyjä kerroksia. KSH:ssa on 1000 neuronin ulostulokerros joka vastaa sen tunnistamaa tuhatta erilaista kuvaluokkaa.
     
     ImageNet kuvamateriaalissa on vaihtelevan kokoisia kuvia, mutta KSH:n luomassa neuroverkon syötekerros oli 3x224x224 neuronin kokoinen. KSH:n ratkaisu syötteen sopivaksi saamiseksi oli skaalata lähdekuvat ensin 256x256 pikselin kokoon, ja tämän jälkeen ottaa kuvista 224x224 osakuvia satunnaisista sijainneista lähdekuvasta, näin laajentaen harjoitusdataa ja vähentäen ylisovitusta.
     
