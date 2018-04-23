@@ -98,49 +98,24 @@
 
   \mainmatter       % clear page, start arabic page numbering
 
-  Keinotekoisissa neuroverkoissa kulminoituu vuosikymmenten tutkimus funktioiden approksimointiin. Neuroverkot mahdollistavat sellaisten tehtävien automatisoinnin, jotka ovat ennen olleet vain ihmisten tehtävissä. Kaikkivoipia ne eivät kuitenkaan ole, vaan soveltuvat erityisesti ongelmiin, joissa halutaan kuvata jokin syötevektori ulostulovektoriksi. Tälläinen ongelma on esimerkiksi kuvien sisällön tunnistaminen, jossa kuvan pikseliarvot voidaan tulkita olevan syötevektori, ja ulostulovektorin olevan joukko todennäköisyyksiä jossa jokaista tunnistettavaa asiaa kohden neuroverkko antaa todennäköisyysarvion sille, löytyykö kyseinen asia kuvasta.
+  Keinotekoisissa neuroverkoissa kulminoituu vuosikymmenten tutkimus funktioiden approksimoinnin menetelmiin. Neuroverkot ovat viimevuosina mahdollistaneet uusien sellaisten tehtävien automatisoinnin, joita on pidetty vain ihmisille mahdollisina. Kaikkivoipia ne eivät kuitenkaan ole, vaan soveltuvat erityisesti tehtäviin, jotka voidaan tulkita jonkin syötevektorin muuntamiseksi ulostulovektoriksi. Tälläinen tehtävä on esimerkiksi kuvien sisällön tunnistaminen, jossa kuvan pikseleiden väriarvojen voidaan tulkita olevan syötevektori, ja ulostulovektorin olevan jokaista tunnistettavaa asiaa kohden todennäköisyys sille, että kyseinen asia löytyy syötteenä annetusta kuvasta.
 
-  Neuroverkot koostuvat kerroksittain toisiinsa yhdistetyistä neuroneista (mainitse että niiden väliset yhteydet sisältävät varsinaisen oppimisen jonka perusteella se sit approksimoi?). Tyypillisesti ensimmäisenä verkossa on niin kutsuttu syötekerros, johon neuroverkon syöte koodataan. Tämän jälkeen seuraa yksi tai useampia piilokerroksia (jotka tekevät mitä?). Viimeisenä kerroksena toimii ulostulokerros, josta neuroverkon laskennan tulos on luettavissa.
+  Neuroverkot koostuvat kerroksittain toisiinsa yhdistetyistä laskentayksiköistä joita kutsutaan biologisten esikuviensa mukaisesti neuroneiksi. Tietyssä kerroksessa olevat neuronit saavat syötteenään niitä edeltävän kerroksen neuroneilta ulostuloarvoja ja vastaavasti tämän kerroksen neuroneiden ulostuloarvot toimivat niitä seuraavan kerroksen syötteinä. Neuroniin on tallennettu kullekin syötepoluistaan jokin painotusarvo, joka määrittelee kuinka voimakkaasti kyseistä polkua pitkin tuleva syöte vaikuttaa tämän neuronin ulostuloarvoon. Painotetut syötteet summataan ja syötetään aktivaatiofunktiolle, jonka ulostuloarvo toimii koko neuronin yksittäisenä ulostuloarvona. Aktivaatiofunktiona toimii yleensä jokin helposti derivoitavissa oleva funktio, kuten esimerkiksi usein käytetty sigmoidinen funktio.
 
-  Yleensä neuronit eivät ole saman kerroksen sisällä yhdistettyjä toisiinsa. Tapoja yhdistää neuronit kerroksien välillä toisiinsa löytyy useita, ja monissa neuroverkkototeutuksissa saman verkon sisällä onkin käytety useita eri kerroksien yhdistämismenetelimä
-  
-Neuronit tuottavat syötteidensä ja sisältämänsä aktivaatiofunktion perusteella jonkin yksittäisen ulostuloarvon, joka taas syötetään verkossa eteenpäin seuraaville neuroneille.
-  
+   Ensimmäinen neuroverkon kerros on niin kutsuttu syötekerros, johon neuroverkon syöte koodataan. Tämän jälkeen seuraa yksi tai useampia piilokerroksia joissa varsinainen muunnos syötevektorista ulostulovektoriksi tapahtuu. Viimeisenä kerroksena toimii ulostulokerros, josta neuroverkon laskennan tulos on luettavissa. Käytännössä verkkorakenne on kuitenkin vain ajattelua helpottava abstraktio, sillä neuroverkot ovat todellisuudessa tietokonesovelluksissa vain matriiseja joihin verkon kriittiset arvot tallennetaan.
 
-  Neuroverkkoa opetettaessa sen onnistumista tehtävässään mitataan yleensä virhefunktiolla, jonka arvo kertoo, kuinka paljon neuroverkon tuottama approksimaatio eroaa tuloksesta joka siltä oltaisiin haluttu. Neuroverkon kouluttamisen voidaan siis ajatella olevan tämän virhefunktion arvon minimoimista harjoitusdataa hyödyntämällä.
+  %(mainitse että niiden väliset yhteydet sisältävät varsinaisen oppimisen jonka perusteella se sit approksimoi?). 
+  %Monissa neuroverkkojen käytännön toteutuksissa se, mihin edeltävän kerroksen neuroneihin kukin neuroni on yhdistetty vaihtelee kerroksittain, mutta selkeästi yleisin yhdistämistapa on kuitenkin yhdistää kukin neuroni jokaiseen edeltävän kerroksen neuroniin. Tälläisia kerroksia kutsutaan yleensä täysin yhdistetyiksi kerroksiksi.   
 
-  Neuroverkkojen oppimisella tai harjoittamisella tarkoitetaan niiden neuronien välisten painotuksien säätämistä. Tähän on olemassa useita menetelmiä, mutta tällä hetkellä yleisimmin käytössä on niin kutsuttu gradienttimenetelmä.
+  Neuroverkon rakenteen valitsemisen lisäksi se täytyy harjoittaa jollakin harjoitusaineistolla. Harjoitettaessa neuroverkon tuottaman approksimaation hyvyyttä mitataan yleensä virhefunktiolla. Harjoitusvaiheessa neuroverkolle syötetään jokin harjoitusaineiston yksikkö ja koska toivottu tulos syötteelle tunnetaan, neuroverkon syötteensä perusteella tuottaman tuloksen poikkeama halutusta tuloksesta voidaan mitata virhefunktiolla. Koska neuroverkon tuottamat arvot riippuvat harjoitusvaiheessa enää vain sen neuroneiden syötteiden painotuksista, myös virhefunktion arvo riippuu niistä. Neuroverkon harjoittamisen voidaan siis ajatella olevan tämän virhefunktion arvon minimoimista painotusarvoja säätämällä. Tällä hetkellä yleisimmin käytössä oleva menetelmä virhefunktion minimointiin on niin kutsuttu gradienttimenetelmä, jossa painotuksien osittaisderivaatat virhefunktion suhteen toimivat virhefunktion gradientin komponentteina.
 
-  Koska neuroverkon toiminta riippuu sen neuroneiden syötteiden painotuksista, myös virhefunktion arvo riippuu niistä. Joten virhefunktion minimoimiseksi 
+  Painotuksien osittaisderivaattojen selvittämiseen virhefunktion suhteen käytetään takaisinvirtausalgoritmia. Takaisinvirtausalgoritmissa verkon tulkitaan olevan yksi suuri yhdistetty funktio, jolloin virhefunktion derivaatta tietyssä kohtaa verkkoa ja siten tietyn painotuksen kohdalla, on selvitettävissä hyödyntäen derivaatan ketjusääntöä.
 
-  Jotta gradienttimenetelmää varten tarvittava virhefunktion gradientti jolla virhefunktion arvoa minimoidaan saadaan muodostettua, tarvitaan verkon painojen osittaisderivaatat  soveltaa virhefunktion minimointiin, tarvitaan verkon painojen osittaisderivaatat suhteessa Takaisinvirtausalgoritmin avulla virhefunktion
+  %Oikein sovellettuna neuroverkot ovat toistaiseksi kehitetyistä ohjatun oppimisen menetelmistä parhaita löytämään harjoitusmateriaalistaan yleistettävissä olevia piirteitä. Näiden piirteiden avulla on mahdollista esimerkiksi kuvien sisällön tunnistamiseen erikoistuneiden neuroverkkojen kohdalla tunnistaa kuvista joita neuroverkko ei ole ennen nähnyt, löytyykö niistä vaikkapa kissoja.
 
-  Oikein käytettynä neuroverkot ovat toistaiseksi kehitetyistä ohjatun oppimisen menetelmistä parhaita  löytämään harjoitusmateriaalistaan yleistettävissä olevia piirteitä. Näiden piirteiden avulla on mahdollista esimerkiksi kuvien sisällön tunnistamiseen erikoistuneiden neuroverkkojen kohdalla tunnistaa kuvista joita neuroverkko ei ole ennen nähnyt, löytyykö niistä vaikkapa kissoja.
+  Yksi suurimmista haasteista neuroverkkojen harjoittamisessa on neuroverkon liika erikoistuminen tiettyyn harjoitusaineistoon. Tällöin neuroverkko saa harjoitusaineistosta peräisin oleville syötteille toivotusti virhefunktiosta pieniä arvoja, mutta toimii harjoitusaineiston ulkopuolisten syötteiden kanssa huonosti. Tällöin neuroverkko on epäonnistunut yleistämään harjoitusaineiston piirteitä toivotusti. Ongelman ratkaisuun on kehitetty lukuisia menetelmiä, joista esimerkkinä laskentayksiköiden pudotus, jossa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä estämään tiettyä neuronia erikoistumasta johonkin harjoitusaineiston ominaisuuteen liiaksi.
 
-  Kuten muidenkin koneoppimismenetelmien kanssa, neuroverkkojenkin kanssa törmätään usein ongelmaan,jossa neuroverkko on erikoistunut liikaa harjoitusdataansa ja saa toivotusti virhefunktiosta harjoitusdatalleen pieniä arvoja, mutta harjoitusdatan ulkopuolisten syötteiden kanssa toimii huonosti.
-  
-  yksi suurimmista haasteista neuroverkkojen käytössä on saada luotava malli oppimaan harjoitusdatastaan piirteitä, jotka yleistyvät myös harjoitusdatan ulkopuolisiin tapauksiin.
-
-
-  - outro
-
-  - outro
-
-  - outro
-
-  - outro
-
-  - outro
-
-  - outro
-
-  - outro
-
-  - outro
-
-
-
-
+  Onnistuneesti valituilla verkkorakenteilla ja hyvälaatuisella ja suurella harjoitusaineistolla on mahdollista kehittää neuroverkkoja jotka ovat erittäin hyviä löytämään harjoitusaineistostaan yleistettävissä olevia piirteitä. Jotkin näistä piirteistä ovat usein jopa neuroverkot luoneille ihmisille vaikeita täysin ymmärtää. Neuroverkkojen yllättävän hyvän yleistämiskyvyn ansiosta onkin onnistuttu kehittämään neuroverkkoja hyödyntäviä sovelluksia, jotka suoriutuvat ihmistäkin paremmin tehtävissä joita on pidetty ennen mahdottomina tehdä koneellisesti. Neuroverkot ovat yksi viime vuosien tutkituimmista koneoppimisen menetelmistä, ja uutta kehitystä alueella tapahtuu jatkuvasti. Uusia sovelluskohteita joihin neuroverkot soveltuvat löydetään jatkuvasti, sovelluskohteiden sisältäessä kaikkea sairauksien diagnosoinnista videopelien tekoälyihin.
 
   \end{document}
 
