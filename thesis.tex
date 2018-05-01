@@ -86,7 +86,7 @@
 
   % The following can be used to specify keywords and classification of the paper:
 
-  \keywords{neuroverkot, konvoluutio, takaisinvirtausalgoritmi}
+  \keywords{neuroverkot, neuroverkkojen harjoittaminen, kuvien luokittelu}
 
   % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
   % This is probably mostly relevant for computer scientists
@@ -130,37 +130,33 @@
   \mainmatter       % clear page, start arabic page numbering
 
   \section{Johdanto}
-   Syväoppimisen historia ulottuu 1940-luvulle asti, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli jolla kuvailla biologista aivoissa tapahtuvaa oppimista. Heidän kehittelemällään lineaarisella mallilla oli mahdollista tunnistaa kahden syötekategorian välillä kummasta on kyse kategoriat määrittelevien painotuksien avulla, ihmisen joutuessa määrittelemään nämä painot.
+   Syväoppimisen historia ulottuu 1940-luvulle asti \cite{Goodfellow-et-al-2016}, jolloin kybernetiikan tutkimuksen myötä McCulloch ja Pitts kehittivät mukaansa nimetyn McCulloch-Pitts neuronin, tarkoituksenaan luoda matemaattinen malli, jolla kuvailla biologista aivoissa tapahtuvaa oppimista \cite{mcculloch1943logical}. Heidän kehittelemällään lineaarisella mallilla oli mahdollista tunnistaa kahden syötekategorian välillä kategoriat määrittelevien painotuksien avulla  ihmisen joutuessa määrittelemään nämä painot. Vasta 1950-luvulla kehitettiin ensimmäinen malli joka pystyi oppimaan syötekategorioita kuvaavat painotukset niistä annettujen esimerkkien perusteella, niin kutsuttu perseptroni \cite{rosenblatt1957perceptron}.
 
-  Vasta 1950-luvulla kehitettiin ensimmäinen malli joka pystyi oppimaan syötekategorioita kuvaavat painotukset niistä annettujen esimerkkien perusteella, niin kutsuttu perseptroni.
+  Kiinnostus kybernetiikkaan hiipui 1960-luvun aikana, jonka jälkeen merkittävää kehitystä tapahtui seuraavan kerran 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmin (backpropagation) keksittiin 1986 soveltuvan monikerroksisten neuroverkkojen tehokkaaseen harjoittamiseen \cite{Rumelhart-1986-back-prop}.
 
-  Kiinnostuksen kybernetiikkaan hiivuttua 1960-luvun aikana, seuraavan kerran merkittävää kehitystä tapahtui 80-90-luvulla konnektionismin tuodessa neuroverkkomallit takaisin suosioon. Yksi tärkeimmistä näihin aikoihin tapahtuneista kehityksistä syväoppimisen kannalta oli, kun takaisinvirtausalgoritmi (backpropagation) keksittiin 1986 mahdollistavan monikerroksisten neuroverkkojen harjoittamisen verrattain tehokkaasti.
+  90-luvun puolivälin jälkeen syväoppiminen eli jälleen hiljaiseloa vuoteen 2006 asti, jonka jälkeen se on ollut jatkuvasti pinnalla tähän päivään asti. Geoffrey Hinton osoitti tällöin syvien uskomusverkkojen (deep belief network) olevan harjoitettavissa tehokkaasti tasoittain ja muut tutkimusryhmät yleistivät tämän harjoitustavan muille syville keinotekoisille neuroverkoille \cite{Hinton-et-al-06}. Näiden tutkimuksien myötä syväoppiminen terminä alkoi yleistyä, termin käytön tarkoituksena korostaa aikaisempaa syvempien verkkojen harjoitettavissa olemista.
 
-  90-luvun puolivälin jälkeen syväoppiminen eli jälleen hiljaiseloa vuoteen 2006 asti, jonka jälkeen se on ollut jatkuvasti pinnalla tähän päivään asti. Geoffrey Hinton osoitti tällöin syvien uskomusverkkojen (deep belief network) olevan harjoitettavissa tehokkaasti tasoittain ja muut tutkimusryhmät yleistivät tämän harjoitustavan muille syville keinotekoisille neuroverkoille. Näiden tutkimuksien myötä syväoppiminen terminä alkoi yleistyä, termin käytön tarkoituksena korostaa aikaisempaa syvempien verkkojen harjoitettavissa olemista.
+  Lopullinen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamisen kilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä konvolutionaalinen neuroverkko \cite{KSHimagenet2012}. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä varsin rajoitetussa tunnistamistehtävässä ihmistä paremmin.
 
-  Lopullinen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamisen kilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä konvolutionaalinen neuroverkko. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä varsin rajoitetussa tunnistamistehtävässä ihmistä paremmin.
+  Nykyään ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla keksityt. Jonkin verran muutoksia silloisiin algoritmeihin on kuitenkin tehty, erityisesti syvien verkkorakenteiden harjoittamista helpottavina yksinkertaistuksina. Selkeästi suurin syy syväoppimisen vasta äskettäin tärkeäksi muuttumiseen on kuitenkin yhteiskunnan digitalisoitumisen myötä merkittävästi kasvanut helposti saatavilla olevan luokitellun datan määrä, sekä valtavasti kasvanut laskentakapasiteetti, jotka olivat edellytyksiä algoritmien mielekkäälle käyttämiselle \cite{Goodfellow-et-al-2016}.
 
-  Nykyään käytössä olevat ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla käytössä olleet. Jonkin verran muutoksia silloisiin algoritmeihin on tehty syvien verkkorakenteiden harjoittamista helpottavina yksinkertaistuksina, mutta selkeästi suurin syy syväoppimisen tärkeäksi muuttumiseen vasta äskettäin on kuitenkin yhteiskunnan digitalisoitumisen myötä merkittävästi kasvanut helposti saatavilla olevan luokitellun datan määrä, sekä valtavasti kasvanut laskentakapasiteetti, jotka olivat edellytyksiä algoritmien kunnolliselle toiminnalle.
+  Esimerkkinä tarvittavan harjoitusdatan määrästä konvolutionaalisten neuroverkkojen harjoittamiseen kuvien luokittelua varten toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella etukäteen luokiteltuja kuvia. Esimerkiksi ILSVRC-kilpailun harjoitusdatana käytössä oleva ImageNet sisältää yli 14 miljoonaa luokiteltua kuvaa \cite{imagenet-website}. Kuvien sisällön tunnistamisen lisäksi syväoppiminen on osoittautunut erittäin hyödylliseksi useissa aikaisemmin haasteellisiksi osoittautuneissa sovelluskohteissa, kuten puheentunnistuksessa \cite{abdel2012applying}, liikennemerkkien luokittelussa \cite{sermanet2011traffic}, sekä jalankulkijoiden tunnistamisessa \cite{szarvas2005pedestrian} .
 
-  Esimerkkinä tarvittavan harjoitusdatan määrästä konvolutionaalisten neuroverkkojen harjoittamiseen kuvien luokittelua varten toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella etukäteen luokiteltuja kuvia. Esimerkiksi ILSVRC-kilpailun harjoitusdatana käytössä oleva ImageNet sisältää yli 14 miljoonaa luokiteltua kuvaa. (http://image-net.org/about-stats)
-
-  Kuvien sisällön tunnistamisen lisäksi syväoppiminen on osoittautunut erittäin hyödylliseksi useissa haasteellisissa sovelluskohteissa, kuten puheen sisällön, liikennemerkkien luokittelun, sekä jalankulkijoiden tunnistamisessa.
-
-  Tässä tekstissä käsitellään ensin yleisiä keinotekoisten neuroverkkojen piirteitä, kuten yksittäisen neuronin rakennetta, eteenpäinsyöttävien neuroverkkojen rakennetta, sekä sitä, miten neuroverkkoja harjoitetaan. Tämän jälkeen käsitellään miten konvolutionaaliset neuroverkot eroavat muista neuroverkoista, ja mitä sovelluksia niillä on.
+  Ensin käydään läpi yleisiä keinotekoisten neuroverkkojen piirteitä, kuten yksittäisten neuronien ja eteenpäinsyöttävien neuroverkkojen rakennetta. Tämän jälkeen selitetään kuinka neuroverkkoja harjoitetaan harjoitusaineiston avulla takaisinvirtausalgoritmia ja gradienttimenetelmää hyödyntäen. Lopuksi käydään läpi miten konvolutionaaliset neuroverkot eroavat muista neuroverkoista ja mitä sovelluksia niille löytyy.
 
   \section{Neuroverkkojen rakenne}
   \subsection{Keinotekoinen neuroni}
     \label{chap:artificial-neuron}
 
+    %TODO: lähdeviitteet! 
+    TODO: Pitäisikö tässä mainita, että rakenneosiot ovat Neural Networks and Deep Learning kirjasta/sivulta peräisin ja ei lisätä citeä joka lauseen loppuun? 
     Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä (TODO: selitä pelkästään tekstimuodossa re: palaute)
 
      $$ x_1, x_2, ..., x_n \mapsto \Sigma w_i x_i \mapsto f(\Sigma w_i x_i + b) $$
 
-    kaltaisia matemaattisia funktioita. Ne ottavat vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja tämän funktion arvo toimii neuronin lopullisena ulostuloarvona.
+    kaltaisia matemaattisia funktioita. Ne ottavat vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja tämän funktion arvo toimii neuronin lopullisena ulostuloarvona. Toisinaan käytetään myös taipumusvakiota (bias) $b$, joka lisätään syötteiden ja painotuksien tulojen summaan, tarkoituksena säätää neuronin ulostuloarvoja painotuksista riippumatta \cite{Nielsen-neural}.
 
-    Toisinaan käytetään myös taipumusvakiota (bias) $b$, joka lisätään syötteiden ja painotuksien tulojen summaan, tarkoituksena säätää neuronin ulostuloarvoja painotuksista riippumatta.
-
-    50-luvulla kehitetty ensimmäinen tällainen neuroni, perseptroni, kehitettiin 50-luvulla. Sen syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktio muotoa
+    50-luvulla kehitetyn perseptronin, joka oli ensimmäinen tällainen neuroni, syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktio muotoa
 
     \begin{equation}
       f(\Sigma w_i x_i + b)
@@ -194,14 +190,15 @@
   \section{Neuroverkkojen harjoittaminen}
     \label{chap:neural-training}
 
-  Eteenpäinsyöttävien neuroverkkojen joissa on yksi piilokerros jossa on tarpeeksi neuroneita on todistettu pystyvän mallintamaan mitä tahansa jatkuvia $R^n$ kompaktien aliavaruuksien funktioita, kunhan tarpeeksi laskentaresursseja on käytettävissä \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen harjoittamisen voidaan sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota.
+  % mitä tahansa jatkuvia $R^n$ kompaktien aliavaruuksien funktioita, 
+    Eteenpäinsyöttävien neuroverkkojen joissa on yksi piilokerros jossa on tarpeeksi neuroneita on todistettu pystyvän mallintamaan mitä tahansa avaruuden $R^n$ kompakteilla osajoukoilla määriteltyjä jatkuvia funktioita, kunhan tarpeeksi laskentaresursseja on käytettävissä \cite{multilayer-feedforward-universal-approximators}. Neuroverkkojen harjoittamisen voidaan sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota.
 
   Tätä neuroverkon tekemän virheen määrää voidaan mitata virhefunktion (error function) avulla. Usein käytetään neliöllistä virhefunktiota
   \begin{equation}
-    E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i)-a(x_i) \|^2
+    E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i) - z_i \|^2
     \label{eq:error-function}
   \end{equation}
-  jossa $y(x_i)$ on neuroverkon tulos syötteellä $x_i$, $a(x_i)$ on jonkin harjoitusaineiston yksikön $i$:s jäsen, ja $N$ syötteiden määrä.
+  jossa $y(x_i)$ on neuroverkon tulos syötteellä $x_i$, $z_i$ on jonkin harjoitusaineiston yksikön $i$:s jäsen, ja $N$ syötteiden määrä.
 
   %% TOOO: Mainitse että koko harjoitusdatalle lasketaan yksittäisten kierroksien virhefunktioiden arvoista keskiarvo. Smaa pätee painojen ja taipumusvakioiden derivaatoille, niistä otetaan vain keskiarvo. Tästä sais kokonaisen kappaleen lisää? Stokastisen gradienttimenetelmän kohdalla kylläkin mainitaan asiasta lyhyesti
 
@@ -209,11 +206,11 @@
 
 
   \subsection{Gradienttimenetelmä ja takaisinvirtausalgoritmi}
-  Gradienttimenetelmä (gradient descent) on numeerinen menetelmä joka toimii minkä tahansa derivoitavissa olevan funktion lokaalien minimien etsintään. Käytännössä kuitenkin yleensä riittää, että funktiot ovat suurimmilta osin derivoituvia. Neuroverkkojen yhteydessä gradienttimenetelmä toimii valittaessa neuronien aktivaatiofunktioksi pääosin derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan, kunnes gradientti on tarpeeksi pieni, päädytään lähelle lokaalia minimiä.
+  Gradienttimenetelmä (gradient descent) on numeerinen menetelmä joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Käytännössä kuitenkin yleensä riittää, että funktiot ovat suurimmilta osin derivoituvia. Neuroverkkojen yhteydessä gradienttimenetelmä toimii valittaessa neuronien aktivaatiofunktioksi pääosin derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan, kunnes gradientti on tarpeeksi pieni, päädytään lähelle lokaalia minimiä.
 
   Takaisinvirtausalgoritmilla voidaan laskea virhefunktiolle osittaisderivaatta kunkin verkon painon suhteen. Osittaisderivaatoista voidaan muodostaa virhefunktiolle gradientti ja siten soveltaa gradienttimenetelmää. Virhefunktion osittaisderivaatan selvittämiseksi yksittäisen neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen tarvitaan ensin välituloksena virhefunktion osittaisderivaatta neuronin $n_j$ kohdalla. 
 
-  Neuroverkon voidaan ajatella olevan yhdistetty funktio sen neuroneiden funktioista, joten sen derivointiin on kätevää soveltaa ketjusääntöä. Jotta virhefunktion arvot saadaan osaksi verkkoa, lisätään ulostulokerroksen jälkeen yksi näennäinen neuroni joka ottaa ulostulokerroksen neuroneiden ulostulot syötteenään ja laskee niiden perusteella virhefunktion arvon. Nyt virhefunktion derivaattojen laskentaan voidaan hyödyntää seuraavaksi esitettävää verkkomuotoista derivaatan ketjusäännön toteutusta. 
+  Neuroverkon voidaan ajatella olevan yhdistetty funktio sen neuroneiden funktioista, joten derivoimisessa voidaan soveltaa ketjusääntöä. Jotta virhefunktion arvot saadaan osaksi verkkoa, lisätään ulostulokerroksen jälkeen yksi näennäinen neuroni, joka ottaa ulostulokerroksen neuroneiden ulostulot syötteenään, ja laskee niiden perusteella virhefunktion arvon. Nyt virhefunktion derivaattojen laskentaan voidaan hyödyntää seuraavaksi esitettävää verkkomuotoista derivaatan ketjusäännön toteutusta. 
     
   \begin{figure}[h]
     \centering
@@ -233,7 +230,7 @@
     \label{pic:backpropagation}
   \end{figure}
 
-  Takaisinvirtausvaiheessa verkkoa kuljetaan takaperin aikaisempaan nähden. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, kuljettaen tätä arvoa mukana solmulta toiselle, ja uuteen solmuun saavuttaessa kertomalla mukana kulkeva arvo solmuun tallennetulla, kuvassa \ref{pic:backpropagation} solmun vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta esimerkin kahden solmun läpi kulkemisen jälkeen yhdistetty funktio $f(g(x))$ on saatu muotoon $f'(g(x))g'(x)$ joka on funktion $f(g(x))$ derivaatta. 
+  Takaisinvirtausvaiheessa verkkoa kuljetaan takaperin aikaisempaan nähden. Takaisinvirtaus aloitetaan syöttämällä verkkoon numero yksi, kuljettaen tätä arvoa mukana solmulta toiselle, ja uuteen solmuun saavuttaessa kertomalla mukana kulkeva arvo solmuun tallennetulla, kuvassa \ref{pic:backpropagation} solmun vasemmalla puoliskolla näkyvällä arvolla. Näin lopulta esimerkin kahden solmun läpi kulkemisen jälkeen yhdistetty funktio $f(g(x))$ on saatu muotoon $f'(g(x))g'(x)$, joka on funktion $f(g(x))$ derivaatta. 
 
   Kuvaamalla virhefunktion derivaattaa neuronin $n_j$ kohdalla merkinnällä $\delta_j$ voidaan virhefunktion derivaatta suhteessa painoon $w_{ij}$ esittää muodossa 
 
@@ -252,13 +249,13 @@
 
   \subsection{Ylisovitus}
 
-  Suuri haaste neuroverkkojen harjoittamisessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty tekniikoita kuten esimerkiksi neuroniyksikköjen pudotus (dropout) jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä, joka estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti \cite{dropout-srivastava}.
+  Suuri haaste neuroverkkojen harjoittamisessa on ylisovitus (overfitting) jossa neuroverkon virhefunktion arvo on harjoitusdatalla saatu erittäin pieneksi, mutta uuden datan kanssa virhefunktio antaa suuria arvoja. Tällöin neuroverkon oppima malli vastaa harjoitusdataa liian tarkkaan, eikä enää suoriudu yleisestä tapauksesta toivotulla tavalla. Ylisovitusta korjaamaan on kehitetty tekniikoita, kuten esimerkiksi neuroniyksikköjen pudotus (dropout), jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä, mikä estää yksittäisiä neuroneita naapureineen erikoistumatta tiettyyn datan ominaisuuteen liian tarkasti \cite{dropout-srivastava}.
 % 
 
   \subsection{Esimerkki harjoittamisesta}
 
 
-  Tässä kappaleessa käymme läpi neuroverkkojen harjoittamisesta esimerkin jossa suoritamme yhden harjoittamiskierroksen yhdellä harjoitusaineiston yksiköllä. Laskemme ensin neuroverkon antaman tuloksen esimerkkisyötteelle satunnaisesti alustetuin painotuksin, ja sen jälkeen suoritamme harjoittamiskierroksen takaisinvirtausalgoritmia ja gradienttimenetelmää hyödyntäen pyrkien näin muuttamaan neuroverkon aluksi antamaa tulosta lähemmäksi harjoitusaineiston yksikköä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusarvoja, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia. Aktivaatiofunktiona käytetään sigmoidista funktiota $$ \frac{1}{1 + e^{-x}} $$ koska se on kivan muotoinen ja yleisesti käytetty? TODO: kuva sigmoidisesta funktiosta?.
+  Tässä kappaleessa käymme läpi neuroverkkojen harjoittamisesta esimerkin, jossa suoritamme yhden harjoittamiskierroksen yhdellä harjoitusaineiston yksiköllä. Laskemme ensin neuroverkon antaman tuloksen esimerkkisyötteelle satunnaisesti alustetuin painotuksin, ja sen jälkeen suoritamme harjoittamiskierroksen takaisinvirtausalgoritmia ja gradienttimenetelmää hyödyntäen pyrkien näin muuttamaan neuroverkon aluksi antamaa tulosta lähemmäksi harjoitusaineiston yksikköä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusarvoja, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia. Aktivaatiofunktiona käytetään sigmoidista funktiota $$ \frac{1}{1 + e^{-x}} $$ koska se on kivan muotoinen ja yleisesti käytetty? TODO: kuva sigmoidisesta funktiosta?.
 
     \begin{figure}[h]
     \centering
@@ -345,27 +342,31 @@
 
     Konvoluutioverkkojen nimi juontaa juurensa matemaattiseen konvoluutioon, sillä kaava jolla konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa
 
-    $$ \sum_{l=0}^{4}\sum_{m=0}^{4} w_{l,m}a_{j+l,k+m}$$
+    % TODO: kuuluuko loppuun pilkku?
+    $$ \sum_{l=0}^{4}\sum_{m=0}^{4} w_{l,m}a_{j+l,k+m},$$
     
     joka on käytännössä diskreetti konvoluutio, jossa painotukset ovat konvoluution ydin (kernel).
 
-    Intuitiivisemmin, konvoluution voidaan ajatella olevan liukuva ikkuna, joka rajoittaa neuronit saamaan kuvan \ref{pic:convolution} mukaisesti syötteenään vain osan syötekerroksensa ulostuloista, täysin yhdistetyistä neuroverkkokerroksista poiketen. Tämä rajoittuneisuus mahdollistaa neuroneiden erikoistumisen johonkin osa-alueeseen syötteissään, joka on erityisen hyödyllistä haluttaessa käyttää neuroverkkoja syötteiden tutkintaan joissa ilmenee paikallisuutta. Esimerkiksi kuvat ovat erittäin paikallistuneita, pikselien etäisyys toisistaan korreloi vahvasti sen kanssa, liittyykö niiden sisältö toisiinsa.
+    Konvoluution voidaan ajatella olevan liukuva ikkuna, joka rajoittaa neuronit saamaan kuvan \ref{pic:convolution} mukaisesti syötteenään vain osan syötekerroksensa ulostuloista, täysin yhdistetyistä neuroverkkokerroksista poiketen. Tämä rajoittuneisuus mahdollistaa neuroneiden erikoistumisen johonkin osa-alueeseen syötteissään, joka on erityisen hyödyllistä haluttaessa käyttää neuroverkkoja syötteiden tutkintaan joissa ilmenee paikallisuutta. Esimerkiksi kuvat ovat erittäin paikallistuneita, pikselien etäisyys toisistaan korreloi vahvasti sen kanssa, liittyykö niiden sisältö toisiinsa.
 
     Kuvasta \ref{pic:convolution} ilmenee myös toinen yleinen konvoluutiokerrosten piirre: mikäli tehdään vain konvoluutioita joissa ydin mahtuu kokonaan syötekuvaan, konvoluutiokerroksella on vähemmän ulostuloja kuin sisääntuloja. Kuvan tapauksessa nähdään syötematriisin ollessa 3x4, ja ytimen 2x2 kokoinen, ulostulomatriisin kooksi tulee 2x3. Tällä tavalla konvoluutio mahdollistaa myös sen, että konvoluutioverkot voivat ottaa vastaan vaihtelevan kokoisia syötteitä.
 
     \subsection{Ominaisuuskartat ja jaetut painot}
+    % TODO: ei yhtään viitettä
   TODO: lisää kuvia yms. siitä mitä ydin on jne.
 
-    Konvoluutiokerroksia on yleensä useita rinnakkain, ja konvoluutiokerrosten neuronit jakavat samassa kerroksessa olevien neuroneiden kesken yhteiset painot (shared weights). Kerroksien yhteiset painot mahdollistavat sen, että kukin kerros oppii tunnistamaan translationaalisesti invariantteja ominaisuuksia syötteistään, ja yksittäisen neuronin voidaan ajatella kertovan löytyykö sen saamien syötteiden alueelta tätä ominaisuutta. Esimerkiksi kuvien tapauksessa ominaisuuskartta joka löytää kuvasta suoria viivoja saattaa olla hyödyllinen, sillä suoria viivoja voi ilmetä useassa eri paikassa kuvassa, ja toisaalta korkeammalla abstraktiotasolla kissa on edelleen kissa, vaikka sitä olisi siirretty muutamia pikseleitä johonkin suuntaan.
+  % TODO selitä lisää miten yhteiset painot toimivat
+    Konvoluutiokerroksia on yleensä useita rinnakkain, ja konvoluutiokerrosten neuronit jakavat samassa kerroksessa olevien neuroneiden kesken yhteiset painot (shared weights). Kerroksien yhteiset painot mahdollistavat sen, että kukin kerros oppii tunnistamaan translationaalisesti invariantteja ominaisuuksia syötteistään, ja yksittäisen neuronin voidaan ajatella kertovan löytyykö sen saamien syötteiden alueelta tätä ominaisuutta. Esimerkiksi kuvien tapauksessa ominaisuuskartta joka löytää kuvasta suoria viivoja saattaa olla hyödyllinen, sillä suoria viivoja voi ilmetä useassa eri paikassa kuvassa, ja toisaalta korkeammalla abstraktiotasolla inhimillisen käsityksen mukaan kuvassa esiintyvät objektit ovat edelleen sama objekti, vaikka niitä olisi siirretty muutamia pikseleitä johonkin suuntaan.
 
-    Painotuksien jakamisen ansiosta konvolutionaalisten kerroksien ja siten neuroverkkojen parametrien määrä on usein huomattavasti pienempi kuin vain täysin yhdistettyjä kerroksia sisältävissä neuroverkoissa, mikä mahdollistaa tehokkaamman harjoittamisen.
     \subsection{Kokoaminen ja tehokkuus}
-    Usein konvoluutioverkoissa käytetään heti konvoluutiokerrosten jälkeen kokoamiskerroksia, jotka tekevät yhteenvedon jostakin edeltävästä neuroverkkokerroksen alueesta. Hyvin yleinen maksimikokoamiskerros (max-pooling) antaa ulostuloksi esimerkiksi 2x2 kokoiselle syötteelle suurimman yksittäisen aktivointiarvon alueen neuroneista.
+    Usein konvoluutioverkoissa käytetään konvoluutiokerroksista seuraavina kokoamiskerroksia, jotka tekevät yhteenvedon jostakin edeltävästä neuroverkkokerroksen alueesta. Esimerkiksi hyvin yleisen maksimikokoamiskerroksen (max-pooling) neuronit antavat ulostulokseen syöteneuroniensa ulostuloista suurimman.
+    %viitteet viitteet viitteet
 
-    Sekä kokoamiskerrokset että jaetut painotukset yhdessä vähentävät konvolutionaalisten neuroverkkojen tarvittavien harjoitettavien parametrien määrää ja mahdollistavat niiden tehokkaan käytön suurillekkin syötteille.
+    Kokoamiskerrokset ja jaetut painotukset vähentävät konvolutionaalisten neuroverkkojen harjoittamiseen tarvittavien parametrien määrää verrattuna neuroverkkoihin, joissa on vain täysin yhdistettyjä kerroksia. Tällä voidaan nopeuttaa neuroverkkojen harjoittamista ja lisätä suorituskykyä.
 
     \subsection{Täysin yhdistetyt kerrokset}
-    Viimeinen kerros konvolutionaalisista neuroverkoista on yleensä tavallinen täysin yhdistetty verkkokerros, joka samalla litistää (flattening) useaan rinnakkaiseen kerrokseen jakautuneen verkon takaisin yhteen.
+    %TODO: miksi kerrokset haluttaisiin litistää takaisin yhteen?
+    Konvoluutiokerrosten kohdalla konvolutionaaliset neuroverkot haarautuvat yleensä rinnakkaisiin kerroksiin. Sijoittamalla verkon viimeiseksi kerrokseksi täysin yhdistetyn kerroksen nämä rinnakkaiset kerrokset voidaan litistää (flattening) takaisin yhteen.
 
   \section{Konvolutionaalisten neuroverkkojen sovellukset}
     Konvoluutioverkkoja on käytetty erityisen onnistuneesti kuvien sisällön luokitteluun. Monille kuvia tunnistaville neuroverkoille yhteinen piirre on, että ulostulokerroksessa on yksi neuroni jokaista tunnistettavaa objektiluokkaa kohden, ja neuronin arvo kertoo kuinka todennäköisesti kyseisen luokan objekti löytyy kuvasta.
@@ -387,7 +388,7 @@
 
 \section{Yhteenveto} 
 
-Tässä tekstissä käytiin läpi ensin kaikille neuroverkoille yleisiä piirteitä kuten yksittäisen neuronin rakennetta ja sitä, miten yksittäisistä neuroneista muodostetaan eteenpäinsyöttävä neuroverkko. Takaisinvirtausalgoritmista esiteltiin kuinka sen avulla pystytään gradienttimenetelmää hyödyntäen harjoittamaan neuroverkkoja harjoitusaineiston perusteella. Tämän jälkeen käsiteltiin konvolutionaalisten neuroverkkojen eroavaisuuksia muista neuroverkoista ja lopuksi esittelimme käytännön esimerkin konvolutionaalisesta neuroverkosta.
+Aloitettiin käymällä läpi kaikille neuroverkoille yleisiä piirteitä, kuten yksittäisen neuronin rakennetta ja sitä, miten yksittäisistä neuroneista muodostetaan eteenpäinsyöttävä neuroverkko. Seuraavaksi esiteltiin kuinka neuroverkkoja voidaan harjoittaa harjoitusaineiston perusteella takaisinvirtausalgoritmin ja gradienttimenetelmän avulla. Lopuksi käsittelimme konvolutionaalisten neuroverkkojen eroavaisuuksia muista neuroverkoista ja esiteltiin käytännön esimerkki konvolutionaalisesta neuroverkosta.
 
 Käsittelemättä jäi ...?
 
