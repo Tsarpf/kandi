@@ -86,7 +86,7 @@
 
   % The following can be used to specify keywords and classification of the paper:
 
-  \keywords{neuroverkot, neuroverkkojen harjoittaminen, kuvien luokittelu}
+  \keywords{neuroverkot, neuroverkkojen harjoittaminen, konvolutionaaliset neuroverkot, kuvien luokittelu}
 
   % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
   % This is probably mostly relevant for computer scientists
@@ -138,38 +138,47 @@
 
   Lopullinen syväoppimisen läpimurto tapahtui vuonna 2012 kun suurimman kuvista objektien tunnistamisen kilpailun, ImageNet Large Scale Visual Recognition Challengen (ILSVRC), voitti ensimmäistä kertaa syvä konvolutionaalinen neuroverkko \cite{KSHimagenet2012}. Voitto tapahtui myös huomattavalla erolla toisen sijan saavuttaneeseen sekä aikaisempien vuosien voittajiin. Tämän jälkeen kilpailun on joka vuosi voittanut syvä konvoluutioverkko, ja nykyään neuroverkot pärjäävät kyseisessä varsin rajoitetussa tunnistamistehtävässä ihmistä paremmin.
 
-  Nykyään ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla keksityt. Jonkin verran muutoksia silloisiin algoritmeihin on kuitenkin tehty, erityisesti syvien verkkorakenteiden harjoittamista helpottavina yksinkertaistuksina. Selkeästi suurin syy syväoppimisen vasta äskettäin tärkeäksi muuttumiseen on kuitenkin yhteiskunnan digitalisoitumisen myötä merkittävästi kasvanut helposti saatavilla olevan luokitellun datan määrä, sekä valtavasti kasvanut laskentakapasiteetti, jotka olivat edellytyksiä algoritmien mielekkäälle käyttämiselle \cite{Goodfellow-et-al-2016}.
+  Nykyään ihmisille monimutkaisissakin tehtävissä pärjäävät oppimisalgoritmit ovat pääasiassa samoja kuin jo 80-luvulla keksityt. Jonkin verran muutoksia silloisiin algoritmeihin on kuitenkin tehty, erityisesti syvien verkkorakenteiden harjoittamista helpottavina yksinkertaistuksina. Suurimmat syyt syväoppimisen tärkeäksi muuttumiselle vasta viime vuosina on yhteiskunnan digitalisoitumisen myötä merkittävästi kasvanut helposti saatavilla olevan luokitellun datan määrä ja valtavasti kasvanut laskentakapasiteetti, jotka olivat edellytyksiä algoritmien mielekkäälle käyttämiselle \cite{Goodfellow-et-al-2016}.
 
   Esimerkkinä tarvittavan harjoitusdatan määrästä konvolutionaalisten neuroverkkojen harjoittamiseen kuvien luokittelua varten toimii yleensä tuhansia ellei jopa miljoonia kuvien sisällön perusteella etukäteen luokiteltuja kuvia. Esimerkiksi ILSVRC-kilpailun harjoitusdatana käytössä oleva ImageNet sisältää yli 14 miljoonaa luokiteltua kuvaa \cite{imagenet-website}. Kuvien sisällön tunnistamisen lisäksi syväoppiminen on osoittautunut erittäin hyödylliseksi useissa aikaisemmin haasteellisiksi osoittautuneissa sovelluskohteissa, kuten puheentunnistuksessa \cite{abdel2012applying}, liikennemerkkien luokittelussa \cite{sermanet2011traffic}, sekä jalankulkijoiden tunnistamisessa \cite{szarvas2005pedestrian}.
 
-  Ensin käydään läpi yleisiä keinotekoisten neuroverkkojen piirteitä, kuten yksittäisten neuronien ja eteenpäinsyöttävien neuroverkkojen rakennetta. Tämän jälkeen selitetään kuinka neuroverkkoja harjoitetaan harjoitusaineiston avulla takaisinvirtausalgoritmia ja gradienttimenetelmää hyödyntäen. Lopuksi käydään läpi miten konvolutionaaliset neuroverkot eroavat muista neuroverkoista ja mitä sovelluksia niille löytyy.
+  Tässä tutkielmassa aloitetaan käymällä läpi yleisiä keinotekoisten neuroverkkojen piirteitä, kuten yksittäisten neuronien ja eteenpäinsyöttävien neuroverkkojen rakennetta. Seuraavaksi käydään läpi kuinka neuroverkkoja harjoitetaan harjoitusaineiston avulla takaisinvirtausalgoritmia hyödyntäen. Lopuksi tutkitaan miten konvolutionaaliset neuroverkot eroavat muista neuroverkoista ja mitä sovelluksia niille löytyy.
 
   \section{Neuroverkkojen rakenne}
+    %TODO: lähdeviitteet! 
+
+  %todo kysy miten tarkalleen tää viittaus kannattaa tehdä?
+  Tässä kappaleessa käydään läpi Michael A. Nielsen, Neural Networks and Deep Learning \cite{Nielsen-neural} kirjaan pohjautuen perusteet keinotekoisten neuroneiden ja neuroverkkojen rakenteesta. 
+
   \subsection{Keinotekoinen neuroni}
     \label{chap:artificial-neuron}
 
-    %TODO: lähdeviitteet! 
-    TODO: Pitäisikö tässä tai johdannon lopussa mainita, että rakenneosiot ovat Neural Networks and Deep Learning kirjasta \cite{Nielsen-neural} peräisin ja ei lisätä citeä joka lauseen loppuun? 
+    \begin{figure}[h]
+      \centering
+      \includegraphics[scale=0.70]{neuron}
+      %\caption{Keinotekoinen neuroni jossa syötteet $x_1 ... x_i$, summaus $\Sigma w_i x_i$, aktivaatiofunktio $f$, ja ulostuloarvo y.}
+      \caption{Keinotekoisen neuronin rakenne}
+      \label{pic:neuron}
+    \end{figure}
 
-    Biologisista vaikuttimistaan huolimatta keinotekoiset neuronit ovat käytännössä (TODO: selitä pelkästään tekstimuodossa re: palaute)
+    Keinotekoiset neuronit ottavat vastaan yhden tai useampia syötteitä $x_i$ ... $x_i$, joista kullakin on jokin painoarvo $w$. Neuroneilla on yksi ulostuloarvo $y$, joka muodostetaan sen syötteistä kahdessa vaiheessa.
+    Ensimmäisessä vaiheessa syötteet kerrotaan painoarvollaan, summataan $\Sigma w_i x_i$, ja mahdollinen taipumusvakio (bias) $b$ lisätään tähän summaan.
+    Toisessa vaiheessa summa syötetään aktivaatiofunktiolle $f$, jonka ulostuloarvo toimii neuronin ulostuloarvona.
 
-     $$ x_1, x_2, ..., x_n \mapsto \Sigma w_i x_i \mapsto f(\Sigma w_i x_i + b) $$
-
-    kaltaisia matemaattisia funktioita. Ne ottavat vastaan yhden tai useampia syötteitä $x_1$, $x_2$, ..., $x_n$, joista kullekin on asetettu jokin painoarvo $w_i$. Syötteiden ja painotuksien tulojen summa $\Sigma x_i w_i$ annetaan parametrina aktivaatiofunktiolle $f$ ja tämän funktion arvo toimii neuronin lopullisena ulostuloarvona. Toisinaan käytetään myös taipumusvakiota (bias) $b$, joka lisätään syötteiden ja painotuksien tulojen summaan, tarkoituksena säätää neuronin ulostuloarvoja painotuksista riippumatta \cite{Nielsen-neural}.
-
-    50-luvulla kehitetyn perseptronin, joka oli ensimmäinen tällainen neuroni, syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktio muotoa
-
-    \begin{equation}
-      f(\Sigma w_i x_i + b)
-      \begin{cases}
-        0\; \text{jos} \; \Sigma x_i w_i + b \leq 0 \\
-        1\; \text{jos} \; \Sigma x_i w_i + b > 0. \\
-      \end{cases}
-      \label{eq:perceptron}
-    \end{equation}
-
-    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvon muuttumisen kautta. Perseptroneja käytettäessä törmätään kuitenkin usein ongelmaan, jossa yksi pieni muutos painotuksissa tai taipumusarvossa johtaa ulostuloarvon vaihtumiseen, joka saattaa aiheuttaa suuria muutoksia ulostuloarvoissa myös koko neuroverkon tasolla. Usein halutaan hienovaraisempia muutoksia ja tällöin käytetään neuroneita joiden syöte- ja paluuarvot voivat olla myös mitä vain reaalilukuja nollan ja yhden väliltä. Esimerkiksi yksi tällainen laajalti käytössä oleva neuroni on sigmoidinen neuroni, jonka aktivaatiofunktiona toimii sigmoidinen funktio.
-
+    % perseptroni helvettiin
+%    50-luvulla kehitetyn perseptronin, joka oli ensimmäinen tällainen neuroni, syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktio muotoa
+%
+%    \begin{equation}
+%      f(\Sigma w_i x_i + b)
+%      \begin{cases}
+%        0\; \text{jos} \; \Sigma x_i w_i + b \leq 0 \\
+%        1\; \text{jos} \; \Sigma x_i w_i + b > 0. \\
+%      \end{cases}
+%      \label{eq:perceptron}
+%    \end{equation}
+%
+%    Yksittäisen neuronin tasolla neuronien oppiminen tapahtuu syötteiden painotuksien ja taipumusarvon muuttumisen kautta. Perseptroneja käytettäessä törmätään kuitenkin usein ongelmaan, jossa yksi pieni muutos painotuksissa tai taipumusarvossa johtaa ulostuloarvon vaihtumiseen, joka saattaa aiheuttaa suuria muutoksia ulostuloarvoissa myös koko neuroverkon tasolla. Usein halutaan hienovaraisempia muutoksia ja tällöin käytetään neuroneita joiden syöte- ja paluuarvot voivat olla myös mitä vain reaalilukuja nollan ja yhden väliltä. Esimerkiksi yksi tällainen laajalti käytössä oleva neuroni on sigmoidinen neuroni, jonka aktivaatiofunktiona toimii sigmoidinen funktio.
+%
   %kappaleessa 3 rojanista hyvää juttua \cite{Rojas96}
 
   %http://neuralnetworksanddeeplearning.com/chap1.html keksi parempi lähde
@@ -178,10 +187,10 @@
   \subsection{Keinotekoisten neuroverkkojen rakenne}
 
   \begin{figure}[h]
-  \centering
-  \includegraphics[scale=0.5]{basic-neuralnet}
-  \caption{Tyypillinen neuroverkon rakenne, jossa kaksi piilokerrosta \cite{Nielsen-neural}}
-  \label{pic:neuralnet}
+    \centering
+    \includegraphics[scale=0.5]{basic-neuralnet}
+    \caption{Tyypillinen neuroverkon rakenne, jossa kaksi piilokerrosta \cite{Nielsen-neural}}
+    \label{pic:neuralnet}
   \end{figure}
 
   Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan tasoittain, jossa jokaisen verkon tason neuronit saavat syötteenään niitä edeltävän tason neuroneiden ulostuloarvot. Poikkeuksena ensimmäinen taso (kuvassa vasemmanpuoleisimpana), joihin verkon syöte koodataan. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan. Neuroverkon laskennan lopputuloksena toimii verkon viimeisen tason neuroneiden ulostuloarvot.
@@ -347,6 +356,7 @@
     \subsection{ReLU}
     ...
     %(TODO:lisää kuvia ja selitystä ytimestä, kuten esitelmähommassa puhuttiin)
+    % esim värittämällä kernelin/feature mapin painotukset nähdään millaisia featureja se etsii
     \subsection{Konvoluutiokerrokset}
     
     \begin{figure}[h]
@@ -357,6 +367,7 @@
     \end{figure}
 
     Konvoluutioverkkojen nimi juontaa juurensa matemaattiseen konvoluutioon, sillä kaava jolla konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa
+    % ^ local receptive fieldsistä voisi olla kuva, esim http://neuralnetworksanddeeplearning.com/images/tikz43.png
 
     % TODO: kuuluuko loppuun pilkku?
     $$ \sum_{l=0}^{4}\sum_{m=0}^{4} w_{l,m}a_{j+l,k+m},$$
