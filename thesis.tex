@@ -161,9 +161,30 @@
       \label{pic:neuron}
     \end{figure}
 
-    Keinotekoiset neuronit ottavat vastaan yhden tai useampia syötteitä $x_i$ ... $x_i$, joista kullakin on jokin painoarvo $w$. Neuroneilla on yksi ulostuloarvo $y$, joka muodostetaan sen syötteistä kahdessa vaiheessa.
-    Ensimmäisessä vaiheessa syötteet kerrotaan painoarvollaan, summataan $\Sigma w_i x_i$, ja mahdollinen taipumusvakio (bias) $b$ lisätään tähän summaan.
-    Toisessa vaiheessa summa syötetään aktivaatiofunktiolle $f$, jonka ulostuloarvo toimii neuronin ulostuloarvona.
+    Keinotekoiset neuronit ottavat vastaan yhden tai useampia syötteitä $x_i$ ... $x_i$, joista kullakin on jokin painoarvo $w_i$. Neuroneilla on yksi ulostuloarvo $y$, joka muodostetaan sen syötteistä kahdessa vaiheessa.
+
+    %Ensimmäisessä vaiheessa syötteet litistetään yhdeksi arvoksi kertomalla ne painoarvollaan, summaamalla ne $\Sigma w_i x_i$, ja lisäämällä taipumusvakion (bias) $b$ tähän summaan.
+    %Ensimmäisessä vaiheessa syötteet litistetään yhdeksi arvoksi summaamalla syötteet, joista kukin kerrotaan painoarvollaan, ja summaan lisätään lopuksi taipumusvakio (bias) $b$.
+    Ensimmäisessä vaiheessa syötteet kerrotaan painotusarvollaan ja litistetään yhdeksi arvoksi summaamalla. Summaan lisätään lopuksi painotusarvo $b$.
+
+    Toisessa vaiheessa summa syötetään aktivaatiofunktiolle $f$, jonka ulostuloarvo toimii koko neuronin yksittäisenä ulostuloarvona. Vaikka neuroneilla on vain yksi ulostuloarvo, tämä arvo voi toimia usean muun neuronin syötteenä.
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{sigmoid}
+    \caption{Sigmoidinen funktio}
+      
+    \label{pic:sigmoid}
+  \end{figure}
+
+    Aktivaatiofunktioina käytetään usein derivoituvia funktioita, sillä tämä helpottaa myöhemmin kappaleessa \ref{chap:backprop} esiteltävän takaisinvirtausalgoritmin käyttöä. Eräs suosittu aktivaatiofunktio on sigmoidinen funktio
+
+    % TODO miksi sigmoidinen? ees lyhyesti?
+    \begin{equation}
+      \frac{1}{1 + e^{-x}}.
+      \label{eq:sigmoid-func}
+    \end{equation}
+
 
     % perseptroni helvettiin
 %    50-luvulla kehitetyn perseptronin, joka oli ensimmäinen tällainen neuroni, syötteet ja ulostuloarvot ovat binäärisiä ja aktivaatiofunktio muotoa
@@ -216,6 +237,7 @@
 
 
   \subsection{Gradienttimenetelmä ja takaisinvirtausalgoritmi}
+  \label{chap:backprop}
   Gradienttimenetelmä (gradient descent) on numeerinen menetelmä joka toimii minkä tahansa derivoituvan funktion lokaalien minimien etsintään. Käytännössä kuitenkin yleensä riittää, että funktiot ovat suurimmilta osin derivoituvia. Neuroverkkojen yhteydessä gradienttimenetelmä toimii valittaessa neuronien aktivaatiofunktioksi pääosin derivoituvia funktioita, jolloin myös koko neuroverkon tuottamat arvot ja siten virhefunktio ovat derivoituvia. Gradientti kertoo mihin suuntaan funktion arvo laskee nopeimmin, joten kuljettaessa iteratiivisesti tähän suuntaan, kunnes gradientti on tarpeeksi pieni, päädytään lähelle lokaalia minimiä.
 
   Takaisinvirtausalgoritmilla voidaan laskea virhefunktiolle osittaisderivaatta kunkin verkon painon suhteen. Osittaisderivaatoista voidaan muodostaa virhefunktiolle gradientti ja siten soveltaa gradienttimenetelmää. Virhefunktion osittaisderivaatan selvittämiseksi yksittäisen neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen tarvitaan ensin välituloksena virhefunktion osittaisderivaatta neuronin $n_j$ kohdalla. 
@@ -277,7 +299,9 @@
 
   \subsection{Esimerkki harjoittamisesta}
 
-  Lasketaan ensin neuroverkon antama tulos esimerkkisyötteelle satunnaisesti alustetuin painotuksin ja selvitetään sen jälkeen takaisinvirtausalgoritmin avulla yhdelle verkon painotukselle uusi arvo, joka vähentää verkon tekemää virhettä esimerkin harjoitusaineiston yksiköllä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusarvoja, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia. Aktivaatiofunktiona käytetään sigmoidista funktiota $$ \frac{1}{1 + e^{-x}} $$ TODO: jossain voisi käsitellä miksi sigmoidinen, ja olla kuva sigmoidisesta funktioista?.
+  Lasketaan ensin neuroverkon antama tulos esimerkkisyötteelle satunnaisesti alustetuin painotuksin ja selvitetään sen jälkeen takaisinvirtausalgoritmin avulla yhdelle verkon painotukselle uusi arvo, joka vähentää verkon tekemää virhettä esimerkin harjoitusaineiston yksiköllä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusarvoja, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia.
+  %TODO: keksi onko eq:sigmoid-func todella lauseke vai mikä?
+   Aktivaatiofunktiona käytetään lausekkeessa \ref{eq:sigmoid-func} esiteltyä sigmoidista funktiota $\sigma (x)$.
 
     \begin{figure}[h]
     \centering
