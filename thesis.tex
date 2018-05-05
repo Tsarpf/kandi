@@ -218,12 +218,9 @@
   Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan kerroksittain niin, että kunkin verkon kerroksen neuronien syötteet ovat niitä edeltävän tason neuroneiden ulostuloarvoja. 
   Yleisimmissä täysin yhdistetyissä (fully connected) neuroverkkokerroksissa jokainen kerroksen neuroni on yhdistetty jokaiseen sitä edeltävän kerroksen neuroniin. Myös muita tapoja yhdistää kerrokset käytetään, kuten esimerkiksi kappaleessa \ref{chap:convolutional-layers} esiteltävissä konvoluutiokerroksissa. 
   
-  Neuroverkoissa on aina ainakin syöte- ja ulostulokerros, sekä vaihteleva määrä niiden välissä olevia piilokerroksia.
-  Eteenpäinsyöttävissä neuroverkoissa ei ole silmukoita, eli informaatio kulkee niissä aina vain yhteen suuntaan. Silmukoita sisältäviä neuroverkkorakenteita hyödynnetään esimerkiksi takaisinkytkeytyvissä neuroverkoissa [TODOcite], mutta ne eivät kuulu tämän tutkielman aihepiiriin.
-  % ^ TODO tän muotoilusta vois kysyä ohjaajalta.
-  
-  Kuvassa \ref{pic:neuralnet} vasemmanpuoleisimpana nähdään syötekerros. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan. Neuroverkon laskennan lopputuloksena toimii verkon viimeisen kerroksen neuroneiden ulostuloarvot.
+  Neuroverkoissa on aina ainakin syöte- ja ulostulokerros, sekä vaihteleva määrä niiden välissä olevia piilokerroksia. Eteenpäinsyöttävissä neuroverkoissa ei ole silmukoita, eli informaatio kulkee niissä aina vain yhteen suuntaan, syötekerroksesta mahdollisten piilokerrosten kautta kohti ulostulokerrosta, jonka neuroneiden ulostuloarvot ovat neuroverkon laskennan lopputulos. Silmukoita sisältäviä takaisinkytkeytyviä neuroverkkoja on myös olemassa [TODOcite], mutta ne eivät kuulu tämän tutkielman aihepiiriin.
 
+  Kuvassa \ref{pic:neuralnet} vasemmanpuoleisimpana nähdään syötekerros. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan.
   % cite???
   Kasvattamalla piilokerroksien sekä kerroksissa olevien neuronien määrää, neuroverkoilla voidaan mallintaa entistä monimutkaisempia funktioita. Vaikka syväoppimista voidaan harjoittaa myös muutoin kuin keinotekoisilla neuroverkoilla, neuroverkkojen tapauksessa termillä viitataan neuroverkkojen piilokerrosten määrään. 
 
@@ -248,20 +245,20 @@
   Neuroverkkojen tekemää virhettä mitataan tyypillisesti virhefunktion (error function) avulla. Virhettä halutaan minimoida koko harjoitusaineiston suhteen, joten minimoitava virhefunktio koostetaan useista harjoitusaineiston yksiköistä saatujen virheiden summasta. Usein harjoitusaineistot kuitenkin koostuvat miljoonista yksiköistä jolloin ongelmaksi muodostuu tehokkuus, joten käytännössä yleensä virhe lasketaan vain osalle harjoitusaineistosta.
 
   %todo lähde
-   Eräs hyvin yleisesti käytetty virhefunktio on neliöllinen virhefunktio
+   Hyvin yleisesti käytetään neliöllistä virhefunktiota
 
   \begin{equation}
     E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i) - z_i \|^2,
     \label{eq:error-function}
   \end{equation}
 
-  jossa $y(x_i)$ on neuroverkon tuottama tulos jollakin harjoitusaineiston yksikön syötteellä $x_i$, $z_i$ on harjoitusaineiston perusteella syötteelle $x_i$ toivottu ulostuloarvo, ja $N$ syötteiden määrä.
+  jossa $y(x_i)$ on neuroverkon tuottama tulos jollakin harjoitusaineiston yksikön syötteellä $x_i$, $z_i$ on harjoitusaineiston perusteella syötteelle $x_i$ toivottu ulostuloarvo, ja $N$ syötteiden määrä. Koska $y(x_i)$ ja $z_i$ ovat yleensä vektoreita, merkinnällä $\|v\|$ tarkoitetaan erotuksesta muodostuvan vektorin euklidista normia.
 
   %todo "tuottamaan virheeseen"?
   %todo "menetelmiä minimointiin"?
   %todo lähde
   %todo lasketaanko virhe kerran ja siihen suhteessa kerran painojen derivaatat, vai derivaatta jokaista yksittäistä virhettä kohtaan ja niiden keskiarvo?
-  Harjoitusvaiheessa ainoat neuroverkossa muutettavissa olevat parametrit ovat sen neuroneiden syötteiden painotusarvot sekä neuroneiden taipumusvakiot. Seuraavaksi esitellään gradienttimenetelmä ja takaisinvirtausalgoritmi, joiden avulla voidaan selvittää, kuinka suuri vaikutus kullakin verkon painolla on koko verkon tuottamaan virheeseen ja pienentää tätä virhettä gradienttimenetelmän mukaisesti.
+  Harjoitusvaiheessa ainoat neuroverkossa muutettavissa olevat parametrit ovat sen neuroneiden syötteiden painotusarvot sekä neuroneiden taipumusvakiot. Seuraavaksi esitellään gradienttimenetelmä ja takaisinvirtausalgoritmi, joiden avulla voidaan selvittää, kuinka suuri vaikutus kullakin painotusarvolla ja taipumusvakiolla on koko verkon virheeseen ja muuttaa niitä suuntaan, joka pienentää virhettä.
   %% TOOO: Mainitse että koko harjoitusdatalle lasketaan yksittäisten kierroksien virhefunktioiden arvoista keskiarvo. Smaa pätee painojen ja taipumusvakioiden derivaatoille, niistä otetaan vain keskiarvo. Tästä sais kokonaisen kappaleen lisää? Stokastisen gradienttimenetelmän kohdalla kylläkin mainitaan asiasta lyhyesti
 
   % The reason we need this assumption is because what backpropagation actually lets us do is compute the partial derivatives  and  for a single training example. We then recover  and  by averaging over training examples.
@@ -289,28 +286,32 @@
 
     %TODO: Aktiivisen tutkimuksen muotoilu? Kysy assarilta?
     %TODO mainitse muunnelmista stokastinen?
-    Vaikka gradienttimenetelmä soveltuukin vain lokaalien minimien etsintään, sen ja sen muunnelmien on huomattu olevan yleensä riittävän toimiva ratkaisu neuroverkkojen harjoittamiseen \cite{Rumelhart-1986-back-prop}\cite{Goodfellow-et-al-2016}. Toistaiseksi käytännön neuroverkkototeutuksissa on todettu olevan tärkeämpää etsiä parametriavaruudesta sellaisia lokaaleita minimeitä, joissa virhefunktio saa pieniä arvoja, kuin etsiä funktion todellista globaalia minimiä \cite{neural-optimization-goodfellow-2015}. Tämä on kuitenkin vielä aktiivisen tutkimuksen aluetta, josta ei ole varmaa tietoa \cite{Goodfellow-et-al-2016}.
+    Vaikka gradienttimenetelmä soveltuukin vain lokaalien minimien etsintään, sen ja sen muunnelmien on huomattu olevan yleensä riittävän toimivia ratkaisuja neuroverkkojen harjoittamiseen \cite{Rumelhart-1986-back-prop}\cite{Goodfellow-et-al-2016}. Toistaiseksi käytännön neuroverkkototeutuksissa on todettu olevan tärkeämpää etsiä parametriavaruudesta sellaisia lokaaleita minimeitä, joissa virhefunktio saa pieniä arvoja, kuin etsiä funktion todellista globaalia minimiä \cite{neural-optimization-goodfellow-2015}. Tämä on kuitenkin vielä aktiivisen tutkimuksen aluetta, josta ei ole varmaa tietoa \cite{Goodfellow-et-al-2016}.
 
     %TODO: tässä 
 
 
   \subsection{Takaisinvirtausalgoritmi}
-    Takaisinvirtausalgoritmi on ohjatun oppimisen algoritmi neuroverkkojen harjoittamiseen gradienttimenetelmää hyödyntämällä. Takaisinvirtausalgoritmissa lasketaan ensin virhefunktiolle osittaisderivaatta kunkin verkon painon suhteen. Osittaisderivaatoista muodostetaan virhefunktiolle gradientti ja sovelletaan siihen gradienttimenetelmää. Virhefunktion osittaisderivaatan selvittämiseksi yksittäisen neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen tarvitaan ensin välituloksena virhefunktion osittaisderivaatta neuronin $n_j$ kohdalla. 
+    Takaisinvirtausalgoritmilla viitataan kaksivaiheiseen neuroverkkojen opetusprosessiin. Eteenpäinvirtaukseksi kutsutaan ensimmäistä vaihetta, jossa neuroverkon virhe lasketaan jollekkin harjoitusaineiston osajoukolle aikaisemmin esitellyllä tavalla. Taaksepäinvirtaukseksi, josta algoritmi on saanut nimensä, kutsutaan virheen kuljettamista verkossa ulostulokerroksesta takaisin kohti syötekerrosta virhefunktion osittaisderivaattojen selvittämiseksi verkon painotusarvojen ja taipumusvakioiden suhteen. Kun virhefunktion osittaisderivaatat painotusarvojen ja taipumusvakioiden suhteen tunnetaan, voidaan niistä muodostaa gradientti ja soveltaa gradienttimenetelmää virheen minimoimiseksi.
 
-    TODO miten selvitetään virheen määrä 1) ulostulokerroksen neuronin kohdalla 2) piilokerroksen neuronin kohdalla.
+    Virhefunktion derivaatan selvittämiseksi yksittäisen neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen tarvitaan ensin välituloksena virhefunktion derivaatta neuronin $n_j$ ulostuloarvon suhteen. Ulostulokerroksen neuroneiden tapauksessa tämä on helppo selvittää, sillä yksittäisen neuronin virhe ulostulokerroksessa on suoraan virhefunktion kaavasta saatava $\frac{1}{2} (o_{i}^{out} - z_i^{out})^2$. Muiden kerroksien neuroneiden virheen laskeminen on monimutkaisempaa, sillä on otettava huomioon, että muissa kerroksissa neuronien ulostuloarvot vaikuttavat niitä seuraavien kerrosten ulostuloarvoihin, ja siten virheisiin. 
 
-  Muiden ulostulokerroksen neuroneiden syötteiden painotukset voidaan laskea vastaavasti. Piilokerroksen painojen aiheuttaman virheen pienentäminen tehdään muuten vastaavasti, mutta laskettaessa kokonaisvirheen muutosta piilokerroksen neuroneiden ulostuloarvojen suhteen, on otettava huomioon piilokerroksen neuroneiden ulostuloarvojen vaikutus useiden ulostulokerroksen neuroneiden tekemään virheeseen.
-
+    %TODO kuva jostain mihin voi viitata
     \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.4]{chain-rule}
-    \caption{TODO piirrä oma kuva, atm: https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/}
-    \label{pic:chain-rule}
+      \centering
+      \includegraphics[scale=0.4]{chain-rule}
+      \caption{Virhefunktion derivaatta syötteen painotuksen suhteen}
+      \label{pic:chain-rule}
     \end{figure}
 
-  Yksittäisen painotuksen vaikutus koko verkon virheeseen voidaan laskea ketjusäännön avulla
+    %TODO Vai jätetäänkö käsittely esimerkkiin?
+    Käsitellään ensin virhefunktion derivaatan selvittämistä ulostulokerroksen neuroneiden syötteiden painotuksien suhteen. 
+    
+    %TODO bias
+    Virhefunktion derivaatta neuronien $n_i$ ja $n_j$ välillä olevan verkon painon $w_{ij}$ suhteen voidaan laskea ketjusäännön avulla
 
-  $$ \frac{\delta E_{koko}}{\delta w_5} = \frac{\delta E_{koko}}{\delta ulos_{o1}} * \frac{\delta ulos_{o1}}{\delta summa_{o1}} * \frac{\delta summa_{o1}}{\delta w_5}. $$
+    %TODO korjaa kaavanen
+    $$ \frac{\partial E_{koko}}{\partial w_{ij}} = \frac{\partial E_{koko}}{\partial o_j^{out}} * \frac{\partial ulos_{o1}}{\partial summa_{o1}} * \frac{\partial summa_{o1}}{\partial w_5}. $$
 
 
     Virhefunktion arvon laskeminen jokaiselle syötteelle ja keskiarvon ottaminen ja tämän perusteella takaisinvirtausalgoritmin suorittaminen olisi erittäin raskasta kun syötteitä voi olla miljoonia kappaleita. Tämän takia käytetään yleensä stokastista gradienttimenetelmää, jossa virhefunktion keskiarvo lasketaan kaikkien syötteiden sijaan joukolle satunnaisesti valittuja syötteitä, ja ajetaan takaisinvirtausalgoritmi tämän tuloksen perusteella.
@@ -379,7 +380,7 @@
 
   Lasketaan painon $w_5$ vaikutus virheeseen. $E_{koko}$ koostuu ulostulokerroksen neuroneiden tekemien virheiden summista, joten kun se derivoidaan tietyn neuronin ulostulon suhteen, muiden neuroneiden virheiden termit putoavat pois. Jäljelle jää 
   
-  $$ \frac{\delta E_{koko}}{\delta o_{1}^{out}} = 2 \cdot \frac{1}{2} (o_{1}^{out} - z_1^{out})^{2-1} \cdot 1 = o_{1}^{out} - z_1^{out} = 0.651$$
+  $$ \frac{\partial E_{koko}}{\partial o_{1}^{out}} = 2 \cdot \frac{1}{2} (o_{1}^{out} - z_1^{out})^{2-1} \cdot 1 = o_{1}^{out} - z_1^{out} = 0.651$$
 
   Aktivaatiofunktion $\sigma (x)$ derivaatta on $\sigma'(x) = \sigma(x) \cdot (1 - \sigma(x))$.
   Koska 
@@ -388,21 +389,21 @@
   
   niin
 
-  %$$ \frac{\delta o_{1}^{out}}{\delta o_1^{summa}} = o_{1}^{out}(1 - o_{1}^{out}) = 0.652(1 - 0.652) \approx 0.227.$$
-  $$ \frac{\delta o_{1}^{out}}{\delta o_1^{summa}} = o_{1}^{out} \cdot (1 - o_{1}^{out}) \approx 0.227.$$
+  %$$ \frac{\partial o_{1}^{out}}{\partial o_1^{summa}} = o_{1}^{out}(1 - o_{1}^{out}) = 0.652(1 - 0.652) \approx 0.227.$$
+  $$ \frac{\partial o_{1}^{out}}{\partial o_1^{summa}} = o_{1}^{out} \cdot (1 - o_{1}^{out}) \approx 0.227.$$
 
   $$ o_1^{summa} = w5 \cdot h_{1}^{out} + w_6 \cdot h_{2}^{out} $$
   
   joten viimeinen tarvittava osa 
-  $$ \frac{\delta o_1^{summa}}{\delta w_5} = 1 \cdot h_{1}^{out} + w_5 \cdot 0 + 0 = out_{h1} $$ 
+  $$ \frac{\partial o_1^{summa}}{\partial w_5} = 1 \cdot h_{1}^{out} + w_5 \cdot 0 + 0 = out_{h1} $$ 
 
   joten 
   
-  $$\frac{\delta E_{koko}}{\delta w_5} = 0.651 \cdot 0.227 \cdot 0.496 \approx 0.073. $$
+  $$\frac{\partial E_{koko}}{\partial w_5} = 0.651 \cdot 0.227 \cdot 0.496 \approx 0.073. $$
 
    Korjaamme nyt $w_5$ virhettä asettamalla sen uudeksi arvoksi
 
-  $$w_{5}^+ = w_5 - \eta \cdot \frac{\delta E_{koko}}{\delta w_5} = 0.9035.$$
+  $$w_{5}^+ = w_5 - \eta \cdot \frac{\partial E_{koko}}{\partial w_5} = 0.9035.$$
 
 
   %TODO: Pitäisikö laskea neuroverkolle uusi ulostulo kun yksi verkon paino muutettu? Vai laskea kaikille painoille muutokset ja sen jälkeen ulostulo?
@@ -429,7 +430,7 @@
       \label{pic:convolution}
     \end{figure}
 
-    Konvoluutioverkkojen nimi juontaa juurensa matemaattiseen konvoluutioon, sillä kaava jolla konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa
+    Konvolutionaalisten neuroverkkojen nimi juontaa juurensa matemaattiseen konvoluutioon. Konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa
     % ^ local receptive fieldsistä voisi olla kuva, esim http://neuralnetworksanddeeplearning.com/images/tikz43.png
 
     % TODO: kuuluuko loppuun pilkku?
