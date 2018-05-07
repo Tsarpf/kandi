@@ -78,11 +78,7 @@
   \date{\today}
   \level{Kandidaatintutkielma}
   \abstract{
-  Viimeisen hieman yli kymmenen vuoden aikana voidaan sanoa keinotekoisten neuroverkkojen ja syväoppimisen tehneen läpimurron. Syväoppimisen voidaan katsoa syntyneen jo 40-luvulla, mutta laajamittaiseen sovelluskäyttöön se on tullut vasta viime vuosina, kun sekä riittävä määrä luokiteltua dataa, että riittävästi prosessointitehoa on tullut helposti saataville. Myös algoritmipuolella tapahtuneet edistykset ovat edesauttaneet läpimurtoa. Aikaisemmin koneoppimisen alalla haasteelliseksi osoittautuneissa sovelluskohteissa kuten kuvien sekä puheen sisällön tunnistamisessa keinotekoiset neuroverkot ovat osoittautuneet toistaiseksi ylivoimaisesti parhaiten toimiviksi ratkaisuiksi.
-  
-  Neuroverkkojen opetuksessa tärkeimpiä menetelmiä ovat gradienttimenetelmä ja takaisinvirtausalgoritmi
-  
-  Konvolutionaaliset neuroverkot ovat eräänlaisia neuroverkkoja jotka soveltuvat hyvin kuvien ja muiden paikallisuudesta hyötyvien syötteiden käsittelyyn}
+  Syväoppimisen voidaan katsoa syntyneen jo 40-luvulla, mutta laajamittaiseen sovelluskäyttöön se on tullut vasta viime vuosina, kun sekä riittävä määrä luokiteltua dataa, että riittävästi prosessointitehoa on tullut helposti saataville. Myös algoritmipuolella tapahtuneet edistykset ovat edesauttaneet läpimurtoa. Joissakin koneoppimisen sovelluskohteissa, kuten kuvien sisällön tunnistamisessa, keinotekoiset neuroverkot ovat osoittautuneet toistaiseksi ylivoimaisesti parhaiten pärjääviksi ratkaisuiksi. Tässä kirjallisuuskatsaukseen perustuvassa tutkielmassa käsitellään ensin kaikille neuroverkoille yhteisiä piirteitä, kuten yksittäisten neuronien ja neuroverkojen rakennetta. Seuraavaksi esittelemme tärkeimmät neuroverkkojen harjoittamisen menetelmät: gradienttimenetelmän ja takaisinvirtausalgoritmin. Lopuksi käymme läpi miten konvolutionaaliset neuroverkot eroavat muista neuroverkoista, ja modernin niitä hyödyntävän sovelluksen.}
 
   % The following can be used to specify keywords and classification of the paper:
 
@@ -93,6 +89,9 @@
   % uncomment the following; contents of \classification will be printed under the abstract with a title
   % "ACM Computing Classification System (CCS):"
   % \classification{}
+  %\classification{Security and privacy $\rightarrow$ Software security engineering}
+  %\classification{Security and privacy $\rightarrow$ Software security engineering}
+  \classification{Computing methodologies $\rightarrow$ Machine learning approaches $\rightarrow$ Neural networks}
 
   % If the automatic page number counting is not working as desired in your case,
   % uncomment the following to manually set the number of pages displayed in the abstract page:
@@ -152,15 +151,15 @@
   \subsection{Keinotekoinen neuroni}
     \label{chap:artificial-neuron}
 
+    Keinotekoiset neuronit ottavat vastaan yhden tai useampia syötteitä $x_i$ ... $x_i$, joista kullakin on jokin painotusarvo $w_i$. Neuroneilla on yksi ulostuloarvo $y$, joka muodostetaan sen syötteistä kahdessa vaiheessa.
+
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.60]{neuron}
-      %\caption{Keinotekoinen neuroni jossa syötteet $x_1 ... x_i$, summaus $\Sigma w_i x_i$, aktivaatiofunktio $f$, ja ulostuloarvo y.}
       \caption{Keinotekoisen neuronin rakenne}
       \label{pic:neuron}
     \end{figure}
 
-    Keinotekoiset neuronit ottavat vastaan yhden tai useampia syötteitä $x_i$ ... $x_i$, joista kullakin on jokin painotusarvo $w_i$. Neuroneilla on yksi ulostuloarvo $y$, joka muodostetaan sen syötteistä kahdessa vaiheessa.
 
     Ensimmäisessä vaiheessa syötteet kerrotaan painotusarvollaan ja litistetään yhdeksi arvoksi summaamalla. Summaan lisätään lopuksi taipumusvakio (bias) $b$. Tästä saadaan Kuvan \ref{pic:neuron} neuronin vasemman puoliskon kaava $\sum w_i x_i + b$.
 
@@ -205,20 +204,20 @@
 
   \subsection{Keinotekoisten neuroverkkojen rakenne}
 
+  Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan kerroksittain niin, että kunkin verkon kerroksen neuronien syötteet ovat niitä edeltävän tason neuroneiden ulostuloarvoja. 
+  Yleisimmissä täysin yhdistetyissä (fully connected) neuroverkkokerroksissa jokainen kerroksen neuroni on yhdistetty jokaiseen sitä edeltävän kerroksen neuroniin. Myös muita tapoja yhdistää kerrokset käytetään, kuten esimerkiksi kappaleessa \ref{chap:convolutional-layers} esiteltävissä konvoluutiokerroksissa. 
+
   \begin{figure}[h]
     \centering
     \includegraphics[scale=0.5]{basic-neuralnet}
-    \caption{Tyypillinen neuroverkon rakenne, jossa kaksi piilokerrosta \cite{Nielsen-neural}}
+    \caption{Nelikerroksinen neuroverkko, jossa on kaksi piilokerrosta \cite{Nielsen-neural}}
     \label{pic:neuralnet}
   \end{figure}
-
-  Yksinkertaisimman verkkorakenteen omaavat eteenpäinsyöttävät neuroverkot muodostetaan kerroksittain niin, että kunkin verkon kerroksen neuronien syötteet ovat niitä edeltävän tason neuroneiden ulostuloarvoja. 
-  Yleisimmissä täysin yhdistetyissä (fully connected) neuroverkkokerroksissa jokainen kerroksen neuroni on yhdistetty jokaiseen sitä edeltävän kerroksen neuroniin. Myös muita tapoja yhdistää kerrokset käytetään, kuten esimerkiksi kappaleessa \ref{chap:convolutional-layers} esiteltävissä konvoluutiokerroksissa. 
   
-  Neuroverkoissa on aina ainakin syöte- ja ulostulokerros, sekä vaihteleva määrä niiden välissä olevia piilokerroksia. Eteenpäinsyöttävissä neuroverkoissa ei ole silmukoita, eli informaatio kulkee niissä aina vain yhteen suuntaan, syötekerroksesta mahdollisten piilokerrosten kautta kohti ulostulokerrosta, jonka neuroneiden ulostuloarvot ovat neuroverkon laskennan lopputulos. Silmukoita sisältäviä takaisinkytkeytyviä neuroverkkoja on myös olemassa [TODOcite], mutta ne eivät kuulu tämän tutkielman aihepiiriin.
+  Neuroverkoissa on aina ainakin syöte- ja ulostulokerros, sekä vaihteleva määrä niiden välissä olevia piilokerroksia. Eteenpäinsyöttävissä neuroverkoissa ei ole silmukoita, eli informaatio kulkee niissä aina vain yhteen suuntaan, syötekerroksesta mahdollisten piilokerrosten kautta kohti ulostulokerrosta, jonka neuroneiden ulostuloarvot ovat neuroverkon laskennan lopputulos. Silmukoita sisältäviä takaisinkytkeytyviä neuroverkkoja on myös olemassa, mutta ne eivät kuulu tämän tutkielman aihepiiriin \cite{Long-short-memory-HochreiterS97}.
 
   Kuvassa \ref{pic:neuralnet} vasemmanpuoleisimpana nähdään syötekerros. Esimerkiksi haluttaessa syöttää 64x64 kuva neuroverkolle voidaan syötekerroksena käyttää 64x64 neuronin kerrosta, johon kuvan pikselien väriarvot koodataan.
-  % cite???
+
   Kasvattamalla piilokerroksien sekä kerroksissa olevien neuronien määrää, neuroverkoilla voidaan mallintaa entistä monimutkaisempia funktioita. Vaikka syväoppimista voidaan harjoittaa myös muutoin kuin keinotekoisilla neuroverkoilla, neuroverkkojen tapauksessa termillä viitataan neuroverkkojen piilokerrosten määrään. 
 
   \section{Neuroverkkojen harjoittaminen}
@@ -226,13 +225,10 @@
 
   Eteenpäinsyöttävien neuroverkkojen, joissa on yksi piilokerros, on todistettu olevan universaaleja approksimaattoreita \cite{multilayer-feedforward-universal-approximators}. Eteenpäinsyöttävät neuroverkot pystyvät siis approksimoimaan mielivaltaisella tarkkuudella mitä tahansa avaruuden $R^n$ kompakteilla osajoukoilla määriteltyjä jatkuvia funktioita, kunhan tarpeeksi laskentaresursseja on käytettävissä.
   
-  %Tulkitsemalla asian asian,  
-
-  %TODO: mieti muotoilua:
-  Suurin osa neuroverkkojen ja ylipäätään koneoppimisen sovelluksista hyödyntää mallien harjoittamisessa ohjattua oppimista \cite{nature-lecun15}. Ohjatussa oppimisessa harjoitusaineisto on luokiteltu jollakin perusteella ja harjoittamisvaiheessa pyritään saamaan opetettava malli löytämään näille ennakkoon määritellyille luokille yhteisiä ja harjoitusaineiston ulkopuolisiin syötteisiin yleistettävissä olevia tekijöitä. 
+  Suurin osa neuroverkkojen ja ylipäätään koneoppimisen sovelluksista hyödyntää mallien harjoittamisessa ohjattua oppimista \cite{nature-lecun15}. Ohjatussa oppimisessa harjoitusaineisto on luokiteltu jollakin perusteella ja harjoittamisvaiheessa pyritään saamaan opetettava malli löytämään näille ennakkoon määritellyille luokille yhteisiä ja harjoitusaineiston ulkopuolisiin syötteisiin yleistettävissä olevia tekijöitä. Harjoitusaineisto on luokiteltu yleensä kahteen osaan, joista ensimmäistä käytetään itse mallin harjoittamiseen, ja toista osaa harjoittamisen jälkeen mallin toimivuuden mittaamiseen.
   
   % TODO kysy parinotaatiosta:
-  Tyypillinen neuroverkkojen harjoittamiseen käytetty harjoitusaineisto on suuri joukko pareiksi järjestettyjä yksiköitä $ \{(X_i, Z_i)\}_{i=1}^N $ jossa $X_i$ on jokin syötevektori ja $Z_i$ toivottu ulostulovektori tälle syötteelle. Esimerkiksi käsin kirjoitettujen numeroiden kuvista tunnistamista varten tehdyssä harjoitusaineistossa $X_i$ voi olla vektori kuvan pikselien värit määritteleviä arvoja ja $Z_i$ vektori arvoja, jossa vain kuvasta löytyvää numeroa vastaava arvo on asetettu nollasta poikkeavaksi \cite{Nielsen-neural}.
+  Tyypillinen neuroverkkojen harjoittamiseen käytetty harjoitusaineisto on suuri joukko pareiksi järjestettyjä yksiköitä $ \{(\mathbf{x_i}, \mathbf{z_i})\}_{i=1}^N,$ jossa $\mathbf{x_i}$ on jokin syötevektori ja $\mathbf{z_i}$ toivottu ulostulovektori tälle syötteelle \cite{nature-lecun15}. Esimerkiksi käsin kirjoitettujen numeroiden kuvista tunnistamista varten tehdyssä harjoitusaineistossa $\mathbf{x_i}$ voi olla vektori kuvan pikselien värit määritteleviä arvoja ja $\mathbf{z_i}$ vektori arvoja, jossa vain kuvasta löytyvää numeroa vastaava arvo on asetettu nollasta poikkeavaksi.
 
   Laskemalla neuroverkolla harjoitusaineistosta peräisin olevalle syötteelle ulostuloarvo, voidaan saatua ulostuloarvoa verrata harjoitusaineistosta löytyvään toivottuun ulostuloarvoon. Näin neuroverkolle voidaan laskea sen tekemä virhe, ja kun virhe tunnetaan, sitä voidaan pyrkiä pienentämään. 
   Neuroverkkojen harjoittamisen voidaan siis sanoa olevan neuroverkon tekemän virheen minimointia sen approksimoidessa jotakin funktiota.
@@ -245,11 +241,11 @@
    Hyvin yleisesti käytetään neliöllistä virhefunktiota
 
   \begin{equation}
-    E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(x_i) - z_i \|^2,
+    E(x) = \frac{1}{2} \sum_{i=1}^{N} \| y(\mathbf{x_i}) - \mathbf{z_i} \|^2,
     \label{eq:error-function}
   \end{equation}
 
-  jossa $y(x_i)$ on neuroverkon tuottama tulos jollakin harjoitusaineiston yksikön syötteellä $X_i$, $Z_i$ on harjoitusaineiston perusteella syötteelle $X_i$ toivottu ulostuloarvo, ja $N$ syötteiden määrä. Koska $y(X_i)$ ja $Z_i$ ovat yleensä vektoreita, merkinnällä $\|v\|$ tarkoitetaan erotuksesta muodostuvan vektorin euklidista normia.
+  jossa $y(\mathbf{x_i})$ on neuroverkon tuottama tulos jollakin harjoitusaineiston yksikön syötteellä $\mathbf{x_i}$, $\mathbf{z_i}$ on harjoitusaineiston perusteella syötteelle $\mathbf{x_i}$ toivottu ulostuloarvo, ja $N$ syötteiden määrä \cite{Goodfellow-et-al-2016}. Koska $y(\mathbf{x_i})$ ja $\mathbf{z_i}$ ovat yleensä vektoreita, merkinnällä $\|v\|$ tarkoitetaan erotuksesta muodostuvan vektorin euklidista normia.
 
   %todo "tuottamaan virheeseen"?
   %todo "menetelmiä minimointiin"?
@@ -271,7 +267,7 @@
     \end{figure}
 
     %TODO muista että takaisinvirtausalgoritmi on yksi tapa toteuttaa gradienttimenetelmää, joten ei "suoriteta gradienttimenetelmää backpropin avulla"
-    Gradientti on derivaatan yleistys useamman kuin yhden muuttujan funktioille, joka kertoo mihin suuntaan funktion arvo kasvaa nopeimmin. Gradienttimenetelmällä (gradient descent) tarkoitetaan numeerista menetelmää, jossa kuljetaan iteratiivisesti negatiivisen gradientin suuntaan kunnes gradientti on tarpeeksi pieni. 
+    Gradientti on derivaatan yleistys useamman kuin yhden muuttujan funktioille, joka kertoo mihin suuntaan funktion arvo kasvaa nopeimmin. Gradienttimenetelmällä (gradient descent) tarkoitetaan numeerista menetelmää, jossa kuljetaan iteratiivisesti negatiivisen gradientin suuntaan kunnes gradientti on tarpeeksi pieni \cite{Rumelhart-1986-back-prop}. 
 
     %TODO mieti reluhomman muotoilua
     %TODO kysy assarilta kannattaako Kaavan olla isolla:
@@ -284,20 +280,20 @@
     Vaikka gradienttimenetelmä soveltuukin vain lokaalien minimien etsintään, sen ja sen muunnelmien on huomattu olevan yleensä riittävän toimivia ratkaisuja neuroverkkojen harjoittamiseen \cite{Rumelhart-1986-back-prop}\cite{Goodfellow-et-al-2016}. Toistaiseksi käytännön neuroverkkototeutuksissa on todettu olevan tärkeämpää etsiä parametriavaruudesta sellaisia lokaaleita minimeitä, joissa virhefunktio saa pieniä arvoja, kuin etsiä funktion todellista globaalia minimiä \cite{neural-optimization-goodfellow-2015}. Tämä on kuitenkin vielä aktiivisen tutkimuksen aluetta, josta ei ole varmaa tietoa \cite{Goodfellow-et-al-2016}.
 
     %todo lähde
-    Sen sijaan että virhefunktion gradientin keskiarvo laskettaisiin mahdollisesti miljoonille harjoitusaineiston yksiköille jokaisella harjoituskierroksella, yleensä käytetään stokastista gradienttimenetelmää, jossa gradientin keskiarvo muodostetaan vain osasta harjoitusaineistoa. 
+    Sen sijaan että virhefunktion gradientin keskiarvo laskettaisiin mahdollisesti miljoonille harjoitusaineiston yksiköille jokaisella harjoituskierroksella, yleensä käytetään stokastista gradienttimenetelmää, jossa gradientin keskiarvo muodostetaan vain osasta harjoitusaineistoa \cite{nature-lecun15}. Menetelmää kutsutaan stokastiseksi, koska harjoitusaineiston pienelle osajoukolle laskettu keskiarvo on kohinainen estimaatti todellisesta keskiarvosta.
     %TODO: Stokastisen gradienttimenetelmän on todettu tuottavan hyviä tuloksia.
 
     %Virhefunktion arvon laskeminen jokaiselle syötteelle ja keskiarvon ottaminen ja tämän perusteella takaisinvirtausalgoritmin suorittaminen olisi erittäin raskasta, kun syötteitä voi olla miljoonia kappaleita. Tämän takia käytetään yleensä stokastista gradienttimenetelmää, jossa virhefunktion keskiarvo lasketaan kaikkien syötteiden sijaan joukolle satunnaisesti valittuja syötteitä, ja suoritetaan seuraavaksi esiteltävä takaisinvirtausalgoritmi tämän tuloksen perusteella.
 
 
   \subsection{Takaisinvirtausalgoritmi}
-    Takaisinvirtausalgoritmilla viitataan kaksivaiheiseen neuroverkkojen opetusprosessiin. Eteenpäinvirtaukseksi kutsutaan ensimmäistä vaihetta, jossa neuroverkon virhe lasketaan jollekkin harjoitusaineiston osajoukolle aikaisemmin esitellyllä tavalla. Taaksepäinvirtaukseksi, josta algoritmi on saanut nimensä, kutsutaan virheen kuljettamista verkossa ulostulokerroksesta takaisin kohti syötekerrosta virhefunktion osittaisderivaattojen selvittämiseksi verkon painotusarvojen ja taipumusvakioiden suhteen. Kun virhefunktion osittaisderivaatat painotusarvojen ja taipumusvakioiden suhteen tunnetaan, voidaan niistä muodostaa gradientti ja soveltaa gradienttimenetelmää virheen minimoimiseksi.
+    Takaisinvirtausalgoritmilla viitataan kaksivaiheiseen neuroverkkojen opettamiseen kehitettyyn menetelmään \cite{Rumelhart-1986-back-prop}. Eteenpäinvirtaukseksi kutsutaan ensimmäistä vaihetta, jossa neuroverkon virhe lasketaan jollekkin harjoitusaineiston osajoukolle aikaisemmin esitellyllä tavalla. Taaksepäinvirtaukseksi, josta algoritmi on saanut nimensä, kutsutaan virheen kuljettamista verkossa ulostulokerroksesta takaisin kohti syötekerrosta virhefunktion osittaisderivaattojen selvittämiseksi verkon painotusarvojen ja taipumusvakioiden suhteen. Kun virhefunktion osittaisderivaatat painotusarvojen ja taipumusvakioiden suhteen tunnetaan, voidaan niistä muodostaa gradientti ja soveltaa gradienttimenetelmää virheen minimoimiseksi.
 
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.4]{neuron-notation}
       \caption{Painotuksiin viittaamiseen käytetty notaatio \cite{Nielsen-neural}.}
-      \label{pic:chain-rule}
+      \label{pic:neuron-notation}
     \end{figure}
 
     Algoritmin käsittelyn helpottamiseksi käytetään verkon osiin viittaamiseen alan kirjallisuudessa yleisesti käytettyä notaatiota likimain vastaavia merkintätapoja \cite{Nielsen-neural}\cite{Rojas96}. Kerroksessa $l$ olevan $i$:nnen neuronin ulostuloarvosta käytetään merkintää $out_i^l$, neuronin painotettujen syötteiden summasta merkintää $net_i^l$, kerroksessa $l-1$ olevan $i$:nnen neuronin ja kerroksessa $l$ olevan $j$:nnen neuronin välillä olevasta painotuksesta merkintää $w_{ji}^l$, ja koko verkon virheestä merkintää $E_{koko}$. Käydään seuraavaksi läpi, kuinka virhefunktion derivaatta yksittäisen painotusarvon suhteen selvitetään ensin ulostulokerroksessa, ja tämän jälkeen muissa kerroksissa.
@@ -309,8 +305,8 @@
     %TODO kuva jostain mihin voi viitata
     \begin{figure}[h]
       \centering
-      \includegraphics[scale=0.4]{chain-rule}
-      \caption{Virhefunktion derivaatta syötteen painotuksen suhteen}
+      \includegraphics[scale=0.5]{chain-rule}
+      \caption{Virhefunktion derivaatta syötteen painotuksen suhteen \cite{backprop-example}}
       \label{pic:chain-rule}
     \end{figure}
 
@@ -354,24 +350,18 @@
 
   $$\frac{\partial E_{koko}}{\partial w_{ji}^{l}}$$
   
-  %TODO kai tähän voisi jonkun perus lähteen hakea, tai ehkä gradienttimenetelmäkappaleessa riittää?
   \noindent tiedetään, virhettä pyritään pienentämään muuttamalla painotusta jonkin oppimistahdin (learning rate) $-\eta$ mukaisesti. Virhefunktiolle laskettu gradientti itsessään kertoo vain suunnan infinitesimaalisella alueella johon siirtymällä virhefunktio kasvaa eniten, mutta ei optimaalista askeleen kokoa. Negatiivisen oppimistahdin avulla siirrytään gradientin osoittamaa virhefunktion suurimman kasvun suuntaa vastakkaiseen suuntaan
 
-  
   $$ w_{ji}^{l} = w_{ji}^{l} - \eta \cdot \frac{\partial E_{koko}}{\partial w_{ji}^{l}}, $$
 
-  %TODO kysy viittaustavasta jossa pisteen ulkpuolella. muutenki paska muotoilu
-  \noindent joka pienentää neuroverkon virhettä, mikäli oppimistahti on riittävän pieni. Oppimistahdin valintaan ja muuttamiseen harjoittamisen aikana löytyy lukuisia heuristisia menetelmiä, joista yleisimpänä jonkin pienen arvon valitseminen aluksi, ja sen pienentäminen oppimisen alkaessa hidastumaan harjoittamisen aikana. \cite{Goodfellow-et-al-2016}\cite{KSHimagenet2012}
+  \noindent joka pienentää neuroverkon virhettä, mikäli oppimistahti on riittävän pieni. Oppimistahdin valintaan ja muuttamiseen harjoittamisen aikana löytyy lukuisia heuristisia menetelmiä, joista yleisimpänä jonkin pienen arvon valitseminen aluksi, ja sen pienentäminen oppimisen alkaessa hidastumaan harjoittamisen aikana \cite{Goodfellow-et-al-2016}\cite{KSHimagenet2012}. 
 
-  Verkon aloituspainojen valinnassa olennaisinta on, että kaikki painotukset eivät ole samoja, koska silloin virhefunktion gradientti on näille painotuksille aina sama, eivätkä neuronit pysty erikoistumaan. Yleisin tapa painojen alustamiseen on valita niille satunnaisia pieniä arvoja jostakin satunnaisjakaumasta. Taipumusvakioiden aloitusarvot valitaan usein heuristisesti. \cite{Goodfellow-et-al-2016}
+  Verkon aloituspainojen valinnassa olennaisinta on, että kaikki painotukset eivät ole samoja, koska silloin virhefunktion gradientti on näille painotuksille aina sama, eivätkä neuronit pysty erikoistumaan \cite{Goodfellow-et-al-2016}. Yleisin tapa painojen alustamiseen on valita niille satunnaisia pieniä arvoja jostakin satunnaisjakaumasta. Taipumusvakioiden aloitusarvot valitaan usein heuristisesti.
 
-
-  %alkup. backprop paperissa on symmetry breakingista
-  %...
   \subsection{Esimerkki harjoittamisesta}
 
   Lasketaan ensin neuroverkon antama tulos esimerkkisyötteelle satunnaisesti alustetuin painotuksin ja selvitetään sen jälkeen takaisinvirtausalgoritmin avulla yhdelle verkon painotukselle uusi arvo, joka vähentää verkon tekemää virhettä esimerkin harjoitusaineiston yksiköllä. Esimerkin neuroverkko on eteenpäinsyöttävä, siinä ei ole taipumusvakioita, ja siinä on kolme kerrosta: syötekerros, täysin yhdistetty piilokerros, sekä täysin yhdistetty ulostulokerros. Kussakin kerroksessa on 2 neuronia. Oppimistahtina käytetään mielivaltaisesti valittua arvoa $\eta = 0.5$.
-  %TODO: keksi onko eq:sigmoid-func todella lauseke vai mikä?
+
    Aktivaatiofunktiona käytetään Lausekkeessa \ref{eq:sigmoid-func} esiteltyä sigmoidista funktiota $\sigma (x)$.
 
     \begin{figure}[h]
@@ -423,7 +413,7 @@
   %$$ \frac{\partial o_{1}^{out}}{\partial o_1^{summa}} = o_{1}^{out}(1 - o_{1}^{out}) = 0.652(1 - 0.652) \approx 0.227.$$
   $$ \frac{\partial o_{1}^{out}}{\partial o_1^{net}} = o_{1}^{out} \cdot (1 - o_{1}^{out}) \approx 0.227.$$
 
-  $$ o_1^{net} = w5 \cdot h_{1}^{out} + w_6 \cdot h_{2}^{out} $$
+  $$ o_1^{net} = w_5 \cdot h_{1}^{out} + w_6 \cdot h_{2}^{out} $$
   
   joten viimeinen tarvittava osa 
   $$ \frac{\partial o_1^{net}}{\partial w_5} = 1 \cdot h_{1}^{out} + w_5 \cdot 0 + 0 = out_{h1} $$ 
@@ -445,28 +435,18 @@
 
   \subsection{Ylisovitus ja sen ratkaiseminen}
 
-  %Koneoppimisessa haaste ylisovitus
-  Suuri haaste neuroverkkojen harjoittamisessa on ylisovitus (overfitting), jossa neuroverkon harjoittamisen jälkeen neuroverkko saa harjoitusaineistosta valituille syötteille pieniä arvoja virhefunktiosta, mutta uuden aineiston kanssa virhefunktio tuottaa suuria arvoja \cite{Nielsen-neural}. Tällöin neuroverkon oppima approksimaatio vastaa harjoitusaineistoa liian tarkkaan, eikä pysty yleistämään harjoitusaineistosta löytyviä ominaisuuksia aineiston ulkopuolisille syötteille.   
+    %vois mainita että kaikessa koneoppimisessa ylisovitus haaste
+    Suuri haaste neuroverkkojen harjoittamisessa, ja koneoppimisessa ylipäätään, on ylisovitus (overfitting), jossa neuroverkon harjoittamisen jälkeen neuroverkko saa harjoitusaineistosta valituille syötteille pieniä arvoja virhefunktiosta, mutta uuden aineiston kanssa virhefunktio tuottaa suuria arvoja \cite{Nielsen-neural}. Tällöin neuroverkon oppima approksimaatio vastaa harjoitusaineistoa liian tarkkaan, eikä pysty yleistämään harjoitusaineistosta löytyviä ominaisuuksia aineiston ulkopuolisille syötteille.   
 
-  todo liian lyhyt
-  Neuroniyksikköjen pudotus (dropout) on menetelmä, jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä, jolloin yksittäiset neuronit naapureineen eivät erikoistu tiettyihin aineiston ominaisuuksiin liian tarkasti \cite{dropout-srivastava}.
+    Ratkaisuksi ylisovitukseen on kehitetty useita menetelmiä. Neuroniyksikköjen pudotus (dropout) on menetelmä, jossa harjoitusvaiheessa yksittäisiä neuroneita poistetaan satunnaisesti käytöstä, jolloin yksittäiset neuronit naapureineen eivät erikoistu tiettyihin aineiston ominaisuuksiin liian tarkasti \cite{dropout-srivastava}. L2 regularisaatiossa neuroverkon virheeseen lisätään arvo $\lambda \sum_{i=1}^N$ jossa $\lambda$ on regularisaatioparametri, jolla regularisaation voimakkuutta voidaan säätää, ja $N$ on painojen määrä. Tällä lisäyksellä neuroverkko saadaan priorisoimaan pieniä painotusarvoja \cite{ng2004feature}.
+    
+    Ylisovitusta voidaan vähentää myös laajentamalla harjoitusaineistoa \cite{KSHimagenet2012}. Esimerkiksi kuvien tunnistuksessa harjoitusaineiston kokoa on kasvatettu kääntämällä ja siirtämällä kuvia, ottamalla kuvista osakuvia ja skaalaamalla niitä suuremmaksi ja pienemmäksi, sekä lisäämällä kuviin satunnaista kohinaa.
 
-  todo liian lyhyt
-  L2 regularisaatiossa neuroverkon virheeseen lisätään arvo $\lambda \sum_{i=1}^N$ jossa $\lambda$ on regularisaatioparametri ja $N$ on painojen määrä. Tällä lisäyksellä neuroverkko saadaan priorisoimaan pieniä painotusarvoja \cite{ng2004feature}.
-  
-  todo poista koko kappale tai lisää viite
-  Ylisovitusta voidaan vähentää myös laajentamalla harjoitusaineistoa. Esimerkiksi kuvien tunnistuksessa harjoitusaineiston kokoa on kasvatettu kääntämällä ja siirtämällä kuvia, ottamalla kuvista osakuvia ja skaalaamalla niitä suuremmaksi ja pienemmäksi, sekä lisäämällä kuviin satunnaista kohinaa. Puheentunnistuksessa harjoitusaineistoon on lisätty kohinaa ja erilaisia muita ylimääräisiä ääniä.
-
- Ylisovittamisen välttäminen on sitä vaikeampaa, mitä enemmän verkossa on opittavia parametreja, mistä johtuen sen välttämiseksi kehitetyt menetelmät ovat muuttuneet tärkeämmiksi modernien neuroverkkojen kasvaessa yhä suuremmiksi \cite{SzegedyLJSRAEVR14}. Seuraavaksi esiteltävät konvolutionaaliset neuroverkot vähentävät tarvittavien yhteyksien ja painotuksien määrää, näin osaltaan helpottaen ylisovitusta.
- %todo liian lyhyt ja viite pitää etsiä (löytyy nielsenistä myös)
-
-  
+    Ylisovittamisen välttäminen on sitä vaikeampaa, mitä enemmän verkossa on opittavia parametreja, mistä johtuen sen välttämiseksi kehitetyt menetelmät ovat muuttuneet tärkeämmiksi modernien neuroverkkojen kasvaessa yhä suuremmiksi ja syvemmiksi \cite{SzegedyLJSRAEVR14}. Seuraavaksi esiteltävät konvolutionaaliset neuroverkot vähentävät tarvittavien yhteyksien ja painotuksien määrää, näin osaltaan helpottaen ylisovitusta.
+    
   \section{Konvolutionaalisten neuroverkkojen rakenne}
 
-  %Konvolutionaalisilla neuroverkoilla pystytään ottamaan neuroverkon rakenteessa huomioon sovelluskohteiden luontaisia ominaisuuksia, kuten kuvien translationaalinen invarianssi \cite{lecun-et-al-98-convnets}.
-
-    %Tässä kappaleessa käydään läpi Michael A. Nielsen, Neural Networks and Deep Learning \cite{Nielsen-neural} kirjaan pohjautuen perusteet konvolutionaalisten neuroverkkojen rakenteesta. 
-    Konvolutionaalisten neuroverkkojen rakenne eroaa tavanomaisista täysin yhdistetyistä neuroverkoista konvoluutio- ja kokoamiskerroksien (pooling layer), kerrosten rinnakkaisuuden, sekä piirrekuvausten jaettujen painojen kautta \cite{Lecun-et-al-1989-convnets}. Näiden ominaisuuksien avulla pystytään vähentämään harjoitettavien parametrien määrää ja ottamaan verkkojen rakenteessa huomioon sovelluskohteiden luontaisia ominaisuuksia \cite{SzegedyLJSRAEVR14}. Pienempien parametrimäärien mahdollistamat syvemmät neuroverkot pystyvät hyödyntämään rakenteessaan monissa luonnollisissa yhteyksissä ilmenevää ominaisuutta, jossa korkeamman abstraktiotason käsitteet voidaan muodostaa yhdistelmästä matalamman tason käsitteitä \cite{nature-lecun15}. Esimerkiksi kuvissa lähekkäiset viivat muodostavat muotoja, muodot muodostavat osia, ja osista muodostuu objekteja. Syvät kuvien tunnistamiseen harjoitetut konvolutionaaliset neuroverkot vastaavatkin suorituskyvyltään ja toimimismalleiltaan yllättävän läheisesti joitakin kädellisten nisäkkäiden visuaalista prosessointia tekeviä aivolohkoja \cite{deep-neural-rival-primate-cortex}.
+    Konvolutionaalisten neuroverkkojen rakenne eroaa tavanomaisista täysin yhdistetyistä neuroverkoista konvoluutio- ja kokoamiskerroksien (pooling layer), kerrosten rinnakkaisuuden, sekä jaetuista painotuksista muodostettujen piirrekarttojen kautta \cite{Lecun-et-al-1989-convnets}. Näiden ominaisuuksien avulla pystytään vähentämään harjoitettavien parametrien määrää ja ottamaan verkkojen rakenteessa huomioon sovelluskohteiden luontaisia ominaisuuksia \cite{SzegedyLJSRAEVR14}. Pienempien parametrimäärien mahdollistamat syvemmät neuroverkot pystyvät hyödyntämään rakenteessaan monissa luonnollisissa yhteyksissä ilmenevää ominaisuutta, jossa korkeamman abstraktiotason käsitteet voidaan muodostaa yhdistelmästä matalamman tason käsitteitä \cite{nature-lecun15}. Esimerkiksi kuvissa lähekkäiset viivat muodostavat muotoja, muodot muodostavat osia, ja osista muodostuu objekteja. Syvät, kuvien tunnistamiseen harjoitetut konvolutionaaliset neuroverkot vastaavatkin suorituskyvyltään ja toimimismalleiltaan yllättävän läheisesti joitakin kädellisten nisäkkäiden visuaalista prosessointia suorittavia aivolohkoja \cite{deep-neural-rival-primate-cortex}.
     
     Konvolutionaalisia neuroverkkoja harjoitetaan samoilla gradienttimenetelmään perustuvilla opetusmenetelmillä, kuin muitakin neuroverkkoja \cite{Nielsen-neural}. Esimerkiksi aikaisemmin esitelty takaisinvirtausalgoritmi soveltuu myös konvolutionaalisten neuroverkkojen harjoittamiseen pienin muutoksin.
 
@@ -475,16 +455,15 @@
     \subsection{Konvoluutiokerrokset}
     \label{chap:convolutional-layers}
 
+   % Konvolutionaalisten neuroverkkojen nimi juontaa juurensa matemaattiseen konvoluutioon.
+    Konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa
+
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.5]{local-receptive}
       \caption{Paikallinen vastaanottava kenttä \cite{Nielsen-neural}}
       \label{pic:local-receptive}
     \end{figure}
-
-
-   % Konvolutionaalisten neuroverkkojen nimi juontaa juurensa matemaattiseen konvoluutioon.
-    Konvoluutiokerrosten neuroneiden syötteet $a_{x,y}$ painotuksineen $w_{x,y}$ voidaan esittää matemaattisesti esimerkiksi 5x5 kokoiselle paikalliselle vastaanottavalle kentälle (local receptive field) muodossa
 
     % TODO: kuuluuko loppuun pilkku?
     $$ \sum_{l=1}^{5}\sum_{m=1}^{5} w_{l,m}a_{j+l,k+m},$$
@@ -494,13 +473,13 @@
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.4]{convolution}
-      \caption{Konvoluutiokerrosten syötteiden valinta ja ulostulojen muodostuminen: syöte muuttuu, ytimen pysyessä samana \cite{Goodfellow-et-al-2016}.}
+      \caption{Konvoluutiokerrosten syötteiden valinta ja ulostulojen muodostuminen: syöte muuttuu ytimen pysyessä samana \cite{Goodfellow-et-al-2016}.}
       \label{pic:convolution}
     \end{figure}
     
-    Konvoluutiokerroksia on yleensä useita rinnakkain ja kunkin kerroksen neuronit jakavat samassa kerroksessa olevien neuroneiden kesken yhteiset painot (shared weights), tarkoituksena kannustaa verkon rakenteella neuroverkko oppimaan näihin kerroksiin syötteiden lokaaleja ominaisuuksia tunnistavia piirrekuvauksia (feature maps) \cite{lecun-et-al-98-convnets}. Rinnakkaisissa kerroksissa samassa kohtaa olevat neuronit saavat siis saman syötteen, mutta konvoluutio suoritetaan eri ytimen perusteella, eli syötettä verrataan samasta kohtaa useaan eri piirrekuvaukseen. Yksittäinen neuroni konvoluutiokerroksessa siis kertoo, löytyykö sen saamien syötteiden alueelta kerroksen piirrekuvausta vastaavaa ominaisuutta.
+    Konvoluutiokerroksia on yleensä useita rinnakkain ja kunkin kerroksen neuronit jakavat samassa kerroksessa olevien neuroneiden kesken yhteiset painot (shared weights), tarkoituksena kannustaa verkon rakenteella neuroverkko oppimaan näihin kerroksiin syötteiden lokaaleja ominaisuuksia tunnistavia piirrekuvauksia (feature maps) \cite{lecun-et-al-98-convnets}. Rinnakkaisissa kerroksissa samassa kohtaa olevat neuronit saavat saman syötteen, mutta konvoluutio suoritetaan eri ytimen perusteella, eli syötettä verrataan samasta kohtaa useaan eri piirrekuvaukseen. Yksittäinen neuroni konvoluutiokerroksessa siis kertoo, löytyykö sen saamien syötteiden alueelta kerroksen piirrekuvausta vastaavaa ominaisuutta.
     
-    Kuvasta \ref{pic:convolution} ilmenee hyödyllinen konvoluutiokerrosten piirre: mikäli tehdään vain konvoluutioita joissa ydin mahtuu kokonaan syötekuvaan, konvoluutiokerroksella on vähemmän ulostuloja kuin syötteitä, eli ne tiivistävät informaatiota. Kuvan tapauksessa nähdään syötematriisin ollessa 3x4, ja ytimen 2x2 kokoinen, ulostulomatriisin kooksi tulee 2x3. Tällä tavalla konvoluutio mahdollistaa myös sen, että konvoluutioverkot voivat ottaa vastaan vaihtelevan kokoisia syötteitä.
+    Kuvasta \ref{pic:convolution} ilmenee hyödyllinen konvoluutiokerrosten piirre: mikäli tehdään vain konvoluutioita joissa ydin mahtuu kokonaan syötekuvaan, konvoluutiokerroksella on vähemmän ulostuloja kuin syötteitä, eli ne tiivistävät informaatiota. Kuvan tapauksessa nähdään syötematriisin ollessa 3x4 ja ytimen 2x2 kokoinen, ulostulomatriisin kooksi tulee 2x3. Tällä tavalla mahdollistaa myös sen, että konvolutionaaliset neuroverkoet voivat ottaa vastaan vaihtelevan kokoisia syötteitä.
     %Yhteiset painot mahdollistavat sen, että kukin kerros oppii tunnistamaan translationaalisesti invariantteja ominaisuuksia syötteistään, ja yksittäisen neuronin voidaan ajatella kertovan löytyykö sen saamien syötteiden alueelta tätä ominaisuutta. Esimerkiksi kuvien tapauksessa piirrekuvaus joka löytää kuvasta suoria viivoja saattaa olla hyödyllinen, sillä suoria viivoja voi ilmetä useassa eri paikassa kuvassa, ja toisaalta korkeammalla abstraktiotasolla kuvassa esiintyvä objekti on edelleen sama objekti, vaikka sitä olisi siirretty muutamia pikseleitä johonkin suuntaan.
 
 %Konvoluutio ja jaetut painot yhdessä mahdollistavat neuroneiden erikoistumisen johonkin osa-alueeseen syötteissään, joka on erityisen hyödyllistä haluttaessa käyttää neuroverkkoja syötteiden tutkintaan joissa ilmenee paikallisuutta.
@@ -512,14 +491,14 @@
 
   % TODO selitä lisää miten yhteiset painot toimivat
 
-    \subsection{Kokoaminen ja tehokkuus}
+    \subsection{Kokoamiskerrokset}
       \begin{figure}[h]
         \centering
         \includegraphics[scale=0.5]{max-pooling}
         \caption{2x2 maksimikokoamiskerros \cite{Nielsen-neural}}
         \label{pic:max-pooling}
       \end{figure}
-      Usein konvolutionaalisissa neuroverkoissa käytetään konvoluutiokerroksien jälkeen kokoamiskerroksia, jotka tekevät yhteenvedon jostakin edeltävästä neuroverkkokerroksen alueesta ilman oppivia parametreja, näin pienentäen verkkoa ja vähentäen opittavien parametrien määrää entisestään \cite{Nielsen-neural}. Hyvin yleisesti käytetyn maksimikokoamiskerroksen (max-pooling) neuronit antavat ulostulokseen syöteneuroniensa ulostuloista suurimman \cite{KSHimagenet2012}. Esimerkiksi Kuvassa \ref{pic:max-pooling} nähtävä 2x2 maksimikokoamiskerros antaisi syötteille $\{0.1, 0.2, 0.3, 0.4\}$ ulostuloarvoksi $max(\{0.1, 0.2, 0.3, 0.4\}) = 0.4.$
+      Usein konvolutionaalisissa neuroverkoissa käytetään konvoluutiokerroksien jälkeen kokoamiskerroksia, jotka tekevät yhteenvedon jostakin edeltävästä neuroverkkokerroksen alueesta ilman opittavia parametreja, näin pienentäen verkkoa ja vähentäen opittavien parametrien määrää entisestään \cite{Nielsen-neural}. Hyvin yleisesti käytetyn maksimikokoamiskerroksen (max-pooling) neuronit antavat ulostulokseen syöteneuroniensa ulostuloista suurimman \cite{KSHimagenet2012}. Esimerkiksi Kuvassa \ref{pic:max-pooling} nähtävä 2x2 maksimikokoamiskerros antaisi syötteille $\{0.1, 0.2, 0.3, 0.4\}$ ulostuloarvoksi $max(\{0.1, 0.2, 0.3, 0.4\}) = 0.4.$
 
     \subsection{Täysin yhdistetyt kerrokset}
 
@@ -530,49 +509,38 @@
       \label{pic:convnet-architecture}
     \end{figure}
     %TODO: miksi kerrokset haluttaisiin litistää takaisin yhteen?
-    Konvoluutiokerrosten kohdalla konvolutionaaliset neuroverkot haarautuvat rinnakkaisiin kerroksiin, jotka voidaan litistää (flattening) takaisin yhteen sijoittamalla verkon viimeiseksi kerrokseksi täysin yhdistetty kerros \cite{Nielsen-neural}. Täysin yhdistetyt kerrokset kokoavat piirrekarttojen keräämän informaation ja tuottavat niistä lopullisen neuroverkon ulostuloarvon. Viimeisessä kerroksessa käytetään usein aktivaatiofunktiona softmax-funktiota, joka tekee ulostulokerroksen arvoista suhteellisia toisiinsa nähden ja pakottaa arvojen summaksi arvon 1 \cite{Nielsen-neural}. Näin neuroverkon ulostuloarvovektorin voidaan ajatella olevan todennäköisyysjakauma neuroverkon tunnistamista käsitteistä. 
+    Konvoluutiokerrosten kohdalla konvolutionaaliset neuroverkot haarautuvat rinnakkaisiin kerroksiin, jotka voidaan litistää (flattening) takaisin yhteen sijoittamalla verkon viimeiseksi kerrokseksi täysin yhdistetyn kerroksen \cite{Nielsen-neural}. Täysin yhdistetyt kerrokset kokoavat piirrekarttojen keräämän informaation ja tuottavat niistä lopullisen neuroverkon ulostuloarvon. Viimeisessä kerroksessa käytetään usein aktivaatiofunktiona softmax-funktiota, joka tekee ulostulokerroksen neuroneiden ulostuloarvoista suhteellisia toisiinsa nähden ja pakottaa arvojen summaksi arvon 1 \cite{Nielsen-neural}. Neuroverkon ulostuloarvovektori voidaan tulkita tällöin todennäköisyysjakaumaksi neuroverkon tunnistamista käsitteistä. 
 
   \section{Konvolutionaaliset neuroverkot käytännössä}
-  todo intro
+  Konvolutionaalisia neuroverkkoja käytetään nykyään puheentunnistuksessa \cite{abdel2012applying}, liikennemerkkien luokittelussa \cite{sermanet2011traffic} ja jalankulkijoiden tunnistamisessa \cite{szarvas2005pedestrian} kuvien sisällön tunnistamisen lisäksi. Vaikka konvolutionaaliset neuroverkot keksittiin pääpiirteittäin jo vuonna 1980 \cite{Fukushima1980}, vasta LeCunin työn myötä 80-luvun lopussa niille keksittiin käytännön sovelluksia, kuten käsinkirjoitettujen postinumeroiden tunnistaminen, joissa ne pärjäsivät muita ratkaisuja paremmin \cite{Lecun-et-al-1989-convnets}.
+  
+  Ennen konvolutionaalisia neuroverkkoja kuvien sisällön tunnistaminen perustui pääasiassa ihmisten käsin luomien piirretunnistimien (feature detector) käyttöön, jotka olivat sekä erittäin työläitä tehdä, että herkkiä pienillekkin muutoksille syötteessä \cite{lecun-et-al-98-convnets}. Konvolutionaaliset neuroverkot pystyvät oppimaan nämä piirteet itse, tehden niistä yleistettäviä moniin eri tilanteisiin, ja niiden luontainen kyky tunnistaa samoiksi syötteitä, joissa on vain pieniä sijainnillisia eroja, saa ne suoriutumaan vanhoja menetelmiä paremmin. 
 
+  \subsection{ImageNet Large Scale Visual Recognition Challenge}
 
-
-    %\subsection{Kirjastot}
-    %Johonkin saisi ehkä pari kappaletta tekstiä (konvolutionaalisten) neuroverkkojen luomista helpottavista kirjastoista yms. kuten TensorFlow.
-    
-  %\subsection{Verkon toiminnan visualisointi}
-  %... \cite{visualizing-convolutional}
-
-     \subsection{ImageNet kilpailu}
-     asdf
-
-  \subsection{Kuvien luokittelu}
-    Ennen konvolutionaalisia neuroverkkoja automaattisessa kuvien sisällön tunnistamisessa hyödynnettiin ihmisten suurella vaivalla käsin luomia piirrekarttoja
-
-    imagenet papru \cite{imagenet-paper}
-    TODO: Imagenet kilpailun kuvailu? Pitäisikö olla oma kokonainen section kuvien luokittelulle ja sen subsectionina imagenet ja CNN:ien toiminnan visualisointi. Esimerkkikuvia imagenet aineistosta?
-    TODO taulukko imagenetissa tunnistusprosentin paranemisesta
-    
-
-    Konvoluutioverkkoja on käytetty erityisen onnistuneesti kuvien sisällön luokitteluun.
-
-    Monille kuvia tunnistaville neuroverkoille yhteinen piirre on, että ulostulokerroksessa on yksi neuroni jokaista tunnistettavaa objektiluokkaa kohden, ja neuronin arvo kertoo kuinka todennäköisesti kyseisen luokan objekti löytyy kuvasta. TODO: Softmax
+  ILSVRC-kilpailussa kilpaillaan pienimmän virheprosentin saavuttamisesta 1000 objektikategorian tunnistuksessa \cite{imagenet-paper}. 2012 vuodesta lähtien kilpailuun osallistuvien mallien toiminnan testaamiseen on käytetty suurinpiirtein samaa noin 150000 kuvan aineistoa, harjoitusaineiston koostuessa noin 1,2 miljoonasta kuvasta. Harjoitusaineiston kuvissa on jokaista objektiluokkaa kohden määritelty, löytyykö kyseistä objektia kyseisestä kuvasta.
 
     \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.4]{imagenet}
-    \caption{ILSVRC-2012 kilpailun voittaneen neuroverkon rakenne \cite{KSHimagenet2012}}
-    \label{pic:hsk-neuralnet}
+      \centering
+      \includegraphics[scale=0.5]{ilsvrc-year}
+      \caption{Kuvien luokitteluvirheen lasku ILSVRC kilpailussa vuosittain \cite{imagenet-paper}}
+      \label{pic:ilsvrc}
     \end{figure}
 
-    % TODO https://arxiv.org/pdf/1710.05941.pdf mainitaan että ReLU oli tosi tärkee tälle 2012 setille
-    Vuonna 2012 ImageNet kuvantunnistuskilpailun voittaneessa Krizhevsky, Sutskever ja Hintonin (myöhemmin KSH) konvolutionaalisessa neuroverkossa on 7 piilokerrosta, joista 5 ensimmäistä ovat konvoluutiokerroksia, ja 2 viimeistä kerrosta täysin yhdistettyjä kerroksia. KSH:ssa on 1000 neuronin ulostulokerros joka vastaa sen tunnistamaa tuhatta erilaista kuvaluokkaa.
-    
-    ImageNet kuvamateriaalissa on vaihtelevan kokoisia kuvia, mutta KSH:n luomassa neuroverkon syötekerros oli 3x224x224 neuronin kokoinen. KSH:n ratkaisu syötteen sopivaksi saamiseksi oli skaalata lähdekuvat ensin 256x256 pikselin kokoon, ja tämän jälkeen ottaa kuvista 224x224 osakuvia satunnaisista sijainneista lähdekuvasta, näin laajentaen harjoitusdataa ja vähentäen ylisovitusta.
-    
-    KSH:n verkossa aktivaatiofunktiona toimi viimeaikoina hyväksi havaittu $R(z) = max(0, z)$ muotoinen Rectified Linear Unitiksi (ReLU) kutsuttu funktio \cite{KSHimagenet2012}.
+    Kilpailua pidetään erittäin merkittävänä konenäön, ja erityisesti konvolutionaalisten neuroverkkojen kehitykselle, sillä ennen vuoden 2012 ILSVRC-kilpailua konvolutionaaliset neuroverkot eivät saaneet juurikaan huomiota konenäön tutkimuksessa \cite{nature-lecun15}. Seuraavaksi esiteltävä vuonna 2012 kilpailun voittanut Krizhevsky, Sutskever ja Hintonin (myöhemmin KSH) konvolutionaalinen neuroverkko sai suuren yleisön huomion voittamalla kilpailun ylivoimaisesti 16.4 tunnistusvirheprosentilla toisen sijan 27.0 tulokseen nähden. Vuodesta 2012 lähtien kilpailun on joka vuosi voittanut konvolutionaalinen neuroverkko.
 
-  imagenet klassifikation \cite{KSHimagenet2012} learning rateksi valittiin ensin 0.01, ja sitä pienennettiin jakamalla sen arvo ymmenellä aina kun oppimisen huomattiin loppuneen.
+  \subsection{Esimerkki modernista konvolutionaalisesta neuroverkosta}
+    \begin{figure}[h]
+      \centering
+      \includegraphics[scale=0.4]{imagenet}
+      \caption{ILSVRC-2012 kilpailun voittaneen neuroverkon rakenne \cite{KSHimagenet2012}}
+      \label{pic:hsk-neuralnet}
+    \end{figure}
+
+    % TODO https://arxiv.org/pdf/1710.05941.pdf mainitaan neural network weight initialization että ReLU oli tosi tärkee tälle 2012 setille
+    KSH neuroverkossa on 7 piilokerrosta, joista 5 ensimmäistä ovat konvoluutiokerroksia, ja 2 viimeistä kerrosta täysin yhdistettyjä kerroksia. ImageNet kuvamateriaalissa on vaihtelevan kokoisia kuvia, mutta KSH neuroverkon syötekerros oli 3x224x224 neuronin kokoinen. KSH:n ratkaisu syötteen sopivaksi saamiseksi oli skaalata lähdekuvat ensin 256x256 pikselin kokoon, ja tämän jälkeen ottaa kuvista 224x224 osakuvia satunnaisista sijainneista, näin laajentaen harjoitusdataa ja vähentäen ylisovitusta. Ylisovituksen vähentämiseksi käytettiin myös neuroniyksiköiden pudotusmenetelmää. Piilokerrosten aktivaatiofunktiona verkossa käytettiin aikaisemmin esiteltyä ReLUa, ja ulostulokerroksessa softmaxia. Oppimistahdiksi valittiin ensin 0.01, ja sitä pienennettiin jakamalla sen arvo kymmenellä aina kun oppimisen huomattiin merkittävästi hidastuneen. 
+    
+    KSH harjoittamisessa hyödynnettiin näytönohjaimia. Verkko jaettiin kahteen osaan, sillä se ei olisi mahtunut yhden silloisen kuluttajakäyttöön suunnatun näytönohjaimen näyttömuistiin.
 
   %\subsection{Deep dream}
   %Samanlainen toteutustapa kuin takaisinvirtausalgoritmissa, paitsi painotusarvot pysyvät kiinteinä ja muutetaankin syötettä.
@@ -580,16 +548,11 @@
 
 \section{Yhteenveto} 
 
-Kappale siitä, että sitä ei vielä täysin ymmärretä, miksi neuroverkot oppivat niin hyvin. Täs vois mainita \cite{neural-optimization-goodfellow-2015} :sta siitä abstraktissa mainitusta jutusta et pitkään pelättiin et neuroverkkojen treenaus ois super vaikeeta 
+Aloitettiin käymällä läpi kaikille neuroverkoille yleisiä piirteitä, kuten yksittäisen neuronin rakennetta ja sitä, miten yksittäisistä neuroneista muodostetaan eteenpäinsyöttävä neuroverkko. Esiteltiin kuinka neuroverkkoja voidaan harjoittaa harjoitusaineiston perusteella takaisinvirtausalgoritmin ja gradienttimenetelmän avulla. Lopuksi käsiteltiin konvolutionaalisten neuroverkkojen eroavaisuuksia muista neuroverkoista ja esiteltiin niistä käytännön esimerkki.
 
-Aloitettiin käymällä läpi kaikille neuroverkoille yleisiä piirteitä, kuten yksittäisen neuronin rakennetta ja sitä, miten yksittäisistä neuroneista muodostetaan eteenpäinsyöttävä neuroverkko. Seuraavaksi esiteltiin kuinka neuroverkkoja voidaan harjoittaa harjoitusaineiston perusteella takaisinvirtausalgoritmin ja gradienttimenetelmän avulla. Lopuksi käsiteltiin konvolutionaalisten neuroverkkojen eroavaisuuksia muista neuroverkoista ja esiteltiin käytännön esimerkki konvolutionaalisesta neuroverkosta.
+Käsittelemättä jäi millä perusteilla hyperparametrit kuten aktivaatiofunktiot, aloituspainot ja oppimistahti valitaan. Tämä on toisaalta erittäin vaikea tehtävä ja alan kirjallisuudessa kyseiset parametrit valitaankin yleensä heuristisin menetelmin.
 
-Käsittelemättä jäi miten aktivaatiofunktioita, hyperparametrejä yms. valitaan järkevästi/hyvin (myös koska niistä ei juuri ymmärretä ja hyvin vaikea tehtävä). Muista neuroverkkorakenteista kuin eteenpäinsyöttävistä konvoluutioverkoista ei kerrottu, esim RNN, muut jotku poolaukset, jne
-
-
-
-
-
+Neuroverkot ovat erittäin aktiivisen tutkimuksen aluetta, sillä monilta osin ei ole vielä täysin selvää, miksi ne toimivat niin hyvin. Toisaalta miljoonien parametrien optimointi on lähes mahdoton tehtävä ratkaista täydellisesti.
 
   % ------------------------------ References ------------------------------
   %
